@@ -113,6 +113,16 @@ jobs = modal.Dict.from_name(DICT_NAME, create_if_missing=True)
 imports = modal.Dict.from_name(IMPORT_DICT_NAME, create_if_missing=True)
 
 
+def _cancelled(store, job_id: str) -> bool:
+    """True when the row was cancelled while a worker was still running.
+
+    The cancel endpoint writes state "failed" / error "CANCELLED"; a late
+    worker result must not overwrite that acknowledged cancellation.
+    """
+    row = store.get(job_id) or {}
+    return row.get("state") == "failed" and row.get("error") == "CANCELLED"
+
+
 @app.function(
     image=gpu_image,
     gpu="T4",
@@ -133,6 +143,10 @@ def process(payload: dict) -> None:
         from spawn_clipper.runner import run_job
 
         result = run_job(payload)
+        if _cancelled(jobs, job_id):
+            # Cancelled while running. The late result must not overwrite
+            # the acknowledged cancellation (as process_import already does).
+            return
         jobs[job_id] = {
             "state": "succeeded",
             "suggestion_sha256": result["suggestion_sha256"],
@@ -141,6 +155,8 @@ def process(payload: dict) -> None:
         }
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "CLIP_JOB_FAILED"
+        if _cancelled(jobs, job_id):
+            raise
         jobs[job_id] = {"state": "failed", "suggestion_sha256": None, "error": code}
         raise
 
@@ -165,6 +181,10 @@ def process_render(payload: dict) -> None:
         from spawn_clipper.runner import render_chosen
 
         result = render_chosen(payload)
+        if _cancelled(jobs, job_id):
+            # Cancelled while running. The late result must not overwrite
+            # the acknowledged cancellation (as process_import already does).
+            return
         jobs[job_id] = {
             "state": "succeeded",
             "suggestion_sha256": result["suggestion_sha256"],
@@ -173,6 +193,8 @@ def process_render(payload: dict) -> None:
         }
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "CLIP_RENDER_FAILED"
+        if _cancelled(jobs, job_id):
+            raise
         jobs[job_id] = {"state": "failed", "suggestion_sha256": None, "renders": [], "error": code}
         raise
 
