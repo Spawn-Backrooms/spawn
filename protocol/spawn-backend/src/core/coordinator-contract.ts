@@ -27,6 +27,11 @@ export const maxSteps = Math.min(
   LIMITS.steps - 1,
 );
 export const maxSpecialists = Math.min(2, LIMITS.helpers);
+/** A research budget that affords one execution step cannot fund the usual
+ * researcher-plus-synthesizer pair: the schema caps such a plan at one
+ * specialist and one step, so the single step must do both jobs. */
+const oneStepResearchInstruction =
+  "Use one researcher only. Cite supplied source IDs, flag missing evidence, never claim browsing. That single step must research the supplied sources and synthesize the final cited findings in one deliverable; no separate synthesis step fits this budget.";
 const identifier = z
   .string()
   .regex(/^[A-Za-z0-9_-]{1,80}$/)
@@ -275,7 +280,9 @@ export function coordinatorWorkDecisionPrompt(
     "Otherwise unmet_requirements:[], requires_additional_authority:false and a compact local plan. Missing evidence can be flagged in an analysis without requesting browsing; distinguish this from work that actually requires obtaining sources. Empty required_capabilities or null plan stops for a NEW owner-reviewed quote; no follow-on spend is authorized.",
     `Plan budget: at most ${contract.max_steps} execution steps, at most ${Math.min(maxSpecialists, contract.max_steps)} specialists, one execution and independent review per step. Use unique compact IDs, every specialist used, acyclic dependencies, no planning/review_ step IDs. Do not add a step just to duplicate automatic review.`,
     kind === "research"
-      ? "Use one researcher plus one synthesizer. Exactly one final synthesis must directly depend on every research step. Cite supplied source IDs, flag unavailable evidence, never invent browsing or citations."
+      ? contract.max_steps >= 2
+        ? "Use one researcher plus one synthesizer. Exactly one final synthesis must directly depend on every research step. Cite supplied source IDs, flag unavailable evidence, never invent browsing or citations."
+        : oneStepResearchInstruction
       : "Use builder/reviewer roles only. Propose the minimal source-grounded code change and acceptance checks. Do not claim tests ran.",
     "Each step brief must preserve its essential source facts, source IDs and acceptance criteria; downstream steps receive reviewed predecessor output. Preserve the requested deliverables and distinguish user-supplied claims from verified facts. Be compact: aim for 160 bytes summary, 40 each name, 256 each instruction/brief and 2600 bytes total response. Finish the entire JSON object.",
     JSON.stringify({ goal, room_kind: kind }),
@@ -558,7 +565,9 @@ export function coordinatorPlanningPrompt(
       ? [
           stepLimit >= 3
             ? "Use one researcher and one synthesizer. Only supplied sources; cite them, flag missing evidence, never claim browsing. Prefer one research step. Exactly one final synthesis must directly depend on EVERY research step: r1:[], r2:[r1] => synthesis:[r1,r2], not [r2]."
-            : "Use one researcher and one synthesizer. Only supplied sources; cite them, flag missing evidence, never claim browsing. Use one research step plus exactly one final synthesis, with dependencies research:[], synthesis:[research].",
+            : stepLimit === 2
+              ? "Use one researcher and one synthesizer. Only supplied sources; cite them, flag missing evidence, never claim browsing. Use one research step plus exactly one final synthesis, with dependencies research:[], synthesis:[research]."
+              : oneStepResearchInstruction,
         ]
       : []),
     "The step ID planning and the review_ prefix are reserved. Keep specialist keys short enough that goal ID plus an underscore plus the key fits 80 characters.",
