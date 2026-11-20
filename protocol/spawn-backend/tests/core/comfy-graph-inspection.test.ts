@@ -78,7 +78,7 @@ describe("Comfy API graph inspection", () => {
     expect(comfyGraphInspection.safeParse(result).success).toBe(true);
   });
 
-  it("accepts prefixed IDs and the current SaveImage output signature", () => {
+  it("accepts prefixed IDs and the zero-output SaveImage signature", () => {
     const result = inspect({
       "group.0.image": {
         class_type: "LoadImage",
@@ -90,7 +90,7 @@ describe("Comfy API graph inspection", () => {
       },
       preview: {
         class_type: "PreviewImage",
-        inputs: { images: ["group.1.save", 0] },
+        inputs: { images: ["group.0.image", 0] },
       },
     });
     expect(result.structurally_valid).toBe(true);
@@ -98,7 +98,7 @@ describe("Comfy API graph inspection", () => {
     expect(
       result.classes.find((entry) => entry.class_type === "SaveImage")
         ?.output_count,
-    ).toBe(1);
+    ).toBe(0);
   });
 
   it("keeps unknown classes and their output arity visibly unverified", () => {
@@ -142,6 +142,60 @@ describe("Comfy API graph inspection", () => {
     expectError(JSON.stringify(candidate), "DANGLING_LINK");
     candidate["9"].inputs.images = ["8", 1];
     expectError(JSON.stringify(candidate), "OUTPUT_INDEX_OUT_OF_RANGE");
+  });
+
+  it("reports no data outputs for SaveImage and PreviewImage", () => {
+    const result = inspect({
+      image: { class_type: "LoadImage", inputs: { image: "fixture.png" } },
+      save: {
+        class_type: "SaveImage",
+        inputs: { images: ["image", 0], filename_prefix: "fixture" },
+      },
+      preview: {
+        class_type: "PreviewImage",
+        inputs: { images: ["image", 0] },
+      },
+    });
+    expect(result.structurally_valid).toBe(true);
+    expect(
+      result.classes.find((entry) => entry.class_type === "SaveImage")
+        ?.output_count,
+    ).toBe(0);
+    expect(
+      result.classes.find((entry) => entry.class_type === "PreviewImage")
+        ?.output_count,
+    ).toBe(0);
+  });
+
+  it("rejects links from a SaveImage or PreviewImage output", () => {
+    expectError(
+      JSON.stringify({
+        image: { class_type: "LoadImage", inputs: { image: "fixture.png" } },
+        save: {
+          class_type: "SaveImage",
+          inputs: { images: ["image", 0], filename_prefix: "fixture" },
+        },
+        preview: {
+          class_type: "PreviewImage",
+          inputs: { images: ["save", 0] },
+        },
+      }),
+      "OUTPUT_INDEX_OUT_OF_RANGE",
+    );
+    expectError(
+      JSON.stringify({
+        image: { class_type: "LoadImage", inputs: { image: "fixture.png" } },
+        preview: {
+          class_type: "PreviewImage",
+          inputs: { images: ["image", 0] },
+        },
+        save: {
+          class_type: "SaveImage",
+          inputs: { images: ["preview", 0], filename_prefix: "fixture" },
+        },
+      }),
+      "OUTPUT_INDEX_OUT_OF_RANGE",
+    );
   });
 
   it.each([-1, 0.5, "0", true, 9_007_199_254_740_992])(

@@ -19,9 +19,11 @@ const signatures = new Map<string, { outputs: number; outputNode?: true }>([
   ["VAEEncode", { outputs: 1 }],
   ["LoadImage", { outputs: 2 }],
   ["LoraLoader", { outputs: 2 }],
-  ["SaveImage", { outputs: 1, outputNode: true }],
+  ["SaveImage", { outputs: 0, outputNode: true }],
   // PreviewImage inherits SaveImage's return signature and OUTPUT_NODE.
-  ["PreviewImage", { outputs: 1, outputNode: true }],
+  // Both are terminal nodes with RETURN_TYPES = (): their UI result is not
+  // a data output, so no link may reference output 0 of either class.
+  ["PreviewImage", { outputs: 0, outputNode: true }],
 ]);
 const limitations = [
   "Inspection never admits or runs a SPAWN workflow. It performs no network, file, subprocess, model or installation effects.",
