@@ -192,6 +192,11 @@ async function main() {
   const taken = { ids: new Set(), names: new Set() };
   catalogue.templates.forEach((template, i) => {
     errors.push(...checkTemplate(template, `catalogue/platform-rooms.v1.json templates[${i}]`, "editable_proposed_default"));
+    // The catalogue is the store list: two entries under one seed_id or
+    // name leave one room unreachable by that key, so the catalogue itself
+    // needs the same uniqueness check proposals get below.
+    check(errors, `catalogue/platform-rooms.v1.json templates[${i}].seed_id`, !taken.ids.has(template.seed_id), `"${template.seed_id}" is already used`);
+    check(errors, `catalogue/platform-rooms.v1.json templates[${i}].name`, !taken.names.has(String(template.name).toLowerCase()), `the name "${template.name}" is already used`);
     taken.ids.add(template.seed_id);
     taken.names.add(String(template.name).toLowerCase());
   });
