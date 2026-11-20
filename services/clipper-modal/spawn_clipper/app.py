@@ -145,6 +145,19 @@ def process(payload: dict) -> None:
         raise
 
 
+def _record_render(job_id: str, record: dict) -> None:
+    """Append one finished clip to the job row.
+
+    The status view is the only progress channel SPAWN polls, so the row
+    must grow while the render runs -- not only when every clip finishes.
+    The row's state is left untouched: a cancelled row stays cancelled.
+    """
+    current = jobs.get(job_id) or {}
+    renders = list(current.get("renders") or [])
+    renders.append(record)
+    jobs[job_id] = {**current, "renders": renders}
+
+
 @app.function(
     image=gpu_image,
     gpu="T4",
@@ -164,7 +177,9 @@ def process_render(payload: dict) -> None:
     try:
         from spawn_clipper.runner import render_chosen
 
-        result = render_chosen(payload)
+        result = render_chosen(
+            payload, on_clip=lambda record: _record_render(job_id, record)
+        )
         jobs[job_id] = {
             "state": "succeeded",
             "suggestion_sha256": result["suggestion_sha256"],
@@ -173,7 +188,15 @@ def process_render(payload: dict) -> None:
         }
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "CLIP_RENDER_FAILED"
-        jobs[job_id] = {"state": "failed", "suggestion_sha256": None, "renders": [], "error": code}
+        latest = jobs.get(job_id) or {}
+        # Keep the clips that already rendered: they exist at their put_urls,
+        # and the status view must not report them as never rendered.
+        jobs[job_id] = {
+            "state": "failed",
+            "suggestion_sha256": None,
+            "renders": latest.get("renders") or [],
+            "error": code,
+        }
         raise
 
 
