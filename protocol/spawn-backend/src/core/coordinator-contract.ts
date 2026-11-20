@@ -418,6 +418,41 @@ export function coordinatorPlanningSchemaSize(
     : bytes(JSON.stringify(coordinatorPlanningResponseFormat(value)));
 }
 
+/** The prompts require unique specialist keys and step IDs, steps routed to
+ * a defined specialist, dependencies that reference step IDs, and an
+ * acyclic graph. Counts and roles alone cannot project a plan that breaks
+ * any of those: a dangling reference has no target and a cycle has no order.
+ */
+function planReferencesValid(plan: z.infer<typeof planSchema>): boolean {
+  const stepIds = plan.steps.map((step) => step.step_id);
+  const specialistKeys = plan.specialists.map((entry) => entry.key);
+  if (new Set(stepIds).size !== stepIds.length) return false;
+  if (new Set(specialistKeys).size !== specialistKeys.length) return false;
+  if (
+    plan.steps.some((step) => !specialistKeys.includes(step.specialist_key))
+  )
+    return false;
+  if (
+    plan.steps.some((step) =>
+      step.depends_on.some((dep) => !stepIds.includes(dep)),
+    )
+  )
+    return false;
+  const byId = new Map(plan.steps.map((step) => [step.step_id, step]));
+  const state = new Map<string, "visiting" | "done">();
+  const visit = (id: string): boolean => {
+    if (state.get(id) === "done") return true;
+    if (state.get(id) === "visiting") return false;
+    const step = byId.get(id);
+    if (!step) return false;
+    state.set(id, "visiting");
+    if (!step.depends_on.every(visit)) return false;
+    state.set(id, "done");
+    return true;
+  };
+  return plan.steps.every((step) => visit(step.step_id));
+}
+
 /** Validate the entire original plan before a lossless internal action projection. */
 export function coordinatorPlanOutput(
   source: string,
@@ -437,7 +472,8 @@ export function coordinatorPlanOutput(
     ) &&
     parsed.data.steps.every(
       (step) => step.depends_on.length < contract.max_steps,
-    );
+    ) &&
+    planReferencesValid(parsed.data);
   if (!parsed.success)
     diagnostic?.({
       structured_output_rejection: "schema",
