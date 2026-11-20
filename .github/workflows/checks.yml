@@ -140,3 +140,5 @@ jobs:
         run: |
           find connectors agents/mcp-contract backrooms -name '*.json' -print0 \
             | xargs -0 -n1 node -e 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"))'
+      - name: MCP contract fits the transport limit
+        run: node agents/mcp-contract/check.mjs

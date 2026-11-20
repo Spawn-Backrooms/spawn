@@ -1590,7 +1590,7 @@
           "graph_json": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 262144
+            "maxLength": 49152
           }
         },
         "required": [
