@@ -51,17 +51,20 @@ export const config = z.discriminatedUnion("kind", [
     tool: z.enum(["clips", "memes", "affiliate"]).optional(),
     meme_looks: memeLookCatalogue.optional(),
     storyboard: s,
-    shots: z.array(
-      z.object({
-        shot_id: id,
-        description: s,
-        duration_seconds: z.number().nullable(),
-      }),
-    ),
+    shots: z
+      .array(
+        z.object({
+          shot_id: id,
+          description: s,
+          duration_seconds: z.number().nullable(),
+        }),
+      )
+      .min(1)
+      .max(32),
   }),
   z.object({
     kind: z.literal("research"),
-    questions: z.array(s),
+    questions: z.array(s).min(1).max(16),
     citation_policy: z.literal("provided_sources_only"),
   }),
   z.object({
