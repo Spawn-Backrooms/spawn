@@ -120,6 +120,34 @@ class PolicyTest(unittest.TestCase):
         self.assertFalse(document["render_clips"])
         self.assertNotIn("secret", json.dumps(document))
 
+    def test_transcript_windows_end_at_last_speech(self):
+        # A window groups speech; dead air after its last segment is not speech.
+        # One 8s burst in a 30-minute video must suggest 0-8s, not 0-60s.
+        clips = windows_from_transcript(
+            [{"start_ms": 0, "end_ms": 8_000, "text": "Hello world"}],
+            30 * 60_000, 4,
+        )
+        self.assertEqual([(c["in_ms"], c["out_ms"]) for c in clips], [(0, 8_000)])
+        # A 42s gap must not stretch the first window to the next segment's start.
+        clips = windows_from_transcript([
+            {"start_ms": 0, "end_ms": 8_000, "text": "Hello"},
+            {"start_ms": 50_000, "end_ms": 58_000, "text": "later"},
+        ], 30 * 60_000, 4)
+        self.assertEqual(
+            [(c["in_ms"], c["out_ms"]) for c in clips],
+            [(0, 8_000), (50_000, 58_000)],
+        )
+        # Sparse bursts every 60s: each window is its burst, not a padded 60s.
+        clips = windows_from_transcript([
+            {"start_ms": 0, "end_ms": 8_000, "text": "a"},
+            {"start_ms": 60_000, "end_ms": 68_000, "text": "b"},
+            {"start_ms": 120_000, "end_ms": 128_000, "text": "c"},
+        ], 30 * 60_000, 4)
+        self.assertEqual(
+            [(c["in_ms"], c["out_ms"]) for c in clips],
+            [(0, 8_000), (60_000, 68_000), (120_000, 128_000)],
+        )
+
     def test_signature_matches_hashlib(self):
         body = b"{}"
         expected = hmac.new(b"secret", b"50.POST./v1/jobs.{}", hashlib.sha256).hexdigest()

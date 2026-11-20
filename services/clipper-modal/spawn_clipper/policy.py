@@ -340,6 +340,7 @@ def windows_from_transcript(
     """
     clips: list[dict] = []
     start = None
+    last_end = None
     texts: list[str] = []
     for segment in segments:
         try:
@@ -353,20 +354,24 @@ def windows_from_transcript(
         if start is None:
             start = seg_start
         if seg_end - start > 45_000 and texts:
-            clips.append(_window(start, min(start + MAX_CLIP_MS, seg_start), texts, duration_ms))
+            # End at the last speech, not at the next segment's start:
+            # the gap between bursts is silence, not a moment worth clipping.
+            clips.append(_window(start, last_end, texts, duration_ms))
             texts = []
             start = seg_start
             if len(clips) >= max_clips:
                 break
         texts.append(text)
+        last_end = seg_end
         if seg_end - start >= 15_000:
             clips.append(_window(start, min(seg_end, start + MAX_CLIP_MS), texts, duration_ms))
             texts = []
             start = None
+            last_end = None
             if len(clips) >= max_clips:
                 break
     if start is not None and texts and len(clips) < max_clips:
-        end = min(duration_ms, start + MAX_CLIP_MS)
+        end = min(duration_ms, last_end)
         if end > start:
             clips.append(_window(start, end, texts, duration_ms))
     return [clip for clip in clips if clip["out_ms"] - clip["in_ms"] >= 1000][:max_clips]
