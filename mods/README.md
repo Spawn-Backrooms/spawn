@@ -9,7 +9,7 @@ Version 1 mods contain a `mod.json` file and an optional preview image. The loca
 | Kind | What it changes | Shows up in |
 | --- | --- | --- |
 | `caption-style` | A caption look for CLIPS: font, size, colors, outline, shadow, position, words per group, uppercase, entrance animation | Captions, next to the built-in presets |
-| `clip-recipe` | A clipping starter: 1–6 clips with a length, aspect and framing each, built on a base starter | The recipe library |
+| `clip-recipe` | A clipping starter: 1–4 clips with a length, aspect and framing each, built on a base starter | The recipe library |
 
 More kinds (room themes, role packs) are planned.
 
@@ -59,7 +59,7 @@ A maintainer reviews taste, licensing and honesty, then adds it to SPAWN's mod c
 | Field | Values |
 | --- | --- |
 | `base` | `"clip-one"`, `"three-clips"` or `"walkthrough"` |
-| `clips` | 1–6 clips, each `{ "length_ms": 3000–60000, "aspect": "9:16" \| "1:1" \| "16:9", "framing": "contain" \| "cover" }` |
+| `clips` | 1–4 clips, each `{ "length_ms": 3000–60000, "aspect": "9:16" \| "1:1" \| "16:9", "framing": "contain" \| "cover" }` |
 
 `cover` fills the frame (cropping the edges); `contain` keeps the whole picture.
 

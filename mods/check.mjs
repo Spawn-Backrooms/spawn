@@ -54,7 +54,9 @@ function captionStyle(errors, at, c) {
 function clipRecipe(errors, at, c) {
   if (!exact(errors, at, c, ["base", "clips"])) return;
   if (!["clip-one", "three-clips", "walkthrough"].includes(c.base)) errors.push(`${at}.base: "clip-one", "three-clips" or "walkthrough"`);
-  if (!Array.isArray(c.clips) || c.clips.length < 1 || c.clips.length > 6) return errors.push(`${at}.clips: 1 to 6 clips`);
+  // One recipe clip becomes one Creator clip node, and the pipeline caps clip
+  // nodes at 4 (CREATOR_LIMITS.clips in protocol/src/api/creatorPipelineSchemas.ts).
+  if (!Array.isArray(c.clips) || c.clips.length < 1 || c.clips.length > 4) return errors.push(`${at}.clips: 1 to 4 clips`);
   c.clips.forEach((clip, i) => {
     const where = `${at}.clips[${i}]`;
     if (!exact(errors, where, clip, ["length_ms", "aspect", "framing"])) return;

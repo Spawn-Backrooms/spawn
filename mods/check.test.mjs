@@ -50,3 +50,51 @@ for (const field of ["text_color", "highlight_color", "outline_color"]) {
     assert.ok(checkManifest(m).some((e) => e.includes(`.${field}:`)));
   });
 }
+
+// A clip recipe becomes one Creator clip node per clip, and the Creator
+// pipeline caps clip nodes at 4 (CREATOR_LIMITS.clips). A recipe with 5 or 6
+// clips passes the checker but its definition is rejected at load.
+const recipeClip = (length_ms = 10000) => ({ length_ms, aspect: "9:16", framing: "cover" });
+const validRecipe = {
+  schema_version: "spawn.mod.v1",
+  id: "clip-count-fixture",
+  version: 1,
+  kind: "clip-recipe",
+  name: "Clip Count Fixture",
+  description: "A fixture for validating clip recipe clip counts.",
+  author: "bfs2021",
+  license: "MIT",
+  content: {
+    base: "three-clips",
+    clips: [recipeClip(), recipeClip(), recipeClip()],
+  },
+};
+const recipeWithClips = (count) => {
+  const m = structuredClone(validRecipe);
+  m.content.clips = Array.from({ length: count }, () => recipeClip());
+  return m;
+};
+
+test("accepts a clip recipe with 1 clip", () => {
+  assert.deepEqual(checkManifest(recipeWithClips(1)), []);
+});
+
+test("accepts a clip recipe with 4 clips", () => {
+  assert.deepEqual(checkManifest(recipeWithClips(4)), []);
+});
+
+test("rejects a clip recipe with 5 clips", () => {
+  const errors = checkManifest(recipeWithClips(5));
+  assert.ok(
+    errors.some((e) => e.includes(".content.clips:")),
+    `expected a clips error, got: ${JSON.stringify(errors)}`,
+  );
+});
+
+test("rejects a clip recipe with 6 clips", () => {
+  const errors = checkManifest(recipeWithClips(6));
+  assert.ok(
+    errors.some((e) => e.includes(".content.clips:")),
+    `expected a clips error, got: ${JSON.stringify(errors)}`,
+  );
+});
