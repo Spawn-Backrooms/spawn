@@ -74,7 +74,7 @@ export function checkManifest(m, at = "mod.json") {
   if (!KINDS.includes(m.kind)) errors.push(`${at}.kind: one of ${KINDS.join(", ")}`);
   text(errors, `${at}.name`, m.name, 60);
   text(errors, `${at}.description`, m.description, 200);
-  if (typeof m.author !== "string" || !/^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/.test(m.author)) errors.push(`${at}.author: your GitHub handle`);
+  if (typeof m.author !== "string" || !/^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/.test(m.author)) errors.push(`${at}.author: your GitHub handle`);
   if (!LICENSES.includes(m.license)) errors.push(`${at}.license: one of ${LICENSES.join(", ")}`);
   if (m.kind === "caption-style") captionStyle(errors, `${at}.content`, m.content);
   if (m.kind === "clip-recipe") clipRecipe(errors, `${at}.content`, m.content);

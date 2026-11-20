@@ -33,6 +33,24 @@ test("accepts valid color strings in all three fields", () => {
   assert.deepEqual(checkManifest(structuredClone(validStyle)), []);
 });
 
+test("accepts a single-hyphen GitHub handle", () => {
+  const m = structuredClone(validStyle);
+  m.author = "octo-cat";
+  assert.deepEqual(checkManifest(m), []);
+});
+
+for (const author of ["abc-", "a--b"]) {
+  test(`rejects "${author}" as a GitHub handle`, () => {
+    const m = structuredClone(validStyle);
+    m.author = author;
+    const errors = checkManifest(m);
+    assert.ok(
+      errors.some((e) => e.includes(".author:")),
+      `expected an error for author "${author}", got: ${JSON.stringify(errors)}`,
+    );
+  });
+}
+
 for (const field of ["text_color", "highlight_color", "outline_color"]) {
   test(`rejects a one-element color array in ${field}`, () => {
     const m = structuredClone(validStyle);
