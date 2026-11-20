@@ -27,6 +27,7 @@ APP_NAME = "spawn-clipper"
 SECRET_NAME = "spawn-clipper"
 DICT_NAME = "spawn-clip-jobs"
 IMPORT_DICT_NAME = "spawn-source-imports"
+IMPORT_CANCELLED_DICT_NAME = "spawn-source-cancelled-imports"
 MAX_CONTAINERS = 1
 IMPORT_MAX_CONTAINERS = 2
 GPU_TIMEOUT_SECONDS = 20 * 60
@@ -111,6 +112,28 @@ import_image = (
 model_cache = modal.Volume.from_name("spawn-clipper-models", create_if_missing=True)
 jobs = modal.Dict.from_name(DICT_NAME, create_if_missing=True)
 imports = modal.Dict.from_name(IMPORT_DICT_NAME, create_if_missing=True)
+# Authoritative cancellation record for imports, mirroring `cancelled` for
+# CLIPS jobs (PR #8). A modal.Dict has no compare-and-swap, so the read
+# guard in process_import and the terminal write are separate operations
+# and a cancel can land between them. The cancel endpoint writes this
+# record when it acknowledges a cancellation, and every import status read
+# honours it, so a late worker result can never become the visible
+# terminal state of a cancelled import.
+cancelled_imports = modal.Dict.from_name(IMPORT_CANCELLED_DICT_NAME, create_if_missing=True)
+
+
+def _import_cancelled(job_id: str) -> bool:
+    """True when the import was cancelled while the worker was still running.
+
+    The cancelled record is checked first: it is written by the cancel
+    endpoint when it acknowledges the cancellation, so it stays true even
+    if a late worker write landed in the row afterwards. The row check is
+    kept as a fallback for rows the endpoint already marked.
+    """
+    if job_id in cancelled_imports:
+        return True
+    row = imports.get(job_id) or {}
+    return row.get("state") == "failed" and row.get("error") == "CANCELLED"
 
 
 @app.function(
@@ -196,13 +219,14 @@ def process_import(payload: dict) -> None:
         from spawn_clipper.importer import run_import
 
         result = run_import(payload)
-        latest = imports.get(job_id) or {}
-        if latest.get("state") == "failed":
+        if _import_cancelled(job_id):
             # Cancelled while running. SPAWN treats the uploaded object as unconfirmed and removes it.
             return
         imports[job_id] = {"state": "succeeded", "error": None, **result}
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "IMPORT_FAILED"
+        if _import_cancelled(job_id):
+            raise
         latest = imports.get(job_id) or {}
         imports[job_id] = {**latest, "state": "failed", "error": latest.get("error") or code}
         raise
@@ -210,10 +234,16 @@ def process_import(payload: dict) -> None:
 
 def _import_view(job_id: str) -> dict:
     row = imports.get(job_id)
-    if not row:
+    if not row and job_id not in cancelled_imports:
         return {"job_id": job_id, "state": "not_found", "error": None}
+    row = row or {}
     view = {"job_id": job_id, "state": row.get("state") or "not_found", "error": row.get("error")}
-    if view["state"] == "succeeded":
+    if job_id in cancelled_imports:
+        # An acknowledged cancellation is the visible terminal state even
+        # if a late worker write landed in the row after the guard read.
+        view["state"] = "failed"
+        view["error"] = "CANCELLED"
+    elif view["state"] == "succeeded":
         view.update(
             sha256=row.get("sha256"),
             bytes=row.get("bytes"),
@@ -221,6 +251,24 @@ def _import_view(job_id: str) -> dict:
             mime_type=row.get("mime_type"),
         )
     return view
+
+
+def _cancel_import(job_id: str) -> dict | None:
+    """Acknowledge an import cancellation. Returns the view, or None if not found.
+
+    Writes the cancelled record before the row, so a status read never
+    reports a late worker result as the terminal state. An import that
+    already finished stays at its terminal state; a cancelled import stays
+    cancelled even if a worker already overwrote its row to "succeeded".
+    """
+    row = imports.get(job_id)
+    if not row:
+        return None
+    if job_id in cancelled_imports or row.get("state") in ("succeeded", "failed"):
+        return _import_view(job_id)
+    cancelled_imports[job_id] = True
+    imports[job_id] = {**row, "state": "failed", "error": "CANCELLED"}
+    return _import_view(job_id)
 
 
 def _secret() -> str:
@@ -346,9 +394,9 @@ def api():
         row = imports.get(job_id) if job_id.startswith("srcimport_") else None
         if not row:
             return JSONResponse({"job_id": job_id, "state": "not_found"}, status_code=404)
-        if row.get("state") in ("succeeded", "failed"):
+        if row.get("state") in ("succeeded", "failed") or job_id in cancelled_imports:
             return JSONResponse(_import_view(job_id), status_code=200)
-        imports[job_id] = {**row, "state": "failed", "error": "CANCELLED"}
+        view = _cancel_import(job_id)
         call_id = imports.get(f"call:{job_id}")
         if call_id:
             try:
@@ -356,7 +404,7 @@ def api():
             except Exception:
                 # The row is already failed; a late upload is removed by SPAWN.
                 pass
-        return JSONResponse(_import_view(job_id), status_code=200)
+        return JSONResponse(view, status_code=200)
 
     @web.get("/v1/jobs/{job_id}")
     async def status(job_id: str, request: Request):
