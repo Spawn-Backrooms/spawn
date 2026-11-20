@@ -50,7 +50,7 @@ if (
   try {
     if (process.argv.length !== 4)
       throw new Error(
-        "Usage: node integrations/openai/prepare-registered.mjs VERIFIED_CANONICAL_APP_ID NEW_OUTPUT_DIRECTORY",
+        "Usage: node connectors/openai/prepare-registered.mjs VERIFIED_CANONICAL_APP_ID NEW_OUTPUT_DIRECTORY",
       );
     console.log(
       JSON.stringify(await prepareRegistered(process.argv[2], process.argv[3])),
