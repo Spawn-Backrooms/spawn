@@ -91,3 +91,65 @@ describe("prompts", () => {
     expect(() => coordinatorPlanningPrompt(" ", "research", "1000", "100")).toThrow();
   });
 });
+
+describe("plan structural references", () => {
+  // Both prompts state the same hard structural rules ("Use unique specialist
+  // keys and step IDs. Every specialist must be used. Dependencies must
+  // reference step IDs and form an acyclic graph."), and coordinatorPlanOutput
+  // claims to "validate the entire original plan before a lossless internal
+  // action projection". But the approval gate never resolves a reference: a
+  // plan whose synthesis depends on a step that does not exist, whose steps
+  // form a cycle, whose step names a specialist that does not exist, or whose
+  // IDs are duplicated is accepted, and no later step can project it.
+  // Budget 700/100 affords 3 steps, so none of these is a budget rejection.
+  const threeStep = () => coordinatorPlanningContract("research", "700", "100");
+  const validThreeStep = {
+    summary: "Find cited facts, then synthesize.",
+    specialists: [
+      { key: "r", name: "Researcher", instructions: "Extract cited facts from S1 and S2.", role: "researcher" },
+      { key: "s", name: "Synthesizer", instructions: "Write the brief from reviewed findings.", role: "synthesizer" },
+    ],
+    steps: [
+      { step_id: "find", brief: "Cite S1 facts.", specialist_key: "r", depends_on: [] },
+      { step_id: "find2", brief: "Cite S2 facts.", specialist_key: "r", depends_on: ["find"] },
+      { step_id: "write", brief: "Synthesize.", specialist_key: "s", depends_on: ["find", "find2"] },
+    ],
+  };
+  it("admits a 3-step budget and accepts the well-formed three-step plan", () => {
+    expect(threeStep().max_steps).toBe(3);
+    expect(coordinatorPlanOutput(JSON.stringify(validThreeStep), threeStep())).toEqual(validThreeStep);
+  });
+  it("rejects a dependency on a step ID that does not exist", () => {
+    const dangling = { ...validThreeStep, steps: validThreeStep.steps.map((step) => step.step_id === "write" ? { ...step, depends_on: ["find", "ghost"] } : step) };
+    expect(() => coordinatorPlanOutput(JSON.stringify(dangling), threeStep())).toThrow();
+  });
+  it("rejects a dependency cycle", () => {
+    const cyclic = {
+      ...validThreeStep,
+      steps: [
+        { step_id: "find", brief: "Cite S1 facts.", specialist_key: "r", depends_on: ["write"] },
+        { step_id: "write", brief: "Synthesize.", specialist_key: "s", depends_on: ["find"] },
+      ],
+    };
+    expect(() => coordinatorPlanOutput(JSON.stringify(cyclic), threeStep())).toThrow();
+  });
+  it("rejects a step routed to a specialist key that does not exist", () => {
+    const ghost = { ...validThreeStep, steps: validThreeStep.steps.map((step) => step.step_id === "find2" ? { ...step, specialist_key: "ghost" } : step) };
+    expect(() => coordinatorPlanOutput(JSON.stringify(ghost), threeStep())).toThrow();
+  });
+  it("rejects duplicate step IDs", () => {
+    const dupSteps = { ...validThreeStep, steps: validThreeStep.steps.map((step) => step.step_id === "find2" ? { ...step, step_id: "find" } : step) };
+    expect(() => coordinatorPlanOutput(JSON.stringify(dupSteps), threeStep())).toThrow();
+  });
+  it("rejects duplicate specialist keys", () => {
+    const dupKeys = { ...validThreeStep, specialists: validThreeStep.specialists.map((entry) => entry.key === "s" ? { ...entry, key: "r" } : entry) };
+    expect(() => coordinatorPlanOutput(JSON.stringify(dupKeys), threeStep())).toThrow();
+  });
+  it("rejects the same malformed plan through the work-decision path", () => {
+    const contract = coordinatorWorkDecisionContract("research", "700", "100");
+    const assessment = { required_capabilities: ["research.cited_findings"], unmet_requirements: [], requires_additional_authority: false, rationale: "Supplied sources suffice." };
+    const dangling = { ...validThreeStep, steps: validThreeStep.steps.map((step) => step.step_id === "write" ? { ...step, depends_on: ["find", "ghost"] } : step) };
+    expect(() => coordinatorWorkDecisionOutput(JSON.stringify({ assessment, plan: dangling }), contract)).toThrow();
+    expect(coordinatorWorkDecisionOutput(JSON.stringify({ assessment, plan: validThreeStep }), contract).plan).toEqual(validThreeStep);
+  });
+});
