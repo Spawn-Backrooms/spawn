@@ -91,3 +91,80 @@ describe("prompts", () => {
     expect(() => coordinatorPlanningPrompt(" ", "research", "1000", "100")).toThrow();
   });
 });
+
+describe("one-step research budget", () => {
+  // A parent cap of 300 with a per-call cap of 100 admits the request with
+  // max_steps 1, but the research prompts used to demand two specialists and
+  // two execution steps. No plan could satisfy both: the two-step plan the
+  // instruction describes is rejected by coordinatorPlanOutput.
+  const oneStep = () => coordinatorPlanningContract("research", "300", "100");
+  const oneStepPlan = {
+    summary: "Research S1 and synthesize the findings in one step.",
+    specialists: [
+      { key: "r", name: "Researcher", instructions: "Extract cited facts from S1 and synthesize them.", role: "researcher" },
+    ],
+    steps: [
+      { step_id: "find", brief: "Cite S1 facts and synthesize.", specialist_key: "r", depends_on: [] },
+    ],
+  };
+  it("admits a 3x budget with one execution step, and 5x with two", () => {
+    expect(oneStep().max_steps).toBe(1);
+    expect(coordinatorPlanningContract("research", "499", "100").max_steps).toBe(1);
+    expect(coordinatorPlanningContract("research", "500", "100").max_steps).toBe(2);
+  });
+  it("gives the one-step research room a satisfiable planning instruction", () => {
+    const prompt = coordinatorPlanningPrompt("Summarize S1.", "research", "300", "100", oneStep(), undefined, undefined, "v2");
+    expect(prompt).toContain("at most 1 execution step");
+    expect(prompt).not.toContain("one researcher and one synthesizer");
+    expect(prompt).not.toContain("one research step plus exactly one final synthesis");
+    expect(prompt).toContain("one researcher only");
+    const twoStep = coordinatorPlanningPrompt("Summarize S1.", "research", "500", "100");
+    expect(twoStep).toContain("at most 2 execution step");
+    expect(twoStep).toContain("one research step plus exactly one final synthesis");
+  });
+  it("accepts the one-step plan the instruction describes", () => {
+    expect(coordinatorPlanOutput(JSON.stringify(oneStepPlan), oneStep())).toEqual(oneStepPlan);
+  });
+  it("gives the one-step research room a satisfiable work-decision instruction", () => {
+    const decision = coordinatorWorkDecisionPrompt("Summarize S1.", "research", "300", "100", "v2");
+    expect(decision).toContain("at most 1 execution step");
+    expect(decision).not.toContain("one researcher plus one synthesizer");
+    expect(decision).toContain("one researcher only");
+  });
+});
+
+describe("coordinator prompt versions", () => {
+  // v1 is the legacy wording quotes pin: retained work must replay with
+  // byte-identical prompt text, so v1 keeps the pre-PR two-step wording for
+  // every budget, including one-step. v2 carries the one-step instruction.
+  const oneStep = () => coordinatorPlanningContract("research", "300", "100");
+  const legacyDecision = "Use one researcher plus one synthesizer. Exactly one final synthesis must directly depend on every research step. Cite supplied source IDs, flag unavailable evidence, never invent browsing or citations.";
+  const legacyPlanTwoStep = "Use one researcher and one synthesizer. Only supplied sources; cite them, flag missing evidence, never claim browsing. Use one research step plus exactly one final synthesis, with dependencies research:[], synthesis:[research].";
+  it("keeps v1 byte-identical to the legacy wording for one-step and two-step budgets", () => {
+    const decision = coordinatorWorkDecisionPrompt("Summarize S1.", "research", "300", "100");
+    expect(decision).toContain(legacyDecision);
+    expect(decision).not.toContain("one researcher only");
+    expect(coordinatorWorkDecisionPrompt("Summarize S1.", "research", "300", "100", "v1")).toBe(decision);
+    const plan = coordinatorPlanningPrompt("Summarize S1.", "research", "300", "100", oneStep());
+    expect(plan).toContain(legacyPlanTwoStep);
+    expect(plan).not.toContain("one researcher only");
+    expect(coordinatorPlanningPrompt("Summarize S1.", "research", "300", "100", oneStep(), undefined, undefined, "v1")).toBe(plan);
+    const twoStepPlan = coordinatorPlanningPrompt("Summarize S1.", "research", "500", "100");
+    expect(twoStepPlan).toContain(legacyPlanTwoStep);
+    expect(twoStepPlan).not.toContain("one researcher only");
+  });
+  it("gives v2 the one-step instruction at one step and keeps two steps at two", () => {
+    const oneStepDecision = coordinatorWorkDecisionPrompt("Summarize S1.", "research", "300", "100", "v2");
+    expect(oneStepDecision).toContain("one researcher only");
+    expect(oneStepDecision).not.toContain("one researcher plus one synthesizer");
+    const twoStepDecision = coordinatorWorkDecisionPrompt("Summarize S1.", "research", "500", "100", "v2");
+    expect(twoStepDecision).toContain("one researcher plus one synthesizer");
+    expect(twoStepDecision).not.toContain("one researcher only");
+    const oneStepPlan = coordinatorPlanningPrompt("Summarize S1.", "research", "300", "100", oneStep(), undefined, undefined, "v2");
+    expect(oneStepPlan).toContain("one researcher only");
+    expect(oneStepPlan).not.toContain("one researcher and one synthesizer");
+    const twoStepPlan = coordinatorPlanningPrompt("Summarize S1.", "research", "500", "100", undefined, undefined, undefined, "v2");
+    expect(twoStepPlan).toContain("one research step plus exactly one final synthesis");
+    expect(twoStepPlan).not.toContain("one researcher only");
+  });
+});
