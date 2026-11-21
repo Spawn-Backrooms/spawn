@@ -306,7 +306,18 @@ export const workflow = z.object({
   reason: s.nullable(),
   created_at: s,
   updated_at: s,
-});
+}).refine(
+  // A step runs by its role: role_snapshot is the roster the workflow
+  // dispatches to, so a step naming a role outside the snapshot (never
+  // assigned, or gone after the role left) has no agent to run it.
+  (value) => {
+    const snapshotIds = new Set(
+      value.role_snapshot.map((entry) => entry.role_id),
+    );
+    return value.steps.every((step) => snapshotIds.has(step.role_id));
+  },
+  { message: "workflow steps must reference a role in role_snapshot" },
+);
 export const association = z
   .object({ room, task, association: taskLink })
   .refine(
