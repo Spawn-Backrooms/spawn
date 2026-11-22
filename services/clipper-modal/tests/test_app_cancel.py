@@ -221,6 +221,9 @@ class LateResultAfterCancelTests(unittest.TestCase):
         view = app._view(job_id)
         self.assertEqual(view["state"], "failed")
         self.assertEqual(view["error"], "CANCELLED")
+        # The late suggestion must not leak into the status response.
+        self.assertIsNone(view["suggestion_sha256"])
+        self.assertEqual(view["renders"], [])
 
     def test_cancel_between_guard_and_write_render_stays_cancelled(self):
         job_id = "job_race_render"
@@ -235,6 +238,9 @@ class LateResultAfterCancelTests(unittest.TestCase):
         view = app._view(job_id)
         self.assertEqual(view["state"], "failed")
         self.assertEqual(view["error"], "CANCELLED")
+        # The late suggestion and renders must not leak into the status response.
+        self.assertIsNone(view["suggestion_sha256"])
+        self.assertEqual(view["renders"], [])
 
     def test_cancel_between_guard_and_write_failure_stays_cancelled(self):
         job_id = "job_race_failure"
@@ -309,6 +315,31 @@ class LateResultAfterCancelTests(unittest.TestCase):
         self.assertEqual(view["error"], "CANCELLED")
         self.assertEqual(app._view(job_id)["state"], "failed")
         self.assertEqual(app._view(job_id)["error"], "CANCELLED")
+
+    def test_cancelled_view_clears_late_suggestion_and_renders(self):
+        # Status response for a cancelled job must not carry a late
+        # suggestion hash or render list, for both analysis and render.
+        for job_id, row in (
+            ("job_view_analysis", {"state": "succeeded", "suggestion_sha256": "abc", "error": None}),
+            (
+                "job_view_render",
+                {
+                    "state": "succeeded",
+                    "suggestion_sha256": "abc",
+                    "renders": [{"index": 0, "bytes": 1, "sha256": "d"}],
+                    "error": None,
+                },
+            ),
+        ):
+            with self.subTest(job_id=job_id):
+                app.jobs[job_id] = {"state": "running", "error": None}
+                app._cancel_job(job_id)
+                app.jobs[job_id] = row
+                view = app._view(job_id)
+                self.assertEqual(view["state"], "failed")
+                self.assertEqual(view["error"], "CANCELLED")
+                self.assertIsNone(view["suggestion_sha256"])
+                self.assertEqual(view["renders"], [])
 
     def test_cancel_unknown_job_returns_none(self):
         self.assertIsNone(app._cancel_job("job_missing"))

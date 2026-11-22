@@ -291,8 +291,12 @@ def _view(job_id: str) -> dict:
     if job_id in cancelled:
         # An acknowledged cancellation is the visible terminal state even
         # if a late worker write landed in the row after the guard read.
+        # Clear the late results too, so the status response carries no
+        # suggestion hash or render list for a cancelled job.
         view["state"] = "failed"
         view["error"] = "CANCELLED"
+        view["suggestion_sha256"] = None
+        view["renders"] = []
     return view
 
 
