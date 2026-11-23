@@ -1,0 +1,367 @@
+{
+  "schema_version": "spawn.research-experiment.v1",
+  "preregistration": {
+    "schema_version": "spawn.research-preregistration.v1",
+    "experiment_id": "e03-synthetic-zero-cohorts",
+    "question": "Illustrate a negative retained-procedure comparison without claiming measured learning.",
+    "registered_at": "2026-11-23T00:00:00.000Z",
+    "phase": "confirmatory",
+    "assignment_manifest_sha256": "sha256:13b1d99d041d78bd522d1af8190808cbfbafe126ab53734e6a780e62541a73c4",
+    "models": [
+      {
+        "id": "fixture-model",
+        "provider": "synthetic",
+        "name": "fixture-model",
+        "revision": {
+          "status": "pinned",
+          "value": "fixture-v1"
+        },
+        "configuration_sha256": "sha256:2dcb5efbcc384321b3e3c06ff4e8568b978a1f46a06fdaec3f68fbab006d1267"
+      }
+    ],
+    "tools": [
+      {
+        "id": "fixture-checker",
+        "provider": "synthetic",
+        "name": "fixture-checker",
+        "revision": {
+          "status": "pinned",
+          "value": "fixture-v1"
+        },
+        "configuration_sha256": "sha256:a99ece318cd72c8a03b43ac2980a5e933c4f11a258f69384ebfc08c408914314"
+      }
+    ],
+    "conditions": [
+      {
+        "condition_id": "retrieval",
+        "description": "retrieval",
+        "intervention": {
+          "ref": "intervention-retrieval",
+          "sha256": "sha256:02aaddff7d93b728a1874428269155ce75ce3b5e1ae7ceffb56dc86b067c7f50",
+          "version": "synthetic-v1"
+        },
+        "model_ids": [
+          "fixture-model"
+        ],
+        "tool_ids": [
+          "fixture-checker"
+        ]
+      },
+      {
+        "condition_id": "accepted-knowledge",
+        "description": "accepted-knowledge",
+        "intervention": {
+          "ref": "intervention-accepted-knowledge",
+          "sha256": "sha256:1becdf2a553071a56d32571b19a3ff9ba2b29ace8390266ff7db2af425161236",
+          "version": "synthetic-v1"
+        },
+        "model_ids": [
+          "fixture-model"
+        ],
+        "tool_ids": [
+          "fixture-checker"
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "control": "returning_room",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "shared_repository",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "parallel_nonsharing",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "no_memory",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "raw_transcript",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "ordinary_retrieval",
+        "disposition": "included",
+        "condition_ids": [
+          "retrieval"
+        ],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "v0_learner",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      }
+    ],
+    "matching": [
+      {
+        "dimension": "model_versions",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-model_versions",
+          "sha256": "sha256:25d698785a716609d3508239e7880f8fcdd2e554dae8dff8e0dec596fcfbcd41",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "tool_versions",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-tool_versions",
+          "sha256": "sha256:053cb0f8007fb78f4f69972fe87fd34abacb26a26f378061c7b41d9742e46535",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "information",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-information",
+          "sha256": "sha256:51c0f2fa0905ffd0f46f5853d7f799f3cb5547aa917024ff193a5621aad3af59",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "schedule",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-schedule",
+          "sha256": "sha256:f1bed9c701ee495db76d138d8f52884c5aaf4944552fed2fa9fa22028d52bfbd",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "total_compute",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-total_compute",
+          "sha256": "sha256:469d4fd010f7a03fbae96cd59ae60bc27691128b24616fccb917ce9683f2a909",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "review_and_selection",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-review_and_selection",
+          "sha256": "sha256:4df835be5a67195e8f0f860d39d6569c965d3754e64b58a557596d4de941b64c",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "human_help",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-human_help",
+          "sha256": "sha256:cd0a08f27c0f6021185d0a91bb934c3a28bb4ec034d5aff1ab1e250b60db5704",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      }
+    ],
+    "assignment": {
+      "unit": "lineage",
+      "analysis_unit": "lineage",
+      "sharing_interference": true,
+      "method": "randomized",
+      "procedure": {
+        "ref": "lineage-assignment",
+        "sha256": "sha256:07083a43f8a19155d9b8b20e464504846238f3b5db8aa56d6817f0aa13038a97",
+        "version": "synthetic-v1"
+      }
+    },
+    "tasks": [
+      {
+        "task_id": "task-a",
+        "split": "heldout",
+        "artifact": {
+          "ref": "task-a",
+          "sha256": "sha256:3ece6de3512a51aa0b30968386980443007d05ede70d5964fe7d942dbcb32f7a",
+          "version": "synthetic-v1"
+        },
+        "rights": {
+          "ref": "self-authored-fixture-rights",
+          "sha256": "sha256:271ecd744518f90b1b385bbf4ecb53df968bb4190793dafa983de2963aa0b060",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "task_id": "task-b",
+        "split": "heldout",
+        "artifact": {
+          "ref": "task-b",
+          "sha256": "sha256:fc953875a86227dfd669d9efbb06475696279b8335c382feb3e0ca568cbf0e84",
+          "version": "synthetic-v1"
+        },
+        "rights": {
+          "ref": "self-authored-fixture-rights",
+          "sha256": "sha256:271ecd744518f90b1b385bbf4ecb53df968bb4190793dafa983de2963aa0b060",
+          "version": "synthetic-v1"
+        }
+      }
+    ],
+    "endpoints": [
+      {
+        "endpoint_id": "transfer-success",
+        "claim": "transfer",
+        "role": "primary",
+        "metric": "Held-out task success under a frozen checker",
+        "unit": "success-proportion-difference",
+        "direction": "higher_is_better",
+        "control_condition_id": "retrieval",
+        "treatment_condition_id": "accepted-knowledge",
+        "evaluator": {
+          "ref": "frozen-checker",
+          "sha256": "sha256:8ce9fcdc8fd339d2b308ced41b81670adfcce54fb39c7046ae7f0f60638608c1",
+          "version": "synthetic-v1"
+        },
+        "decision_rule": {
+          "ref": "minimum-useful-gain-rule",
+          "sha256": "sha256:114369a987ae5f75d1b97df808c2cecef4f693e58ee7f79f118f4b1dde94887c",
+          "version": "synthetic-v1"
+        },
+        "uncertainty_method": {
+          "ref": "lineage-interval-rule",
+          "sha256": "sha256:8c2c3904853f5a4be587649bf9b361ed92f95cc4cc4a78b475d41504a19b949a",
+          "version": "synthetic-v1"
+        }
+      }
+    ],
+    "sampling": {
+      "kind": "confirmatory",
+      "pilot_record": {
+        "ref": "variance-pilot",
+        "sha256": "sha256:bef908dc2c4cfd010e0b9e2c4ff889cbf1751960e8140fac8fcc6aadf382565c",
+        "version": "synthetic-v1"
+      },
+      "sample_size_rule": {
+        "ref": "sample-size-rule",
+        "sha256": "sha256:d0b8b56f1f4431f0b65caee660b9069422b1f9acfc22abd5b7502a8cc26c24d9",
+        "version": "synthetic-v1"
+      },
+      "target_assignment_units": 2,
+      "locked_at": "2026-11-22T23:00:00.000Z"
+    },
+    "analysis_plan": {
+      "ref": "pairwise-lineage-analysis",
+      "sha256": "sha256:3cad6c8b87122e80f08f07f6c33feab922ab2e5970c5a3bb46ecb9bf8837e528",
+      "version": "synthetic-v1"
+    },
+    "missing_outcomes_rule": {
+      "ref": "missing-outcomes-rule",
+      "sha256": "sha256:d6c652ccd074473e51b8eddbc89516b2529f9243eab631ede2ecf5ecded9e687",
+      "version": "synthetic-v1"
+    }
+  },
+  "preregistration_sha256": "sha256:d55af256244b5880789d091a3a874a82c19c5f72e5be63b326ec0e9d309ec69f",
+  "recorded_at": "2026-11-23T02:00:00.000Z",
+  "record_status": "closed",
+  "evidence_mode": "synthetic",
+  "assignments": [
+    {
+      "assignment_id": "assignment-1",
+      "unit_id": "lineage-1",
+      "lineage_id": "lineage-1",
+      "condition_id": "retrieval",
+      "eligibility": "ineligible",
+      "eligibility_reason": "No eligible lineage in this synthetic boundary case.",
+      "attempt_ids": []
+    },
+    {
+      "assignment_id": "assignment-2",
+      "unit_id": "lineage-2",
+      "lineage_id": "lineage-2",
+      "condition_id": "accepted-knowledge",
+      "eligibility": "ineligible",
+      "eligibility_reason": "No eligible lineage in this synthetic boundary case.",
+      "attempt_ids": []
+    }
+  ],
+  "attempts": [],
+  "resources": {
+    "coverage": [
+      {
+        "category": "generation",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "coordination",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "review",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "retrieval",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "proof",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "storage",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "human",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      },
+      {
+        "category": "other",
+        "status": "not_applicable",
+        "explanation": "No work ran in this zero-eligible-cohort synthetic fixture."
+      }
+    ],
+    "entries": []
+  },
+  "analyses": [
+    {
+      "endpoint_id": "transfer-success",
+      "finding": "not_evaluated",
+      "estimate": null,
+      "uncertainty": {
+        "kind": "not_estimated",
+        "reason": "Zero eligible cohorts."
+      },
+      "included_attempt_ids": [],
+      "excluded_attempts": [],
+      "evidence": null,
+      "interpretation": "No eligible cohorts means no evaluated finding, not a positive or negative result."
+    }
+  ],
+  "limitations": [
+    "Every value, source reference, cost and interval is synthetic. No model, native runtime, chain or provider call occurred.",
+    "Artifact digests identify synthetic fixture labels, not authenticated external receipts. Canonical whitepaper endpoint definitions require a release-cleared maintainer reference."
+  ]
+}

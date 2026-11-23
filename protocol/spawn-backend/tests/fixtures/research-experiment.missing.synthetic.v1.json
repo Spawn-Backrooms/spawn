@@ -1,0 +1,908 @@
+{
+  "schema_version": "spawn.research-experiment.v1",
+  "preregistration": {
+    "schema_version": "spawn.research-preregistration.v1",
+    "experiment_id": "e03-synthetic-missing",
+    "question": "Illustrate a negative retained-procedure comparison without claiming measured learning.",
+    "registered_at": "2026-11-23T00:00:00.000Z",
+    "phase": "confirmatory",
+    "assignment_manifest_sha256": "sha256:854bd6d3ef73289dff2d3fef6bf5cb6b587d19e56bdb5d4d0673916b89197b8b",
+    "models": [
+      {
+        "id": "fixture-model",
+        "provider": "synthetic",
+        "name": "fixture-model",
+        "revision": {
+          "status": "pinned",
+          "value": "fixture-v1"
+        },
+        "configuration_sha256": "sha256:2dcb5efbcc384321b3e3c06ff4e8568b978a1f46a06fdaec3f68fbab006d1267"
+      }
+    ],
+    "tools": [
+      {
+        "id": "fixture-checker",
+        "provider": "synthetic",
+        "name": "fixture-checker",
+        "revision": {
+          "status": "pinned",
+          "value": "fixture-v1"
+        },
+        "configuration_sha256": "sha256:a99ece318cd72c8a03b43ac2980a5e933c4f11a258f69384ebfc08c408914314"
+      }
+    ],
+    "conditions": [
+      {
+        "condition_id": "retrieval",
+        "description": "retrieval",
+        "intervention": {
+          "ref": "intervention-retrieval",
+          "sha256": "sha256:02aaddff7d93b728a1874428269155ce75ce3b5e1ae7ceffb56dc86b067c7f50",
+          "version": "synthetic-v1"
+        },
+        "model_ids": [
+          "fixture-model"
+        ],
+        "tool_ids": [
+          "fixture-checker"
+        ]
+      },
+      {
+        "condition_id": "accepted-knowledge",
+        "description": "accepted-knowledge",
+        "intervention": {
+          "ref": "intervention-accepted-knowledge",
+          "sha256": "sha256:1becdf2a553071a56d32571b19a3ff9ba2b29ace8390266ff7db2af425161236",
+          "version": "synthetic-v1"
+        },
+        "model_ids": [
+          "fixture-model"
+        ],
+        "tool_ids": [
+          "fixture-checker"
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "control": "returning_room",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "shared_repository",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "parallel_nonsharing",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "no_memory",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "raw_transcript",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "ordinary_retrieval",
+        "disposition": "included",
+        "condition_ids": [
+          "retrieval"
+        ],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      },
+      {
+        "control": "v0_learner",
+        "disposition": "not_applicable",
+        "condition_ids": [],
+        "rationale": "This synthetic contract fixture illustrates one comparison, not the full X01 control design."
+      }
+    ],
+    "matching": [
+      {
+        "dimension": "model_versions",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-model_versions",
+          "sha256": "sha256:25d698785a716609d3508239e7880f8fcdd2e554dae8dff8e0dec596fcfbcd41",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "tool_versions",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-tool_versions",
+          "sha256": "sha256:053cb0f8007fb78f4f69972fe87fd34abacb26a26f378061c7b41d9742e46535",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "information",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-information",
+          "sha256": "sha256:51c0f2fa0905ffd0f46f5853d7f799f3cb5547aa917024ff193a5621aad3af59",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "schedule",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-schedule",
+          "sha256": "sha256:f1bed9c701ee495db76d138d8f52884c5aaf4944552fed2fa9fa22028d52bfbd",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "total_compute",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-total_compute",
+          "sha256": "sha256:469d4fd010f7a03fbae96cd59ae60bc27691128b24616fccb917ce9683f2a909",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "review_and_selection",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-review_and_selection",
+          "sha256": "sha256:4df835be5a67195e8f0f860d39d6569c965d3754e64b58a557596d4de941b64c",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      },
+      {
+        "dimension": "human_help",
+        "status": "matched",
+        "basis": {
+          "ref": "matching-human_help",
+          "sha256": "sha256:cd0a08f27c0f6021185d0a91bb934c3a28bb4ec034d5aff1ab1e250b60db5704",
+          "version": "synthetic-v1"
+        },
+        "explanation": "Declared matching in a synthetic contract fixture; no real experiment occurred."
+      }
+    ],
+    "assignment": {
+      "unit": "lineage",
+      "analysis_unit": "lineage",
+      "sharing_interference": true,
+      "method": "randomized",
+      "procedure": {
+        "ref": "lineage-assignment",
+        "sha256": "sha256:07083a43f8a19155d9b8b20e464504846238f3b5db8aa56d6817f0aa13038a97",
+        "version": "synthetic-v1"
+      }
+    },
+    "tasks": [
+      {
+        "task_id": "task-a",
+        "split": "heldout",
+        "artifact": {
+          "ref": "task-a",
+          "sha256": "sha256:3ece6de3512a51aa0b30968386980443007d05ede70d5964fe7d942dbcb32f7a",
+          "version": "synthetic-v1"
+        },
+        "rights": {
+          "ref": "self-authored-fixture-rights",
+          "sha256": "sha256:271ecd744518f90b1b385bbf4ecb53df968bb4190793dafa983de2963aa0b060",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "task_id": "task-b",
+        "split": "heldout",
+        "artifact": {
+          "ref": "task-b",
+          "sha256": "sha256:fc953875a86227dfd669d9efbb06475696279b8335c382feb3e0ca568cbf0e84",
+          "version": "synthetic-v1"
+        },
+        "rights": {
+          "ref": "self-authored-fixture-rights",
+          "sha256": "sha256:271ecd744518f90b1b385bbf4ecb53df968bb4190793dafa983de2963aa0b060",
+          "version": "synthetic-v1"
+        }
+      }
+    ],
+    "endpoints": [
+      {
+        "endpoint_id": "transfer-success",
+        "claim": "transfer",
+        "role": "primary",
+        "metric": "Held-out task success under a frozen checker",
+        "unit": "success-proportion-difference",
+        "direction": "higher_is_better",
+        "control_condition_id": "retrieval",
+        "treatment_condition_id": "accepted-knowledge",
+        "evaluator": {
+          "ref": "frozen-checker",
+          "sha256": "sha256:8ce9fcdc8fd339d2b308ced41b81670adfcce54fb39c7046ae7f0f60638608c1",
+          "version": "synthetic-v1"
+        },
+        "decision_rule": {
+          "ref": "minimum-useful-gain-rule",
+          "sha256": "sha256:114369a987ae5f75d1b97df808c2cecef4f693e58ee7f79f118f4b1dde94887c",
+          "version": "synthetic-v1"
+        },
+        "uncertainty_method": {
+          "ref": "lineage-interval-rule",
+          "sha256": "sha256:8c2c3904853f5a4be587649bf9b361ed92f95cc4cc4a78b475d41504a19b949a",
+          "version": "synthetic-v1"
+        }
+      }
+    ],
+    "sampling": {
+      "kind": "confirmatory",
+      "pilot_record": {
+        "ref": "variance-pilot",
+        "sha256": "sha256:bef908dc2c4cfd010e0b9e2c4ff889cbf1751960e8140fac8fcc6aadf382565c",
+        "version": "synthetic-v1"
+      },
+      "sample_size_rule": {
+        "ref": "sample-size-rule",
+        "sha256": "sha256:d0b8b56f1f4431f0b65caee660b9069422b1f9acfc22abd5b7502a8cc26c24d9",
+        "version": "synthetic-v1"
+      },
+      "target_assignment_units": 2,
+      "locked_at": "2026-11-22T23:00:00.000Z"
+    },
+    "analysis_plan": {
+      "ref": "pairwise-lineage-analysis",
+      "sha256": "sha256:3cad6c8b87122e80f08f07f6c33feab922ab2e5970c5a3bb46ecb9bf8837e528",
+      "version": "synthetic-v1"
+    },
+    "missing_outcomes_rule": {
+      "ref": "missing-outcomes-rule",
+      "sha256": "sha256:d6c652ccd074473e51b8eddbc89516b2529f9243eab631ede2ecf5ecded9e687",
+      "version": "synthetic-v1"
+    }
+  },
+  "preregistration_sha256": "sha256:c1e41f53389f8bb44a538261495c0fc204b1bd23661ae380c25c13ba5ddb2cd8",
+  "recorded_at": "2026-11-23T02:00:00.000Z",
+  "record_status": "closed",
+  "evidence_mode": "synthetic",
+  "assignments": [
+    {
+      "assignment_id": "assignment-1",
+      "unit_id": "lineage-1",
+      "lineage_id": "lineage-1",
+      "condition_id": "retrieval",
+      "eligibility": "eligible",
+      "eligibility_reason": "Synthetic eligible lineage.",
+      "attempt_ids": [
+        "attempt-1",
+        "attempt-2",
+        "attempt-5",
+        "attempt-6"
+      ]
+    },
+    {
+      "assignment_id": "assignment-2",
+      "unit_id": "lineage-2",
+      "lineage_id": "lineage-2",
+      "condition_id": "accepted-knowledge",
+      "eligibility": "eligible",
+      "eligibility_reason": "Synthetic eligible lineage.",
+      "attempt_ids": [
+        "attempt-3",
+        "attempt-4"
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "attempt_id": "attempt-1",
+      "assignment_id": "assignment-1",
+      "task_id": "task-a",
+      "status": "completed",
+      "status_reason": "Synthetic completed outcome retained in the attempt ledger.",
+      "started_at": "2026-11-23T01:00:00.000Z",
+      "ended_at": "2026-11-23T01:01:00.000Z",
+      "holdout_exposure": "unexposed",
+      "evidence_classes": [
+        "synthetic"
+      ],
+      "evidence": [
+        {
+          "ref": "attempt-evidence-1",
+          "sha256": "sha256:167d0212dda4175fc3164e3b39565f957fa5b51b2c0dcc93ff7a280a387a905f",
+          "version": "synthetic-v1"
+        }
+      ],
+      "native_references": [],
+      "measurements": [
+        {
+          "endpoint_id": "transfer-success",
+          "observation": {
+            "status": "observed",
+            "value": 1,
+            "evidence": {
+              "ref": "measurement-1",
+              "sha256": "sha256:7fab2b9d38fa34334d78ff9c83c446cd416878811db1e3c6616be52ca296253f",
+              "version": "synthetic-v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "attempt_id": "attempt-2",
+      "assignment_id": "assignment-1",
+      "task_id": "task-b",
+      "status": "failed",
+      "status_reason": "Synthetic failed outcome retained in the attempt ledger.",
+      "started_at": "2026-11-23T01:00:00.000Z",
+      "ended_at": "2026-11-23T01:01:00.000Z",
+      "holdout_exposure": "unexposed",
+      "evidence_classes": [
+        "synthetic"
+      ],
+      "evidence": [
+        {
+          "ref": "attempt-evidence-2",
+          "sha256": "sha256:02a41690a906e4cd35790842ebfffca999f662677e2a53ec26ff33eb154a6fe2",
+          "version": "synthetic-v1"
+        }
+      ],
+      "native_references": [],
+      "measurements": [
+        {
+          "endpoint_id": "transfer-success",
+          "observation": {
+            "status": "observed",
+            "value": 0,
+            "evidence": {
+              "ref": "measurement-2",
+              "sha256": "sha256:de3784182f046d8fc5598c8c329a26610a8956a7c8033ded4cbc896c11b60f51",
+              "version": "synthetic-v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "attempt_id": "attempt-3",
+      "assignment_id": "assignment-2",
+      "task_id": "task-a",
+      "status": "completed",
+      "status_reason": "Synthetic completed outcome retained in the attempt ledger.",
+      "started_at": "2026-11-23T01:00:00.000Z",
+      "ended_at": "2026-11-23T01:01:00.000Z",
+      "holdout_exposure": "unexposed",
+      "evidence_classes": [
+        "synthetic"
+      ],
+      "evidence": [
+        {
+          "ref": "attempt-evidence-3",
+          "sha256": "sha256:0ee44595ebfaaf18745d41a01fbd43f857b89b7bd32dc37b28178351709227be",
+          "version": "synthetic-v1"
+        }
+      ],
+      "native_references": [],
+      "measurements": [
+        {
+          "endpoint_id": "transfer-success",
+          "observation": {
+            "status": "observed",
+            "value": 0,
+            "evidence": {
+              "ref": "measurement-3",
+              "sha256": "sha256:3f39b7427f17448979c4b045ada777223937783e22f71ed28f7937fc7ea0d1a7",
+              "version": "synthetic-v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "attempt_id": "attempt-4",
+      "assignment_id": "assignment-2",
+      "task_id": "task-b",
+      "status": "abandoned",
+      "status_reason": "Synthetic abandoned outcome retained in the attempt ledger.",
+      "started_at": "2026-11-23T01:00:00.000Z",
+      "ended_at": "2026-11-23T01:01:00.000Z",
+      "holdout_exposure": "unexposed",
+      "evidence_classes": [
+        "synthetic"
+      ],
+      "evidence": [
+        {
+          "ref": "attempt-evidence-4",
+          "sha256": "sha256:b95afa932b64518934d22030df39f5b35143f1f94be696dd7782134a5bd6a4ba",
+          "version": "synthetic-v1"
+        }
+      ],
+      "native_references": [],
+      "measurements": [
+        {
+          "endpoint_id": "transfer-success",
+          "observation": {
+            "status": "observed",
+            "value": 0,
+            "evidence": {
+              "ref": "measurement-4",
+              "sha256": "sha256:2a9e8f462b81afe94fc41ef5e974a50d378464277d4701dba66f254248d3b7b5",
+              "version": "synthetic-v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "attempt_id": "attempt-5",
+      "assignment_id": "assignment-1",
+      "task_id": "task-a",
+      "status": "unknown",
+      "status_reason": "Missing outcome is retained; it is not counted as success.",
+      "started_at": "2026-11-23T01:00:00.000Z",
+      "ended_at": null,
+      "holdout_exposure": "unexposed",
+      "evidence_classes": [
+        "synthetic"
+      ],
+      "evidence": [
+        {
+          "ref": "attempt-evidence-1",
+          "sha256": "sha256:167d0212dda4175fc3164e3b39565f957fa5b51b2c0dcc93ff7a280a387a905f",
+          "version": "synthetic-v1"
+        }
+      ],
+      "native_references": [],
+      "measurements": [
+        {
+          "endpoint_id": "transfer-success",
+          "observation": {
+            "status": "missing",
+            "reason": "Synthetic unavailable outcome."
+          }
+        }
+      ]
+    },
+    {
+      "attempt_id": "attempt-6",
+      "assignment_id": "assignment-1",
+      "task_id": "task-a",
+      "status": "not_started",
+      "status_reason": "Missing outcome is retained; it is not counted as success.",
+      "started_at": null,
+      "ended_at": null,
+      "holdout_exposure": "unexposed",
+      "evidence_classes": [
+        "synthetic"
+      ],
+      "evidence": [
+        {
+          "ref": "attempt-evidence-1",
+          "sha256": "sha256:167d0212dda4175fc3164e3b39565f957fa5b51b2c0dcc93ff7a280a387a905f",
+          "version": "synthetic-v1"
+        }
+      ],
+      "native_references": [],
+      "measurements": [
+        {
+          "endpoint_id": "transfer-success",
+          "observation": {
+            "status": "missing",
+            "reason": "Synthetic unavailable outcome."
+          }
+        }
+      ]
+    }
+  ],
+  "resources": {
+    "coverage": [
+      {
+        "category": "generation",
+        "status": "recorded",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "coordination",
+        "status": "recorded",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "review",
+        "status": "recorded",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "retrieval",
+        "status": "recorded",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "proof",
+        "status": "not_applicable",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "storage",
+        "status": "recorded",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "human",
+        "status": "recorded",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      },
+      {
+        "category": "other",
+        "status": "not_applicable",
+        "explanation": "Synthetic fixture accounting; no actual provider, proof or production execution."
+      }
+    ],
+    "entries": [
+      {
+        "entry_id": "knowledge-production",
+        "economic_fact_id": "fact-knowledge-production",
+        "attempt_id": null,
+        "category": "generation",
+        "scope": "inherited_knowledge_production",
+        "knowledge_artifact": {
+          "ref": "inherited-procedure",
+          "sha256": "sha256:7aacb34a59d43ab117d47288def99f069868731b07c3c70c54691720604180d9",
+          "version": "synthetic-v1"
+        },
+        "usage": [
+          {
+            "unit": "input_tokens",
+            "amount": "1000"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "1000000",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-knowledge-production",
+            "sha256": "sha256:7958a895cc4c7de80e28187c7b071e8644519fd16d771244b5280aebc3abab3a",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-knowledge-production",
+          "sha256": "sha256:dc8b17994c19f74b673976b18529a921cc3179353daa7b10bd47a989d8ceff81",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "generation-1",
+        "economic_fact_id": "fact-generation-1",
+        "attempt_id": "attempt-1",
+        "category": "generation",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "input_tokens",
+            "amount": "100"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "100",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-generation-1",
+            "sha256": "sha256:98530f0b02a3e662a08f80eaf2c01abadd204a4436857eca6587a90e32965037",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-generation-1",
+          "sha256": "sha256:930662aa2c4c47cc4af796fbb191a9a7f13b78b820e03d16c2abbe9ecfdd1583",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "generation-2",
+        "economic_fact_id": "fact-generation-2",
+        "attempt_id": "attempt-2",
+        "category": "generation",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "input_tokens",
+            "amount": "100"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "200",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-generation-2",
+            "sha256": "sha256:c3c962c1cf6e663df547e7e3adbaa3d3317f248f5c25e684d19d5a29ef0ea555",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-generation-2",
+          "sha256": "sha256:69ffb291ccfcb3bbe5fd02792e42150a828e6a887db68fe429af9a2b443eb529",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "generation-3",
+        "economic_fact_id": "fact-generation-3",
+        "attempt_id": "attempt-3",
+        "category": "generation",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "input_tokens",
+            "amount": "100"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "300",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-generation-3",
+            "sha256": "sha256:6246bdb6b149493bf006986e66ca21f9774afa9b642b1448cf0fbc1d12cba6da",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-generation-3",
+          "sha256": "sha256:36dc97c84319bba7156bdfd8f4da68f14b49f430ccf64fc6506a6ea45ea1def2",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "generation-4",
+        "economic_fact_id": "fact-generation-4",
+        "attempt_id": "attempt-4",
+        "category": "generation",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "input_tokens",
+            "amount": "100"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "400",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-generation-4",
+            "sha256": "sha256:5754c069a3015d69fd9c94bd588d4b2f90cb36d897b6761789373dfb28de8f31",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-generation-4",
+          "sha256": "sha256:afdcb621d8c9459b018a7c79dbf63c9d3c374b338b021972cade9cb061d511c3",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "coordination",
+        "economic_fact_id": "fact-coordination",
+        "attempt_id": null,
+        "category": "coordination",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "requests",
+            "amount": "1"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "200",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-coordination",
+            "sha256": "sha256:1787f33d448e7128863d307868526be388f1e707a810c606d7ada51093f7b6cb",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-coordination",
+          "sha256": "sha256:21be933e8a2dfcf4c2dadbbfce750d42fabd066f93c7ba502ed0c0b80334c135",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "review",
+        "economic_fact_id": "fact-review",
+        "attempt_id": null,
+        "category": "review",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "requests",
+            "amount": "1"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "300",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-review",
+            "sha256": "sha256:873c60ff39e805980b235385bb6eb87b37cc09a637ecc84bc744b9b16e4b17e1",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-review",
+          "sha256": "sha256:9fff54033ce196090ac1dad762fe6401fc7c19d360d70ed19cb02c02b65b1724",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "retrieval",
+        "economic_fact_id": "fact-retrieval",
+        "attempt_id": null,
+        "category": "retrieval",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "requests",
+            "amount": "1"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "400",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-retrieval",
+            "sha256": "sha256:4806ea5c4e3d86bd613505879faf1b7cfa5a33d85aed34848beb4bc95b6117c5",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-retrieval",
+          "sha256": "sha256:88b834317b7c57a31d73c1db529a3d258975d78822eaabb0fc77d6c4160fc108",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "storage",
+        "economic_fact_id": "fact-storage",
+        "attempt_id": null,
+        "category": "storage",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "storage_byte_seconds",
+            "amount": "1"
+          }
+        ],
+        "money": {
+          "kind": "external_cost",
+          "micro_usd": "100",
+          "basis": "observed",
+          "evidence": {
+            "ref": "cost-storage",
+            "sha256": "sha256:10b77a8928ed4b4839802fb8878381856fbb33e8b1b930019e3fda30d11b3bd8",
+            "version": "synthetic-v1"
+          }
+        },
+        "source": {
+          "ref": "source-storage",
+          "sha256": "sha256:44a041a477f74a3b03dbabf9d73cab97628803ee63615c948904c4979968081c",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "human",
+        "economic_fact_id": "fact-human",
+        "attempt_id": null,
+        "category": "human",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "human_ms",
+            "amount": "60000"
+          }
+        ],
+        "money": {
+          "kind": "not_applicable",
+          "reason": "Human effort is recorded in milliseconds; this fixture does not impute a cash valuation."
+        },
+        "source": {
+          "ref": "source-human",
+          "sha256": "sha256:facf7b4a60485c2a4d116c40d51caca8335ea3f01c697fe1341b049ae2db2a91",
+          "version": "synthetic-v1"
+        }
+      },
+      {
+        "entry_id": "unknown-dispatch",
+        "economic_fact_id": "fact-unknown-dispatch",
+        "attempt_id": "attempt-5",
+        "category": "generation",
+        "scope": "experiment",
+        "knowledge_artifact": null,
+        "usage": [
+          {
+            "unit": "requests",
+            "amount": "1"
+          }
+        ],
+        "money": {
+          "kind": "unknown",
+          "reason": "Dispatch accounting remains unresolved; no zero-cost assumption."
+        },
+        "source": {
+          "ref": "source-unknown-dispatch",
+          "sha256": "sha256:b393a1192d5e12cfc673e70d069cf3986e32714a0bb07718ac9b2ad1ecda521d",
+          "version": "synthetic-v1"
+        }
+      }
+    ]
+  },
+  "analyses": [
+    {
+      "endpoint_id": "transfer-success",
+      "finding": "inconclusive",
+      "estimate": -0.5,
+      "uncertainty": {
+        "kind": "interval",
+        "lower": -1,
+        "upper": 0.5,
+        "level": 0.95
+      },
+      "included_attempt_ids": [
+        "attempt-1",
+        "attempt-2",
+        "attempt-3",
+        "attempt-4"
+      ],
+      "excluded_attempts": [
+        {
+          "attempt_id": "attempt-5",
+          "reason": "Missing outcome is retained under the frozen missing-outcomes rule."
+        },
+        {
+          "attempt_id": "attempt-6",
+          "reason": "Missing outcome is retained under the frozen missing-outcomes rule."
+        }
+      ],
+      "evidence": {
+        "ref": "synthetic-analysis",
+        "sha256": "sha256:b13d78fe6856399f8dd1dfa6545e41153eb0c47452fbded5bd7f46d480265643",
+        "version": "synthetic-v1"
+      },
+      "interpretation": "Fabricated negative result demonstrates the record contract only. The values and interval are not an empirical estimate or a validated scoring calculation."
+    }
+  ],
+  "limitations": [
+    "Every value, source reference, cost and interval is synthetic. No model, native runtime, chain or provider call occurred.",
+    "Artifact digests identify synthetic fixture labels, not authenticated external receipts. Canonical whitepaper endpoint definitions require a release-cleared maintainer reference."
+  ]
+}
