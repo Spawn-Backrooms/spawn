@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: 24
       - run: node backrooms/check.mjs
+      - run: node --test backrooms/check.test.mjs
 
   mods:
     runs-on: ubuntu-latest
