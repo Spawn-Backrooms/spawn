@@ -1,0 +1,865 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SPAWN Q01 public audit projection",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "observed_window",
+    "projection_kind",
+    "canonical_authority",
+    "completion",
+    "trackers",
+    "repositories",
+    "source_refs",
+    "room_kinds",
+    "first_wave",
+    "units",
+    "historical_records",
+    "linked_acceptance_groups",
+    "handoffs",
+    "scope_limits"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "spawn.q01.public-projection.v1"
+    },
+    "observed_window": {
+      "type": "object",
+      "required": [
+        "started_at",
+        "ended_at"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        "ended_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        }
+      }
+    },
+    "projection_kind": {
+      "const": "public_audit_projection"
+    },
+    "canonical_authority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "completion": {
+      "type": "object",
+      "required": [
+        "q01",
+        "programme",
+        "release",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "q01": {
+          "enum": [
+            "incomplete",
+            "reconciled"
+          ]
+        },
+        "programme": {
+          "const": "unassessed"
+        },
+        "release": {
+          "const": "unassessed"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "trackers": {
+      "type": "object",
+      "required": [
+        "core",
+        "rings"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "core": {
+          "type": "string",
+          "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+        },
+        "rings": {
+          "type": "string",
+          "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+        }
+      }
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "repository",
+          "main",
+          "prs"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "repository": {
+            "$ref": "#/$defs/repository"
+          },
+          "main": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "prs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/pullRequest"
+            },
+            "minItems": 0
+          }
+        }
+      },
+      "minItems": 2
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceRef"
+      },
+      "minItems": 1
+    },
+    "room_kinds": {
+      "type": "object",
+      "required": [
+        "declared",
+        "source_ref",
+        "qualification",
+        "note"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "declared": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "coding",
+              "art",
+              "video",
+              "research",
+              "live_avatar",
+              "trading"
+            ]
+          },
+          "minItems": 6
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "qualification": {
+          "const": "unassessed"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "first_wave": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "unit_id",
+          "state",
+          "allowed_preparation",
+          "shared_boundary",
+          "handoff_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "unit_id": {
+            "$ref": "#/$defs/unitId"
+          },
+          "state": {
+            "enum": [
+              "maintainer_coordination_required",
+              "public_preparation_ready"
+            ]
+          },
+          "allowed_preparation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "shared_boundary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "handoff_ids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/handoffId"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "minItems": 5
+    },
+    "units": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unit"
+      },
+      "minItems": 60
+    },
+    "historical_records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/historical"
+      },
+      "minItems": 123
+    },
+    "linked_acceptance_groups": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/historicalId"
+        },
+        "minItems": 2
+      },
+      "minItems": 0,
+      "const": [
+        [
+          "CORE-018",
+          "CORE-020",
+          "PROD-02",
+          "PROD-03"
+        ],
+        [
+          "CORE-043",
+          "PROD-04",
+          "PROD-05"
+        ],
+        [
+          "CORE-044",
+          "PROD-06",
+          "PROD-07",
+          "PROD-08",
+          "PROD-09",
+          "PROD-10"
+        ],
+        [
+          "CORE-028",
+          "OPS-05"
+        ],
+        [
+          "CORE-042",
+          "OPS-08"
+        ],
+        [
+          "CORE-045",
+          "TOK-08"
+        ]
+      ]
+    },
+    "handoffs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/handoff"
+      },
+      "minItems": 5
+    },
+    "scope_limits": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "unitId": {
+      "enum": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05",
+        "K06",
+        "K07",
+        "K08",
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "O01",
+        "O02",
+        "O03",
+        "O04",
+        "O05",
+        "O06",
+        "O07",
+        "Q01",
+        "Q02",
+        "Q03",
+        "Q04",
+        "Q05",
+        "Q06",
+        "Q07",
+        "Q08",
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ]
+    },
+    "historicalId": {
+      "enum": [
+        "CORE-001",
+        "CORE-002",
+        "CORE-003",
+        "CORE-004",
+        "CORE-005",
+        "CORE-006",
+        "CORE-007",
+        "CORE-008",
+        "CORE-009",
+        "CORE-010",
+        "CORE-011",
+        "CORE-012",
+        "CORE-013",
+        "CORE-014",
+        "CORE-015",
+        "CORE-016",
+        "CORE-017",
+        "CORE-018",
+        "CORE-019",
+        "CORE-020",
+        "CORE-021",
+        "CORE-022",
+        "CORE-023",
+        "CORE-024",
+        "CORE-025",
+        "CORE-026",
+        "CORE-027",
+        "CORE-028",
+        "CORE-029",
+        "CORE-030",
+        "CORE-031",
+        "CORE-032",
+        "CORE-033",
+        "CORE-034",
+        "CORE-035",
+        "CORE-036",
+        "CORE-037",
+        "CORE-038",
+        "CORE-039",
+        "CORE-040",
+        "CORE-041",
+        "CORE-042",
+        "CORE-043",
+        "CORE-044",
+        "CORE-045",
+        "HOST-01",
+        "HOST-02",
+        "HOST-03",
+        "HOST-04",
+        "HOST-05",
+        "HOST-06",
+        "HOST-07",
+        "HOST-08",
+        "HOST-09",
+        "HOST-10",
+        "HOST-11",
+        "HOST-12",
+        "HOST-13",
+        "HOST-14",
+        "HOST-15",
+        "HOST-16",
+        "FIN-01",
+        "FIN-02",
+        "FIN-03",
+        "FIN-04",
+        "FIN-05",
+        "FIN-06",
+        "FIN-07",
+        "FIN-08",
+        "FIN-09",
+        "FIN-10",
+        "FIN-11",
+        "FIN-12",
+        "FIN-13",
+        "FIN-14",
+        "FIN-15",
+        "FIN-16",
+        "FIN-17",
+        "FIN-18",
+        "FIN-19",
+        "FIN-20",
+        "TOK-01",
+        "TOK-02",
+        "TOK-03",
+        "TOK-04",
+        "TOK-05",
+        "TOK-06",
+        "TOK-07",
+        "TOK-08",
+        "TOK-09",
+        "PROD-01",
+        "PROD-02",
+        "PROD-03",
+        "PROD-04",
+        "PROD-05",
+        "PROD-06",
+        "PROD-07",
+        "PROD-08",
+        "PROD-09",
+        "PROD-10",
+        "PROD-11",
+        "PROD-12",
+        "PROD-13",
+        "PROD-14",
+        "SEC-01",
+        "SEC-02",
+        "SEC-03",
+        "SEC-04",
+        "SEC-05",
+        "SEC-06",
+        "SEC-07",
+        "SEC-08",
+        "OPS-01",
+        "OPS-02",
+        "OPS-03",
+        "OPS-04",
+        "OPS-05",
+        "OPS-06",
+        "OPS-07",
+        "OPS-08",
+        "OPS-09",
+        "OPS-10",
+        "OPS-11"
+      ]
+    },
+    "repository": {
+      "enum": [
+        "Spawn-Backrooms/spawn",
+        "Spawn-Backrooms/backroom-rings"
+      ]
+    },
+    "owner": {
+      "type": "object",
+      "required": [
+        "state",
+        "identity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "unassigned",
+            "assigned"
+          ]
+        },
+        "identity": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "required": [
+        "id",
+        "url",
+        "blob"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/blob/[a-f0-9]{40}/[^\\s]+$"
+        },
+        "blob": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        }
+      }
+    },
+    "pullRequest": {
+      "type": "object",
+      "required": [
+        "number",
+        "url",
+        "title",
+        "head",
+        "base",
+        "base_ref",
+        "head_ref",
+        "draft",
+        "author",
+        "assignees",
+        "updated_at",
+        "files"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "head": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "base": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "base_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "head_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "draft": {
+          "type": "boolean"
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignees": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "updated_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "unit": {
+      "type": "object",
+      "required": [
+        "id",
+        "repository",
+        "issue_url",
+        "title",
+        "github_state",
+        "github_assignees",
+        "accountable_owner",
+        "depends_on",
+        "implementation_status",
+        "qualification_status",
+        "serving_status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/unitId"
+        },
+        "repository": {
+          "$ref": "#/$defs/repository"
+        },
+        "issue_url": {
+          "type": "string",
+          "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "github_state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "github_assignees": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "accountable_owner": {
+          "$ref": "#/$defs/owner"
+        },
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unitId"
+          },
+          "minItems": 0
+        },
+        "implementation_status": {
+          "const": "unassessed"
+        },
+        "qualification_status": {
+          "const": "unassessed"
+        },
+        "serving_status": {
+          "const": "unassessed"
+        }
+      }
+    },
+    "historical": {
+      "type": "object",
+      "required": [
+        "id",
+        "historical_record_state",
+        "current_requirement",
+        "relationship",
+        "programme_contributions",
+        "accountable_owner",
+        "canonical_work",
+        "residual_acceptance",
+        "closure_status",
+        "next_action"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/historicalId"
+        },
+        "historical_record_state": {
+          "const": "draft_planning_record"
+        },
+        "current_requirement": {
+          "type": "object",
+          "required": [
+            "state",
+            "decision_ref"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": [
+                "unresolved",
+                "accepted",
+                "superseded",
+                "excluded"
+              ]
+            },
+            "decision_ref": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          }
+        },
+        "relationship": {
+          "enum": [
+            "direct_delta",
+            "preserved_dependency",
+            "scoped_release_evidence",
+            "bounded_research",
+            "independent_no_new_delta"
+          ]
+        },
+        "programme_contributions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "unit_id",
+              "issue_url"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "unit_id": {
+                "$ref": "#/$defs/unitId"
+              },
+              "issue_url": {
+                "type": "string",
+                "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+              }
+            }
+          },
+          "minItems": 0
+        },
+        "accountable_owner": {
+          "$ref": "#/$defs/owner"
+        },
+        "canonical_work": {
+          "type": "object",
+          "required": [
+            "state",
+            "public_issue_url",
+            "handoff_id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": [
+                "unresolved",
+                "public_issue",
+                "restricted_handoff"
+              ]
+            },
+            "public_issue_url": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+            },
+            "handoff_id": {
+              "$ref": "#/$defs/handoffId"
+            }
+          }
+        },
+        "residual_acceptance": {
+          "type": "object",
+          "required": [
+            "state",
+            "evidence_refs"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": [
+                "unreconciled",
+                "open",
+                "fulfilled",
+                "not_applicable"
+              ]
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          }
+        },
+        "closure_status": {
+          "const": "unassessed"
+        },
+        "next_action": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "required": [
+        "id",
+        "scope",
+        "state",
+        "accountable_owner",
+        "public_receipt",
+        "next_action"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/handoffId"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "awaiting_owner",
+            "reconciled"
+          ]
+        },
+        "accountable_owner": {
+          "$ref": "#/$defs/owner"
+        },
+        "public_receipt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://github\\.com/Spawn-Backrooms/(?:spawn|backroom-rings)/(?:issues|pull|blob)/[^\\s]+$"
+        },
+        "next_action": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "handoffId": {
+      "enum": [
+        "H-NATIVE",
+        "H-PORT",
+        "H-HISTORY",
+        "H-SERVING",
+        "H-ACTIVE-WORK"
+      ]
+    }
+  }
+}
