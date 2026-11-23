@@ -26,6 +26,7 @@ from spawn_clipper.policy import (
 APP_NAME = "spawn-clipper"
 SECRET_NAME = "spawn-clipper"
 DICT_NAME = "spawn-clip-jobs"
+CANCELLED_DICT_NAME = "spawn-clip-cancelled-jobs"
 IMPORT_DICT_NAME = "spawn-source-imports"
 MAX_CONTAINERS = 1
 IMPORT_MAX_CONTAINERS = 2
@@ -110,7 +111,28 @@ import_image = (
 
 model_cache = modal.Volume.from_name("spawn-clipper-models", create_if_missing=True)
 jobs = modal.Dict.from_name(DICT_NAME, create_if_missing=True)
+# Authoritative cancellation record. A modal.Dict has no compare-and-swap,
+# so the read guard in the workers and the terminal write are separate
+# operations and a cancel can land between them. The cancel endpoint writes
+# this record when it acknowledges a cancellation, and every status read
+# honours it, so a late worker result can never become the visible
+# terminal state of a cancelled job.
+cancelled = modal.Dict.from_name(CANCELLED_DICT_NAME, create_if_missing=True)
 imports = modal.Dict.from_name(IMPORT_DICT_NAME, create_if_missing=True)
+
+
+def _cancelled(store, job_id: str) -> bool:
+    """True when the job was cancelled while a worker was still running.
+
+    The cancelled record is checked first: it is written by the cancel
+    endpoint when it acknowledges the cancellation, so it stays true even
+    if a late worker write landed in the row afterwards. The row check is
+    kept as a fallback for rows the endpoint already marked.
+    """
+    if job_id in cancelled:
+        return True
+    row = store.get(job_id) or {}
+    return row.get("state") == "failed" and row.get("error") == "CANCELLED"
 
 
 @app.function(
@@ -133,6 +155,10 @@ def process(payload: dict) -> None:
         from spawn_clipper.runner import run_job
 
         result = run_job(payload)
+        if _cancelled(jobs, job_id):
+            # Cancelled while running. The late result must not overwrite
+            # the acknowledged cancellation (as process_import already does).
+            return
         jobs[job_id] = {
             "state": "succeeded",
             "suggestion_sha256": result["suggestion_sha256"],
@@ -141,6 +167,8 @@ def process(payload: dict) -> None:
         }
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "CLIP_JOB_FAILED"
+        if _cancelled(jobs, job_id):
+            raise
         jobs[job_id] = {"state": "failed", "suggestion_sha256": None, "error": code}
         raise
 
@@ -165,6 +193,10 @@ def process_render(payload: dict) -> None:
         from spawn_clipper.runner import render_chosen
 
         result = render_chosen(payload)
+        if _cancelled(jobs, job_id):
+            # Cancelled while running. The late result must not overwrite
+            # the acknowledged cancellation (as process_import already does).
+            return
         jobs[job_id] = {
             "state": "succeeded",
             "suggestion_sha256": result["suggestion_sha256"],
@@ -173,6 +205,8 @@ def process_render(payload: dict) -> None:
         }
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "CLIP_RENDER_FAILED"
+        if _cancelled(jobs, job_id):
+            raise
         jobs[job_id] = {"state": "failed", "suggestion_sha256": None, "renders": [], "error": code}
         raise
 
@@ -244,15 +278,45 @@ def _authorized(request, body: bytes) -> bool:
 
 def _view(job_id: str) -> dict:
     row = jobs.get(job_id)
-    if not row:
+    if not row and job_id not in cancelled:
         return {"job_id": job_id, "state": "not_found", "suggestion_sha256": None, "error": None}
-    return {
+    row = row or {}
+    view = {
         "job_id": job_id,
         "state": row.get("state") or "not_found",
         "suggestion_sha256": row.get("suggestion_sha256"),
         "renders": row.get("renders") or [],
         "error": row.get("error"),
     }
+    if job_id in cancelled:
+        # An acknowledged cancellation is the visible terminal state even
+        # if a late worker write landed in the row after the guard read.
+        # Clear the late results too, so the status response carries no
+        # suggestion hash or render list for a cancelled job.
+        view["state"] = "failed"
+        view["error"] = "CANCELLED"
+        view["suggestion_sha256"] = None
+        view["renders"] = []
+    return view
+
+
+def _cancel_job(job_id: str) -> dict | None:
+    """Acknowledge a cancellation. Returns the view, or None if not found.
+
+    Writes the cancelled record before the row, so a status read never
+    reports a late worker result as the terminal state. A job that already
+    finished stays at its terminal state; a cancelled job stays cancelled
+    even if a worker already overwrote its row to "succeeded".
+    """
+    row = jobs.get(job_id)
+    if not row:
+        return None
+    if job_id in cancelled or row.get("state") in ("succeeded", "failed"):
+        return _view(job_id)
+    # Cancellation does not enqueue a replacement GPU input.
+    cancelled[job_id] = True
+    jobs[job_id] = {**row, "state": "failed", "error": "CANCELLED"}
+    return _view(job_id)
 
 
 @app.function(
@@ -372,13 +436,9 @@ def api():
         body = await request.body()
         if not _authorized(request, body):
             return JSONResponse({"error": "unauthorized"}, status_code=401)
-        row = jobs.get(job_id)
-        if not row:
+        view = _cancel_job(job_id)
+        if view is None:
             return JSONResponse({"job_id": job_id, "state": "not_found"}, status_code=404)
-        if row.get("state") in ("succeeded", "failed"):
-            return JSONResponse(_view(job_id), status_code=200)
-        # Cancellation does not enqueue a replacement GPU input.
-        jobs[job_id] = {**row, "state": "failed", "error": "CANCELLED"}
-        return JSONResponse(_view(job_id), status_code=200)
+        return JSONResponse(view, status_code=200)
 
     return web
