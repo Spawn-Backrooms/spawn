@@ -361,8 +361,13 @@ def host_of(url: str) -> str:
     return (urlparse(url).hostname or "").lower()
 
 
-def render_chosen(job: dict) -> dict:
-    """Cut the owner's chosen ranges to private 9:16 MP4s. No moment picker and no publish."""
+def render_chosen(job: dict, on_clip=None) -> dict:
+    """Cut the owner's chosen ranges to private 9:16 MP4s. No moment picker and no publish.
+
+    ``on_clip`` is called with each finished clip's record right after its
+    upload, so a status poll can see real progress while later clips are
+    still rendering.
+    """
     refuse_publish_environment()
     work = tempfile.mkdtemp(prefix=f"spawn-render-{job['job_id']}-")
     try:
@@ -378,11 +383,16 @@ def render_chosen(job: dict) -> dict:
             if len(body) > 64 * 1024 * 1024:
                 raise PolicyError("RENDER_TOO_LARGE")
             _put(clip["put_url"], body, "video/mp4")
-            renders.append({
+            record = {
                 "index": index,
                 "bytes": len(body),
                 "sha256": hashlib.sha256(body).hexdigest(),
-            })
+            }
+            renders.append(record)
+            if on_clip is not None:
+                # Report the finished clip now: the status view is the only
+                # progress channel, and a later clip may still fail.
+                on_clip(record)
         manifest = json.dumps(renders, separators=(",", ":"), sort_keys=True).encode()
         return {
             "suggestion_sha256": hashlib.sha256(manifest).hexdigest(),
