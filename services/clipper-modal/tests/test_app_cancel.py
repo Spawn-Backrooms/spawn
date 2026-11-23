@@ -146,7 +146,7 @@ class LateResultAfterCancelTests(unittest.TestCase):
     def test_late_render_result_does_not_overwrite_cancel(self):
         job_id = "job_late_render"
 
-        def render_chosen(payload):
+        def render_chosen(payload, on_clip=None):
             _cancel_row(app.jobs, payload["job_id"])
             return {"suggestion_sha256": "abc", "renders": [{"index": 0, "bytes": 1, "sha256": "d"}]}
 
@@ -229,7 +229,7 @@ class LateResultAfterCancelTests(unittest.TestCase):
         job_id = "job_race_render"
         app.jobs = _RaceStore({job_id: {"state": "running", "error": None}})
 
-        def render_chosen(payload):
+        def render_chosen(payload, on_clip=None):
             return {"suggestion_sha256": "abc", "renders": [{"index": 0, "bytes": 1, "sha256": "d"}]}
 
         self.runner.render_chosen = render_chosen
