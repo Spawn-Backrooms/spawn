@@ -364,16 +364,20 @@ def api():
             payload = parse_job_request(body)
         except PolicyError as error:
             return JSONResponse({"error": error.code}, status_code=422)
-        existing = jobs.get(payload["job_id"])
-        if existing:
+        # Claim the job id atomically: both API containers can receive the same id at once.
+        claimed = jobs.put(
+            payload["job_id"],
+            {
+                "state": "queued",
+                "suggestion_sha256": None,
+                "error": None,
+                "openshorts_commit": OPENSHORTS_COMMIT,
+            },
+            skip_if_exists=True,
+        )
+        if not claimed:
             # Same SPAWN job id is already queued or finished. Do not start another GPU run.
             return JSONResponse({**_view(payload["job_id"]), "duplicate": True}, status_code=202)
-        jobs[payload["job_id"]] = {
-            "state": "queued",
-            "suggestion_sha256": None,
-            "error": None,
-            "openshorts_commit": OPENSHORTS_COMMIT,
-        }
         process.spawn(payload)
         return JSONResponse(_view(payload["job_id"]), status_code=202)
 
@@ -386,15 +390,13 @@ def api():
             payload = parse_render_request(body)
         except PolicyError as error:
             return JSONResponse({"error": error.code}, status_code=422)
-        existing = jobs.get(payload["job_id"])
-        if existing:
+        claimed = jobs.put(
+            payload["job_id"],
+            {"state": "queued", "suggestion_sha256": None, "renders": [], "error": None},
+            skip_if_exists=True,
+        )
+        if not claimed:
             return JSONResponse({**_view(payload["job_id"]), "duplicate": True}, status_code=202)
-        jobs[payload["job_id"]] = {
-            "state": "queued",
-            "suggestion_sha256": None,
-            "renders": [],
-            "error": None,
-        }
         process_render.spawn(payload)
         return JSONResponse(_view(payload["job_id"]), status_code=202)
 
@@ -407,10 +409,9 @@ def api():
             payload = parse_import_request(body)
         except PolicyError as error:
             return JSONResponse({"error": error.code}, status_code=422)
-        if imports.get(payload["job_id"]):
+        if not imports.put(payload["job_id"], {"state": "queued", "error": None}, skip_if_exists=True):
             # Same SPAWN import id. Do not fetch the link a second time.
             return JSONResponse({**_import_view(payload["job_id"]), "duplicate": True}, status_code=202)
-        imports[payload["job_id"]] = {"state": "queued", "error": None}
         call = process_import.spawn(payload)
         # Kept beside the row so a fast worker's state write is never overwritten here.
         imports[f"call:{payload['job_id']}"] = call.object_id
