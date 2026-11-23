@@ -89,7 +89,7 @@ function checkConfig(errors, where, kind, config) {
       break;
     case "research":
       if (!exactKeys(errors, where, config, ["kind", "questions", "citation_policy"])) return;
-      if (check(errors, where + ".questions", Array.isArray(config.questions) && config.questions.length <= 16, "must be a list of at most 16 questions"))
+      if (check(errors, where + ".questions", Array.isArray(config.questions) && config.questions.length >= 1 && config.questions.length <= 16, "must be a list of 1-16 questions"))
         config.questions.forEach((question, i) => text(errors, `${where}.questions[${i}]`, question, 2048));
       check(errors, where + ".citation_policy", config.citation_policy === "provided_sources_only", 'must be "provided_sources_only"');
       break;
@@ -104,7 +104,7 @@ function checkConfig(errors, where, kind, config) {
         check(errors, where + ".tool", ["clips", "memes", "affiliate"].includes(config.tool), 'must be "clips", "memes" or "affiliate"');
       if (config.workspace_mode !== undefined)
         check(errors, where + ".workspace_mode", config.workspace_mode === "clips", 'must be "clips"');
-      if (!check(errors, where + ".shots", Array.isArray(config.shots) && config.shots.length <= 32, "must be a list of at most 32 shots")) return;
+      if (!check(errors, where + ".shots", Array.isArray(config.shots) && config.shots.length >= 1 && config.shots.length <= 32, "must be a list of 1-32 shots")) return;
       const ids = new Set();
       config.shots.forEach((shot, i) => {
         const at = `${where}.shots[${i}]`;
