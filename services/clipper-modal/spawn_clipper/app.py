@@ -260,11 +260,21 @@ def _cancel_import(job_id: str) -> dict | None:
     reports a late worker result as the terminal state. An import that
     already finished stays at its terminal state; a cancelled import stays
     cancelled even if a worker already overwrote its row to "succeeded".
+
+    A modal.Dict read and the record write are separate operations, so the
+    worker can commit a terminal state after the first read — and a status
+    read may already have exposed its digest/bytes. Re-read the row
+    immediately before writing the record: an already-committed terminal
+    state is authoritative and is preserved instead of being overwritten
+    by the cancellation.
     """
     row = imports.get(job_id)
     if not row:
         return None
     if job_id in cancelled_imports or row.get("state") in ("succeeded", "failed"):
+        return _import_view(job_id)
+    row = imports.get(job_id)
+    if not row or row.get("state") in ("succeeded", "failed"):
         return _import_view(job_id)
     cancelled_imports[job_id] = True
     imports[job_id] = {**row, "state": "failed", "error": "CANCELLED"}

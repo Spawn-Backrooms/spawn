@@ -149,6 +149,26 @@ class _StartRaceStore(dict):
         dict.__setitem__(self, key, value)
 
 
+class _RowReadRaceDict(dict):
+    """A row whose first state read lets the worker commit success, as it
+    can between the cancel endpoint's row read and its record write on a
+    modal.Dict (separate operations, no compare-and-swap). The worker's
+    terminal write replaces the row object, so the old row still reads
+    "running" — exactly what the cancel saw before the commit.
+    """
+
+    def __init__(self, *args, worker=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.worker = worker
+        self._fired = False
+
+    def get(self, key, default=None):
+        if key == "state" and not self._fired and self.worker is not None:
+            self._fired = True
+            self.worker()
+        return super().get(key, default)
+
+
 def _import_result():
     return {"sha256": "abc", "bytes": 1, "duration_ms": 1, "mime_type": "video/mp4"}
 
@@ -322,6 +342,31 @@ class LateImportResultAfterCancelTests(unittest.TestCase):
         self.assertEqual(view["error"], "CANCELLED")
         self.assertEqual(app._import_view(job_id)["state"], "failed")
         self.assertEqual(app._import_view(job_id)["error"], "CANCELLED")
+
+    # -- reverse interleaving: worker succeeds between cancel read and record --
+
+    def test_worker_success_between_cancel_read_and_record_is_preserved(self):
+        # The cancel read "running", then the worker committed "succeeded"
+        # and a GET exposed its digest/bytes before the cancel wrote the
+        # tombstone. The acknowledged cancellation must not overwrite the
+        # already-committed — and already exposed — success.
+        job_id = "srcimport_reverse_race"
+        exposed = {}
+
+        def commit_success():
+            app.imports[job_id] = {"state": "succeeded", "error": None, **_import_result()}
+            exposed.update(app._import_view(job_id))
+
+        app.imports[job_id] = _RowReadRaceDict(
+            {"state": "running", "error": None}, worker=commit_success
+        )
+        view = app._cancel_import(job_id)
+        self.assertEqual(exposed["state"], "succeeded")
+        self.assertEqual(exposed["sha256"], "abc")
+        self.assertEqual(view["state"], "succeeded")
+        self.assertEqual(view["sha256"], "abc")
+        self.assertEqual(app._import_view(job_id)["state"], "succeeded")
+        self.assertNotIn(job_id, app.cancelled_imports)
 
     def test_cancel_import_unknown_returns_none(self):
         self.assertIsNone(app._cancel_import("srcimport_missing"))
