@@ -25,7 +25,8 @@ export function validateRecipients(recipients:readonly FeeRecipient[],expectedTo
  for(const recipient of recipients){onlyFields(recipient,['address','share_bps'],'UNKNOWN_RECIPIENT_FIELD');publicKey(recipient.address);requireCondition(!seen.has(recipient.address),'DUPLICATE_RECIPIENT');seen.add(recipient.address);requireCondition(Number.isSafeInteger(recipient.share_bps)&&recipient.share_bps>0&&recipient.share_bps<=10000,'INVALID_RECIPIENT_SHARE');sum+=recipient.share_bps;}
  if(expectedTotal!==undefined)requireCondition(sum===expectedTotal,'INCOMPLETE_RECIPIENT_ALLOCATION');
 }
-export function createEconomyPolicy(input:EconomyPolicyInput):Readonly<EconomyPolicy>{
+/** Internal compatibility reader: retain structural checks without imposing a new write invariant on stored policies. */
+export function normalizeEconomyPolicy(input:EconomyPolicyInput):Readonly<EconomyPolicy>{
  onlyFields(input,['economy_id','owner_id','version','fee_basis','basis_confirmed','approval_status','platform_recipient','other_recipients','allowed_actions','max_proposal_lamports','max_reserved_lamports','revoked','platform_share_bps','execution_mode'],'UNKNOWN_POLICY_FIELD');
  const supplied=input as EconomyPolicy;requireCondition(supplied.platform_share_bps===undefined||supplied.platform_share_bps===2000,'INVALID_PLATFORM_SHARE');requireCondition(supplied.execution_mode===undefined||supplied.execution_mode==='human_review_only','INVALID_EXECUTION_MODE');
  validateText(input.economy_id,160,'INVALID_ECONOMY_ID');validateText(input.owner_id,160,'INVALID_OWNER_ID');requireCondition(Number.isSafeInteger(input.version)&&input.version>0,'INVALID_POLICY_VERSION');
@@ -36,6 +37,15 @@ export function createEconomyPolicy(input:EconomyPolicyInput):Readonly<EconomyPo
  requireCondition(policy.allowed_actions.every(action=>actions.includes(action))&&new Set(policy.allowed_actions).size===policy.allowed_actions.length,'INVALID_ALLOWED_ACTIONS');
  requireCondition(lamports(policy.max_proposal_lamports)<=lamports(policy.max_reserved_lamports),'INVALID_POLICY_BUDGET');
  return frozen(policy);
+}
+/** New fee-capable policies must name a full distribution before they can be stored. */
+export function createEconomyPolicy(input:EconomyPolicyInput):Readonly<EconomyPolicy>{
+ const policy=normalizeEconomyPolicy(input);
+ if(policy.allowed_actions.some(action=>action==='propose_fee_setup'||action==='propose_fee_claim')){
+  requireCondition(policy.platform_recipient!==null,'PLATFORM_RECIPIENT_REQUIRED');
+  validateRecipients([{address:policy.platform_recipient,share_bps:policy.platform_share_bps},...policy.other_recipients],10000);
+ }
+ return policy;
 }
 export function policyBlockReason(binding:EconomyBinding,policy:EconomyPolicy):string|null {
  if(binding.economy_id!==policy.economy_id||binding.owner_id!==policy.owner_id)return 'POLICY_IDENTITY_MISMATCH';
