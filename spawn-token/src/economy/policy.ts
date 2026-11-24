@@ -33,7 +33,8 @@ export function createEconomyPolicy(input:EconomyPolicyInput):Readonly<EconomyPo
  requireCondition(['creator_fees_received','total_trading_fees'].includes(policy.fee_basis),'INVALID_FEE_BASIS');requireCondition(['proposed','owner_approved'].includes(policy.approval_status),'INVALID_POLICY_APPROVAL');requireCondition(typeof policy.revoked==='boolean'&&typeof policy.basis_confirmed==='boolean','INVALID_POLICY_FLAGS');
  if(policy.platform_recipient)publicKey(policy.platform_recipient);validateRecipients(policy.other_recipients);
  requireCondition(!policy.other_recipients.some(recipient=>recipient.address===policy.platform_recipient),'DUPLICATE_RECIPIENT');
- if(policy.platform_recipient)validateRecipients([{address:policy.platform_recipient,share_bps:policy.platform_share_bps},...policy.other_recipients],10000);
+ const feeCapable=policy.allowed_actions.some(action=>action==='propose_fee_setup'||action==='propose_fee_claim');
+ if(feeCapable){requireCondition(policy.platform_recipient!==null,'PLATFORM_RECIPIENT_REQUIRED');validateRecipients([{address:policy.platform_recipient,share_bps:policy.platform_share_bps},...policy.other_recipients],10000);}
  requireCondition(policy.allowed_actions.every(action=>actions.includes(action))&&new Set(policy.allowed_actions).size===policy.allowed_actions.length,'INVALID_ALLOWED_ACTIONS');
  requireCondition(lamports(policy.max_proposal_lamports)<=lamports(policy.max_reserved_lamports),'INVALID_POLICY_BUDGET');
  return frozen(policy);

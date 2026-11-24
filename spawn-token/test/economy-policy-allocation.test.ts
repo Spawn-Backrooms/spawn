@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { PublicKey } from '@solana/web3.js';
 import * as token from '../src/index.js';
-import { WALLET } from './fixtures.js';
+import { WALLET, MINT } from './fixtures.js';
 
 const api = token as unknown as Record<string, (...args: any[]) => any>;
 const PLATFORM = new PublicKey(new Uint8Array(32).fill(13)).toBase58();
+const receipt = { intent_id: 'launch_01', transaction_signature: 'public-fixture-signature', network: 'devnet', genesis_hash: 'FAKE_GENESIS_DEVNET', slot: 42, status: 'finalized', mint_address: MINT, creator_public_key: WALLET };
+const association = { economy_id: 'economy_01', agent_id: 'agent_01', owner_id: 'owner_01', launch_intent_id: 'launch_01' };
 const base = {
   economy_id: 'economy_01',
   owner_id: 'owner_01',
@@ -30,5 +32,26 @@ describe('economy policy recipient allocation', () => {
 
   it('accepts the complete allocation', () => {
     expect(() => api.createEconomyPolicy!(base)).not.toThrow();
+  });
+
+  it('accepts a report-only policy with a platform recipient and no other recipients', () => {
+    // A policy with only the `report` action cannot propose a payout
+    // (evaluateEconomyProposal blocks fee actions with ACTION_NOT_PERMITTED
+    // and non-zero report spends), so it needs no fee allocation.
+    const reportOnly = { ...base, other_recipients: [], allowed_actions: ['report'], max_proposal_lamports: '0', max_reserved_lamports: '0' };
+    expect(() => api.createEconomyPolicy!(reportOnly)).not.toThrow();
+  });
+
+  it('rejects a fee-capable policy with no platform recipient', () => {
+    expect(() => api.createEconomyPolicy!({ ...base, platform_recipient: null })).toThrow('PLATFORM_RECIPIENT_REQUIRED');
+  });
+
+  it('recovers a legacy ledger from a stored report-only policy', () => {
+    // createEconomyLedger re-validates the stored policy through
+    // createEconomyPolicy; a retained report-only policy must hydrate.
+    const reportOnly = { ...base, other_recipients: [], allowed_actions: ['report'], max_proposal_lamports: '0', max_reserved_lamports: '0' };
+    const binding = api.registerEconomy!([], association, receipt);
+    const ledger = api.createEconomyLedger!(binding, reportOnly);
+    expect(api.economyTreasuryReport!(ledger, []).remaining_allocation).toBe('owner_policy_only');
   });
 });
