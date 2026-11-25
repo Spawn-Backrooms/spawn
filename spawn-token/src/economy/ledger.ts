@@ -1,8 +1,8 @@
 import {canonicalJson,requireCondition,validateText} from '../metadata.js';
-import {amount,lamports,frozen,policyBlockReason,createEconomyPolicy,onlyFields} from './policy.js';
+import {amount,lamports,frozen,policyBlockReason,normalizeEconomyPolicy,onlyFields} from './policy.js';
 import type {EconomyBinding,EconomyPolicy,EconomyLedger,FinalizedFeeReceipt,EvaluatedEconomyProposal,EconomyTreasuryReport} from './types.js';
 export function createEconomyLedger(binding:EconomyBinding,policy:EconomyPolicy):Readonly<EconomyLedger>{
- policy=createEconomyPolicy(policy);requireCondition(policyBlockReason(binding,policy)===null,'INACTIVE_ECONOMY_POLICY');
+ policy=normalizeEconomyPolicy(policy);requireCondition(policyBlockReason(binding,policy)===null,'INACTIVE_ECONOMY_POLICY');
  return frozen({binding:structuredClone(binding),policy:structuredClone(policy),receipts:[]});
 }
 /** Only server-verified source receipts belong here. Durable atomic uniqueness remains a backend responsibility. */
