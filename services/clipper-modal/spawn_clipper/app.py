@@ -246,27 +246,75 @@ def process_render(payload: dict) -> None:
 def process_import(payload: dict) -> None:
     job_id = payload["job_id"]
     current = imports.get(job_id) or {}
-    if current.get("state") in ("succeeded", "failed"):
+    if not current or _import_terminal(job_id, current) is not None:
         return
     imports[job_id] = {**current, "state": "running", "error": None}
+    # The progress row is not authority. Cancellation may have won since
+    # the first read, including before the provider call ID was published.
+    if _import_terminal(job_id, current) is not None:
+        return
     try:
         from spawn_clipper.importer import run_import
 
         result = run_import(payload)
-        latest = imports.get(job_id) or {}
-        if latest.get("state") == "failed":
-            # Cancelled while running. SPAWN treats the uploaded object as unconfirmed and removes it.
-            return
-        imports[job_id] = {"state": "succeeded", "error": None, **result}
     except Exception as error:
         code = error.code if isinstance(error, PolicyError) else "IMPORT_FAILED"
-        latest = imports.get(job_id) or {}
-        imports[job_id] = {**latest, "state": "failed", "error": latest.get("error") or code}
+        if _import_terminal(job_id, imports.get(job_id)) is not None:
+            raise
+        _finish_import(job_id, {"state": "failed", "error": code})
         raise
+    if _import_terminal(job_id, imports.get(job_id)) is not None:
+        return
+    _finish_import(job_id, {**result, "state": "succeeded", "error": None})
+
+
+def _import_terminal(job_id: str, progress: dict | None) -> dict | None:
+    # Current worker and cancel writers share one conditional terminal key.
+    # Read it *after* progress so status cannot miss completion by reading an
+    # older progress record after reading the terminal key.
+    terminal = imports.get(f"terminal:{job_id}")
+    if terminal is not None:
+        return terminal
+    # Terminal rows published by the old worker remain readable and final.
+    if progress and progress.get("state") in ("succeeded", "failed"):
+        return progress
+    return None
+
+
+def _finish_import(job_id: str, terminal: dict) -> bool:
+    return imports.put(f"terminal:{job_id}", terminal, skip_if_exists=True)
+
+
+def _cancel_import(job_id: str) -> tuple[dict, bool]:
+    progress = imports.get(job_id)
+    terminal = _import_terminal(job_id, progress)
+    if terminal is not None:
+        return _format_import_view(job_id, terminal), False
+    if not progress:
+        # Do not turn a concurrent admission into a successful response
+        # unless this request actually competed for its terminal state.
+        return _format_import_view(job_id, None), False
+    won = _finish_import(job_id, {"state": "failed", "error": "CANCELLED"})
+    return _import_view(job_id), won
+
+
+def _request_import_stop(call_id: str) -> None:
+    # This may also run from the create route if cancel won before the
+    # call ID was published. Both requests stop the same invocation;
+    # an already stopped/finished call needs no successful response.
+    try:
+        modal.FunctionCall.from_id(call_id).cancel()
+    except Exception:
+        # Provider stop is best-effort; terminal authority is unchanged.
+        pass
 
 
 def _import_view(job_id: str) -> dict:
-    row = imports.get(job_id)
+    progress = imports.get(job_id)
+    return _format_import_view(job_id, _import_terminal(job_id, progress) or progress)
+
+
+def _format_import_view(job_id: str, row: dict | None) -> dict:
     if not row:
         return {"job_id": job_id, "state": "not_found", "error": None}
     view = {"job_id": job_id, "state": row.get("state") or "not_found", "error": row.get("error")}
@@ -409,13 +457,18 @@ def api():
             payload = parse_import_request(body)
         except PolicyError as error:
             return JSONResponse({"error": error.code}, status_code=422)
-        if not imports.put(payload["job_id"], {"state": "queued", "error": None}, skip_if_exists=True):
+        if _import_terminal(payload["job_id"], None) is not None or not imports.put(
+            payload["job_id"], {"state": "queued", "error": None}, skip_if_exists=True
+        ):
             # Same SPAWN import id. Do not fetch the link a second time.
             return JSONResponse({**_import_view(payload["job_id"]), "duplicate": True}, status_code=202)
         call = process_import.spawn(payload)
         # Kept beside the row so a fast worker's state write is never overwritten here.
         imports[f"call:{payload['job_id']}"] = call.object_id
-        return JSONResponse(_import_view(payload["job_id"]), status_code=202)
+        view = _import_view(payload["job_id"])
+        if view["state"] == "failed" and view["error"] == "CANCELLED":
+            _request_import_stop(call.object_id)
+        return JSONResponse(view, status_code=202)
 
     @web.get("/v1/imports/{job_id}")
     async def import_status(job_id: str, request: Request):
@@ -431,20 +484,16 @@ def api():
         body = await request.body()
         if not _authorized(request, body):
             return JSONResponse({"error": "unauthorized"}, status_code=401)
-        row = imports.get(job_id) if job_id.startswith("srcimport_") else None
-        if not row:
+        if not job_id.startswith("srcimport_") or len(job_id) > 160:
             return JSONResponse({"job_id": job_id, "state": "not_found"}, status_code=404)
-        if row.get("state") in ("succeeded", "failed"):
-            return JSONResponse(_import_view(job_id), status_code=200)
-        imports[job_id] = {**row, "state": "failed", "error": "CANCELLED"}
-        call_id = imports.get(f"call:{job_id}")
-        if call_id:
-            try:
-                modal.FunctionCall.from_id(call_id).cancel()
-            except Exception:
-                # The row is already failed; a late upload is removed by SPAWN.
-                pass
-        return JSONResponse(_import_view(job_id), status_code=200)
+        view, won = _cancel_import(job_id)
+        if won:
+            call_id = imports.get(f"call:{job_id}")
+            if call_id:
+                _request_import_stop(call_id)
+        if view["state"] == "not_found":
+            return JSONResponse({"job_id": job_id, "state": "not_found"}, status_code=404)
+        return JSONResponse(view, status_code=200)
 
     @web.get("/v1/jobs/{job_id}")
     async def status(job_id: str, request: Request):
