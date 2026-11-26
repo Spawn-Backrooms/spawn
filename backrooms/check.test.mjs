@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { checkTemplate, roomNameKey } from "./check.mjs";
 
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -154,4 +154,24 @@ test("video rooms need at least one shot", () => {
     ),
     [],
   );
+});
+
+
+// A proposal whose JSON value is not an object must produce a validation
+// error, not an uncaught TypeError from the CLI's file-name checks.
+test("a non-object proposal is reported as a validation error", () => {
+  const dir = mkdtempSync(join(tmpdir(), "backrooms-check-null-"));
+  try {
+    mkdirSync(join(dir, "proposals"));
+    const file = join(dir, "proposals", "null.json");
+    writeFileSync(file, "null");
+    const result = spawnSync(process.execPath, [join(here, "check.mjs"), file], {
+      encoding: "utf8",
+    });
+    assert.equal(result.status, 1, result.stdout);
+    assert.match(result.stderr, /must be an object/);
+    assert.doesNotMatch(result.stderr, /TypeError/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

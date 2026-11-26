@@ -2,6 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { checkManifest } from "./check.mjs";
 
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+
+const here = dirname(fileURLToPath(import.meta.url));
+
 const validStyle = {
   schema_version: "spawn.mod.v1",
   id: "caption-color-fixture",
@@ -115,4 +123,23 @@ test("rejects a clip recipe with 6 clips", () => {
     errors.some((e) => e.includes(".content.clips:")),
     `expected a clips error, got: ${JSON.stringify(errors)}`,
   );
+});
+
+// A manifest whose JSON value is not an object must produce a validation
+// error, not an uncaught TypeError from the CLI's folder/duplicate checks.
+test("a non-object manifest is reported as a validation error", () => {
+  const dir = mkdtempSync(join(tmpdir(), "mods-check-"));
+  try {
+    mkdirSync(join(dir, "nullmod"));
+    const file = join(dir, "nullmod", "mod.json");
+    writeFileSync(file, "null");
+    const result = spawnSync(process.execPath, [join(here, "check.mjs"), file], {
+      encoding: "utf8",
+    });
+    assert.equal(result.status, 1, result.stdout);
+    assert.match(result.stderr, /must be an object/);
+    assert.doesNotMatch(result.stderr, /TypeError/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

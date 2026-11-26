@@ -100,6 +100,9 @@ async function main() {
     let manifest;
     try { manifest = JSON.parse(await readFile(file, "utf8")); } catch (error) { errors.push(`${at}: not valid JSON (${error.message})`); continue; }
     errors.push(...checkManifest(manifest, at));
+    // A non-object JSON value is already reported by checkManifest. The
+    // field checks below assume an object and would throw on null/[]/42.
+    if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) continue;
     if (basename(dirname(file)) !== manifest.id) errors.push(`${at}: the folder name must be the mod id "${manifest.id}"`);
     if (ids.has(manifest.id)) errors.push(`${at}: "${manifest.id}" is already used`);
     ids.add(manifest.id);
