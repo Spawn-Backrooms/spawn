@@ -293,7 +293,7 @@ def parse_job_request(raw: bytes) -> dict:
     for item in urls:
         assert_direct_source_url(item)
     max_clips = payload.get("max_clips")
-    if not isinstance(max_clips, int) or not 1 <= max_clips <= MAX_CLIPS:
+    if type(max_clips) is not int or not 1 <= max_clips <= MAX_CLIPS:
         raise PolicyError("REQUEST_INVALID")
     if render and len(urls) != max_clips:
         raise PolicyError("REQUEST_INVALID")
@@ -307,8 +307,8 @@ def parse_job_request(raw: bytes) -> dict:
     size = payload.get("source_bytes")
     duration = payload.get("duration_ms")
     if (
-        not isinstance(size, int)
-        or not isinstance(duration, int)
+        type(size) is not int
+        or type(duration) is not int
         or not 1 <= size <= MAX_SOURCE_BYTES
         or not 1 <= duration <= MAX_DURATION_MS
     ):
@@ -425,10 +425,10 @@ def parse_render_request(raw: bytes) -> dict:
     size = payload.get("source_bytes")
     duration = payload.get("duration_ms")
     if (
-        not isinstance(sha, str)
+        type(sha) is not str
         or not _HEX64.fullmatch(sha)
-        or not isinstance(size, int)
-        or not isinstance(duration, int)
+        or type(size) is not int
+        or type(duration) is not int
         or not 1 <= size <= MAX_SOURCE_BYTES
         or not 1 <= duration <= MAX_DURATION_MS
         or payload.get("openshorts_commit") != OPENSHORTS_COMMIT
@@ -447,8 +447,8 @@ def parse_render_request(raw: bytes) -> dict:
         start = clip.get("in_ms")
         end = clip.get("out_ms")
         if (
-            not isinstance(start, int)
-            or not isinstance(end, int)
+            type(start) is not int
+            or type(end) is not int
             or start < 0
             or end - start < 1000
             or end - start > MAX_CLIP_MS
