@@ -134,32 +134,47 @@ function payload(v) {
  * lexicographically sorted object keys, no accessors, undefined or cycles.
  * Array ordering is semantic. No Unicode normalization. */
 export function canonicalJson(raw) {
+  const chunks=[];
+  let remaining=MAX_WIRE_BYTES;
+  function write(token) {
+    remaining-=utf8Length(token);
+    check(remaining>=0,"RESEARCH_SIZE");
+    chunks.push(token);
+  }
   function encode(v,depth) {
     check(depth<=16,"RESEARCH_DEPTH");
-    if(v===null || typeof v==="boolean") return JSON.stringify(v);
-    if(typeof v==="number") { integer(v); return JSON.stringify(v); }
+    if(v===null || typeof v==="boolean") { write(JSON.stringify(v)); return; }
+    if(typeof v==="number") { integer(v); write(JSON.stringify(v)); return; }
     if(typeof v==="string") {
       check(!/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/u.test(v));
-      check(v.length<=MAX_WIRE_BYTES); return JSON.stringify(v);
+      check(v.length<=MAX_WIRE_BYTES); write(JSON.stringify(v)); return;
     }
     check(v!==null&&typeof v==="object");
     if(Array.isArray(v)) {
       check(v.length<=128 && Reflect.ownKeys(v).length===v.length+1);
-      const parts=[];
+      write("[");
       for(let i=0;i<v.length;i++){
+        if(i)write(",");
         const d=Object.getOwnPropertyDescriptor(v,String(i)); check(d&&"value" in d&&d.enumerable);
-        parts.push(encode(d.value,depth+1));
+        encode(d.value,depth+1);
       }
-      return "["+parts.join(",")+"]";
+      write("]");
+      return;
     }
     check([Object.prototype,null].includes(Object.getPrototypeOf(v)));
     const keys=Reflect.ownKeys(v); check(keys.length<=64&&keys.every(k=>typeof k==="string"&&ID.test(k)));
-    return "{"+keys.sort().map(k=>{
+    write("{");
+    let first=true;
+    for(const k of keys.sort()){
+      if(!first)write(",");
+      first=false;
       const d=Object.getOwnPropertyDescriptor(v,k); check(d&&"value" in d&&d.enumerable);
-      return JSON.stringify(k)+":"+encode(d.value,depth+1);
-    }).join(",")+"}";
+      write(JSON.stringify(k)+":"); encode(d.value,depth+1);
+    }
+    write("}");
   }
-  const out=encode(raw,0); check(utf8Length(out)<=MAX_WIRE_BYTES,"RESEARCH_SIZE"); return out;
+  encode(raw,0);
+  return chunks.join("");
 }
 function wire(raw) { return JSON.parse(canonicalJson(raw)); }
 export function parseEnvelope(raw) {
