@@ -34,7 +34,27 @@ export function conformanceCases(api, hash) {
   // Each test creates a new isolated store. Grants/approval records are
   // deliberately populated OUT OF BAND by the fixture, not by a message.
   function fake() {
-    const grants=new Map(), decisions=new Map(), originals=new Map(), threads=new Map(), objects=new Map(), reviews=new Map(), candidates=new Map(), approvedBudgets=new Set(), effects=new Map();
+    const grants=new Map(), decisions=new Map(), originals=new Map(), threads=new Map(), objects=new Map(), reviews=new Map(), candidates=new Map(), approvedBudgets=new Map(), effects=new Map();
+    const controllers=new Map(), capabilities=new Map();
+    const snapshot=v=>JSON.parse(canonicalJson(v));
+    const controllerOf=identity=>controllers.get(identity.principal_ref)??identity.principal_ref;
+    const budgetBinding=v=>canonicalJson({assignment:v.assignment,source:v.source,target:v.target,actor:v.actor,thread_id:v.thread_id,original_key:v.original_key,payload:v.payload});
+    function approveBudget(v) {
+      const ref=v.payload.budget.authorization_ref;
+      must(v.payload.kind==="request"&&v.payload.budget.mode!=="external_self"&&typeof ref==="string","BUDGET_REQUIRED");
+      const approved=budgetBinding(v),prior=approvedBudgets.get(ref);
+      must(prior===undefined||prior===approved,"BUDGET_CONFLICT");approvedBudgets.set(ref,approved);
+    }
+    async function publishCapability(target,raw) {
+      const descriptor=parseCapability(raw);
+      const digest=await hash(canonicalJson(descriptor));
+      capabilities.set(canonicalJson(target),{descriptor,digest});
+      return {capability_id:descriptor.capability_id,revision:descriptor.revision,descriptor_sha256:digest};
+    }
+    function capabilityCurrent(v) {
+      const p=v.payload,record=capabilities.get(canonicalJson(v.target)),d=record?.descriptor;
+      must(d&&d.available&&p.capability?.capability_id===d.capability_id&&p.capability.revision===d.revision&&p.capability.descriptor_sha256===record.digest&&d.budget_modes.includes(p.budget.mode)&&d.disclosure_policy_sha256===v.disclosure.policy_sha256,"CAPABILITY_CURRENT");
+    }
     const latest=new Map();
     const scoped=(assignment,id)=>canonicalJson([assignment,id]);
     let charges=0;
@@ -48,9 +68,9 @@ export function conformanceCases(api, hash) {
       eq(p.policy,v.disclosure.policy_sha256);eq(p.grant,v.grant);eq(p.assignment,v.assignment);
     };
     function approve(v) {
-      grants.set(v.grant.ref,{active:true,epoch:v.grant.epoch,actor:v.actor,source:v.source,target:v.target,assignment:v.assignment});
-      decisions.set(v.disclosure.decision_ref,{active:true,payload:v.payload_sha256,recipient:v.target,purpose:v.disclosure.purpose,
-        policy:v.disclosure.policy_sha256,grant:v.grant,assignment:v.assignment});
+      grants.set(v.grant.ref,snapshot({active:true,epoch:v.grant.epoch,actor:v.actor,source:v.source,target:v.target,assignment:v.assignment}));
+      decisions.set(v.disclosure.decision_ref,snapshot({active:true,payload:v.payload_sha256,recipient:v.target,purpose:v.disclosure.purpose,
+        policy:v.disclosure.policy_sha256,grant:v.grant,assignment:v.assignment}));
     }
     async function send(raw,identity=raw.actor) {
       const {envelope:v,envelope_sha256:h}=await verifyEnvelope(raw,hash);
@@ -69,7 +89,8 @@ export function conformanceCases(api, hash) {
           must(canonicalJson(parent.first.source)!==canonicalJson(v.target),"CYCLE");
           must(p.purpose==="specialist"&&parent.activeSpecialist===null&&parent.specialistAttempts<3,"FANOUT");
         }
-        if(v.payload.budget.mode!=="external_self")must(approvedBudgets.has(v.payload.budget.authorization_ref),"BUDGET_REQUIRED");
+        if(p.purpose==="specialist")capabilityCurrent(v);
+        if(p.budget.mode!=="external_self")must(approvedBudgets.get(p.budget.authorization_ref)===budgetBinding(v),"BUDGET_REQUIRED");
       }else{
         must(!t.closed&&v.sequence===t.sequence+1&&v.reply_to===t.last,"STALE_OR_ORDER");
         must(canonicalJson(t.assignment)===canonicalJson(v.assignment),"THREAD_ASSIGNMENT");
@@ -81,6 +102,8 @@ export function conformanceCases(api, hash) {
           must(allowed,"NOT_ACCEPTED");
         }
         if(p.kind==="accept"||p.kind==="decline")must(t.state==="requested"&&reverse,"ACCEPT_STATE");
+        if(p.kind==="cancel")must(forward,"CANCEL_REQUESTER");
+        if(p.kind==="accept"&&t.first.payload.purpose==="specialist")capabilityCurrent(t.first);
       }
       let candidateHash=null;
       if(p.kind==="candidate"||p.kind==="correction"){
@@ -103,12 +126,12 @@ export function conformanceCases(api, hash) {
           t.selected=p.candidate_sha256;
         }else{
           must(reverse&&t.selected===p.candidate_sha256&&!reviews.has(v.thread_id)&&canonicalJson(t.acceptedBy)===canonicalJson(identity),"REVIEW_SELECTION");
-          must(selected.principal!==identity.principal_ref,"INDEPENDENT_REVIEW");
+          must(selected.controller!==controllerOf(identity),"INDEPENDENT_REVIEW");
           reviews.set(v.thread_id,{candidate_sha256:t.selected,verdict:p.verdict});
         }
       }
       if(candidateHash){
-        const record={hash:candidateHash,revision:p.candidate.revision,principal:identity.principal_ref,source:p.candidate.source};
+        const record={hash:candidateHash,revision:p.candidate.revision,controller:controllerOf(identity),source:p.candidate.source};
         candidates.set(scoped(v.assignment,candidateHash),record);
         latest.set(scoped(v.assignment,p.candidate.candidate_id),record);
       }
@@ -140,7 +163,10 @@ export function conformanceCases(api, hash) {
       if(effects.has(key))return effects.get(key);
       const record={state:"unknown",charge:"held"};effects.set(key,record);return record;
     }
-    return {approve,send,retain,read,grants,decisions,objects,reviews,candidates,reserveOriginal,approvedBudgets,get charges(){return charges}};
+    return {approve,send,retain,read,grants,decisions,objects,reviews,candidates,reserveOriginal,approveBudget,publishCapability,setController:(actor,controller)=>controllers.set(actor,controller),get charges(){return charges}};
+  }
+  async function specialistCapability(id="math",revision=1,available=true) {
+    return {version:VERSION,capability_id:id,revision,input_schema_sha256:await d(),output_schema_sha256:await d(),disclosure_policy_sha256:await d(),visibility:"invite_only",available,budget_modes:["external_self"]};
   }
   async function reply(store,previous,from,to,payload,overrides={}) {
     const message=await build(from,to,previous.thread_id,previous.sequence+1,previous.message_id,payload,
@@ -164,6 +190,13 @@ export function conformanceCases(api, hash) {
       await rejects(()=>canonicalJson({a:"x".repeat(32769)}));
       await rejects(()=>canonicalJson({a:["é".repeat(16384)]}),"RESEARCH_SIZE");
     }},
+    {name:"canonical byte budget stops traversal and includes escapes and Unicode",run:async()=>{
+      must(canonicalJson("é".repeat(16383))==='"'+"é".repeat(16383)+'"');
+      must(byteLength(canonicalJson("\u0000".repeat(5461)))===32768);
+      await rejects(()=>canonicalJson("\u0000".repeat(5462)),"RESEARCH_SIZE");
+      const nested=Array(128).fill("x".repeat(1024));
+      await rejects(()=>canonicalJson([nested,{get later(){throw Error("accessed")}}]),"RESEARCH_SIZE");
+    }},
     {name:"wire validation, digest tampering and unsupported version",run:async()=>{
       const v=await request(A,M,"t");const r=await verifyEnvelope(v,hash);eq(r.envelope,v);
       await rejects(()=>verifyEnvelope({...v,version:"unknown"},hash),"RESEARCH_VERSION");
@@ -186,9 +219,8 @@ export function conformanceCases(api, hash) {
       const store=fake(), sentinel="PRIVATE_ONLY_NOT_EXPORTED";
       const privateNotes=new Map([[A.room_ref,sentinel],[S.room_ref,"SPECIALIST_PRIVATE_NOTES"]]);
       const start=await deliver(store,M,A,"main");
-      const cap={version:VERSION,capability_id:"math",revision:1,input_schema_sha256:await d(),output_schema_sha256:await d(),disclosure_policy_sha256:await d(),visibility:"invite_only",available:true,budget_modes:["external_self"]};
-      parseCapability(cap);
-      const specialist=await deliver(store,A,S,"specialist","specialist",{parent_thread:"main",capability:{capability_id:"math",revision:1,descriptor_sha256:await hash(canonicalJson(cap))}});
+      const pin=await store.publishCapability(S,await specialistCapability());
+      const specialist=await deliver(store,A,S,"specialist","specialist",{parent_thread:"main",capability:pin});
       const supportText="theorem supporting : True := True.intro\n";
       const support=await candidate(supportText,S,"specialist_c1");
       await store.retain(support.source,supportText);
@@ -235,7 +267,7 @@ export function conformanceCases(api, hash) {
     {name:"causal order, cycle and depth limits",run:async()=>{
       const store=fake(),v=await deliver(store,M,A,"root");
       const late=await build(A,M,"root",4,v.message_id,{kind:"progress",text:"late"});store.approve(late);await rejects(()=>store.send(late),"STALE_OR_ORDER");
-      const pin={capability_id:"x",revision:1,descriptor_sha256:await d()};
+      const pin=await store.publishCapability(S,await specialistCapability("x"));
       const cycle=await request(A,M,"cycle",{purpose:"specialist",parent_thread:"root",capability:pin});store.approve(cycle);await rejects(()=>store.send(cycle),"CYCLE");
       await deliver(store,A,S,"child","specialist",{parent_thread:"root",capability:pin});
       const deep=await request(S,B,"deep",{purpose:"specialist",parent_thread:"child",capability:pin});store.approve(deep);await rejects(()=>store.send(deep),"DEPTH_OR_PARENT");
@@ -285,7 +317,7 @@ export function conformanceCases(api, hash) {
     {name:"one specialist at a time and up to three distinct attempts per parent",run:async()=>{
       const store=fake();
       await deliver(store,M,A,"parent");
-      const opts={purpose:"specialist",parent_thread:"parent",capability:{capability_id:"math",revision:1,descriptor_sha256:await d()}};
+      const opts={purpose:"specialist",parent_thread:"parent",capability:await store.publishCapability(S,await specialistCapability())};
       const one=await request(A,S,"one",opts),two=await request(A,S,"two",opts);
       store.approve(one);
       const original=await store.send(one);
@@ -307,6 +339,68 @@ export function conformanceCases(api, hash) {
       const delivery=await build(A,M,"root",3,accept.message_id,{kind:"candidate",candidate:c});
       store.approve(delivery);await rejects(()=>store.send(delivery),"SUPPORT_MISMATCH");
       await rejects(()=>parseEnvelope({...delivery,payload:{...delivery.payload,candidate:{...c,supporting_evidence:[c.supporting_evidence[0],c.supporting_evidence[0]]}}}));
+    }},
+    {name:"different actors sharing a controlling principal cannot review independently",run:async()=>{
+      const store=fake();
+      store.setController(who(A).principal_ref,"controller_shared");
+      store.setController(who(B).principal_ref,"controller_shared");
+      const root=await deliver(store,M,A,"controller_root"),c=await candidate();
+      await reply(store,root,A,M,{kind:"candidate",candidate:c});
+      const digest=await hash(canonicalJson(c));
+      const review=await deliver(store,M,B,"controlled_review","review",{input:c.source});
+      const selected=await reply(store,review,M,B,{kind:"review_request",candidate_sha256:digest});
+      const result={kind:"review",candidate_sha256:digest,verdict:"approve",evidence_sha256:await d()};
+      await rejects(()=>reply(store,selected,B,M,result),"INDEPENDENT_REVIEW");
+      const independent=await deliver(store,M,S,"controller_independent","review",{input:c.source});
+      const independentSelection=await reply(store,independent,M,S,{kind:"review_request",candidate_sha256:digest});
+      await reply(store,independentSelection,S,M,result);must(store.reviews.size===1);
+    }},
+    {name:"recipient cannot cancel an accepted request",run:async()=>{
+      const store=fake(),accepted=await deliver(store,M,A,"cancel_role");
+      await rejects(()=>reply(store,accepted,A,M,{kind:"cancel",reason:"not requester"}),"CANCEL_REQUESTER");
+      await reply(store,accepted,M,A,{kind:"cancel",reason:"requester stops"});
+    }},
+    {name:"budget approval is immutable and exact to request, payer, mode, cap and scope",run:async()=>{
+      const store=fake();
+      const budget={mode:"contributor_native",payer_ref:who(A).principal_ref,cap_micro_usd:"10",authorization_ref:"budget"};
+      const approved=await request(A,M,"funded",{budget});
+      store.approveBudget(approved);
+      for(const patch of [{payer_ref:who(B).principal_ref},{mode:"requester_native"},{cap_micro_usd:"11"}]){
+        const v=await request(A,M,"funded",{budget:{...budget,...patch}});
+        store.approve(v);await rejects(()=>store.send(v),"BUDGET_REQUIRED");
+      }
+      for(const v of [
+        {...approved,assignment:{...scope,assignment_id:"different"}},
+        await request(A,M,"another",{budget}),
+        await request(A,B,"funded",{budget}),
+      ]){store.approve(v);await rejects(()=>store.send(v),"BUDGET_REQUIRED");}
+      store.approve(approved);eq(await store.send(approved),await store.send(approved));must(store.charges===0);
+    }},
+    {name:"out-of-band approval is not mutable through envelope references",run:async()=>{
+      const original=await request(A,M,"mutation");
+      for(const mutate of [
+        v=>{v.actor.principal_ref="substituted";v.actor.agent_ref="other_agent"},
+        v=>{v.assignment.assignment_id="other"},
+        v=>{v.source.room_ref="other"},
+      ]){
+        const store=fake(),v=JSON.parse(canonicalJson(original));store.approve(v);mutate(v);
+        await rejects(()=>store.send(v));await store.send(original);
+      }
+    }},
+    {name:"withdrawn or superseded specialist pins cannot start or accept work",run:async()=>{
+      const store=fake();await deliver(store,M,A,"cap_root");
+      const cap=await specialistCapability(),pin=await store.publishCapability(S,cap);
+      const opts={purpose:"specialist",parent_thread:"cap_root",capability:pin};
+      const stale=await request(A,S,"stale",opts);store.approve(stale);
+      await store.publishCapability(S,{...cap,revision:2,available:false});
+      await rejects(()=>store.send(stale),"CAPABILITY_CURRENT");
+      const current=await store.publishCapability(S,{...cap,revision:3});
+      const start=await request(A,S,"current",{...opts,capability:current});store.approve(start);await store.send(start);
+      await store.publishCapability(S,{...cap,revision:4});
+      await rejects(()=>reply(store,start,S,A,{kind:"accept",reason:"stale"}),"CAPABILITY_CURRENT");
+      await reply(store,start,S,A,{kind:"decline",reason:"superseded"});
+      const renewed=await store.publishCapability(S,{...cap,revision:5});
+      await deliver(store,A,S,"new","specialist",{...opts,capability:renewed});
     }},
     {name:"distinct verification receipt, no implied upstream acceptance",run:async()=>{
       const v=await build(A,M,"checked",2,"checked_1",{kind:"verification",candidate_sha256:await d(),checker_policy_sha256:await d(),receipt_sha256:await d(),evidence_class:"synthetic",verdict:"pass"},"verification");
