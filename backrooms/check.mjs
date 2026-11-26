@@ -211,6 +211,9 @@ async function main() {
     const where = relative(here, path);
     const template = await json(path);
     errors.push(...checkTemplate(template, where, "proposed"));
+    // A non-object JSON value is already reported by checkTemplate. The
+    // field checks below assume an object and would throw on null/[]/42.
+    if (!template || typeof template !== "object" || Array.isArray(template)) continue;
     if (basename(dirname(path)) === "examples") continue;
     check(errors, where, basename(path) === `${template.seed_id}.json`, `file name must be "${template.seed_id}.json"`);
     check(errors, where + ".seed_id", !taken.ids.has(template.seed_id), `"${template.seed_id}" is already used`);
