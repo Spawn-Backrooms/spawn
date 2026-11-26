@@ -1,0 +1,5677 @@
+{
+  "schema_version": "spawn.q01.public-projection.v1",
+  "observed_window": {
+    "started_at": "2026-11-23T12:37:29Z",
+    "ended_at": "2026-11-23T12:43:27Z"
+  },
+  "projection_kind": "public_audit_projection",
+  "canonical_authority": "The accepted native requirement and release registers remain authoritative. This public projection records source observations and unresolved handoffs only.",
+  "completion": {
+    "q01": "incomplete",
+    "programme": "unassessed",
+    "release": "unassessed",
+    "reason": "Canonical requirement acceptance, accountable owners, residual acceptance and current serving evidence remain unreconciled."
+  },
+  "trackers": {
+    "core": "https://github.com/Spawn-Backrooms/spawn/issues/34",
+    "rings": "https://github.com/Spawn-Backrooms/backroom-rings/issues/5"
+  },
+  "repositories": [
+    {
+      "repository": "Spawn-Backrooms/spawn",
+      "main": "e26e2585d01518ec4d86b93863f6e0fbde724338",
+      "prs": [
+        {
+          "number": 29,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/29",
+          "title": "fix(clips): claim job and import IDs atomically before spawning work",
+          "head": "48bc8489b060d37fd559726b8f0f42c0210d0b98",
+          "base": "7c47f6b8856cc366bbb88c5a357f7324af5bd26d",
+          "base_ref": "main",
+          "head_ref": "fix/clips-atomic-job-claim",
+          "draft": false,
+          "author": "0xHouseOfDefi",
+          "assignees": [],
+          "updated_at": "2026-11-22T09:30:19Z",
+          "files": [
+            "services/clipper-modal/spawn_clipper/app.py",
+            "services/clipper-modal/tests/test_app_job_claim.py"
+          ]
+        },
+        {
+          "number": 26,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/26",
+          "title": "fix(clips): report completed renders in the render status view",
+          "head": "664879d00efd70ab18eafd0b6e31673a93f5c8c5",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "s-w5-a/render-progress",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T10:28:21Z",
+          "files": [
+            "services/clipper-modal/spawn_clipper/app.py",
+            "services/clipper-modal/spawn_clipper/runner.py",
+            "services/clipper-modal/tests/test_app_render_progress.py"
+          ]
+        },
+        {
+          "number": 20,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/20",
+          "title": "fix(mcp-contract): validate spawn_configure_room config like create",
+          "head": "fe85f3b68d42278b7db4b7e19d9d2a57b5322dfa",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "s-w1-b/mcp-configure-config",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T07:09:37Z",
+          "files": [
+            ".github/workflows/checks.yml",
+            "agents/mcp-contract/check.mjs",
+            "agents/mcp-contract/spawn-mcp-tools.v1.json"
+          ]
+        },
+        {
+          "number": 19,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/19",
+          "title": "fix(protocol): reject empty questions and shots in room config schema",
+          "head": "6e97461d56b790132cb6f7ac2cd965f315022b44",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "fix/protocol-empty-room-config",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T07:04:43Z",
+          "files": [
+            "protocol/spawn-backend/tests/room-schemas.test.ts",
+            "protocol/src/api/roomSchemas.ts"
+          ]
+        },
+        {
+          "number": 18,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/18",
+          "title": "fix(mcp-contract): cap comfy graph_json at 48 KiB so schema-valid calls fit the 64 KiB transport limit",
+          "head": "d039e362c49b4df34c07e5a2f514f3543a97aee8",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "w4-c/mcp-comfy-graph-limit",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T03:20:16Z",
+          "files": [
+            ".github/workflows/checks.yml",
+            "agents/mcp-contract/check.mjs",
+            "agents/mcp-contract/spawn-mcp-tools.v1.json"
+          ]
+        },
+        {
+          "number": 16,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/16",
+          "title": "fix(protocol): reject links from SaveImage and PreviewImage outputs",
+          "head": "9e1ec743af9ff97b84137d060959c523d83b7cd4",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "fix/comfy-save-preview-zero-output",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T03:12:22Z",
+          "files": [
+            "protocol/spawn-backend/src/core/comfy-graph-inspection.ts",
+            "protocol/spawn-backend/tests/core/comfy-graph-inspection.test.ts"
+          ]
+        },
+        {
+          "number": 11,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/11",
+          "title": "fix(clips): keep a late import result from overwriting a cancellation",
+          "head": "dc86f375e534012b0fc6379094fb895826ac326c",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "fix/clips-import-cancel-overwrite",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T02:50:31Z",
+          "files": [
+            "services/clipper-modal/spawn_clipper/app.py",
+            "services/clipper-modal/tests/test_app_import_cancel.py"
+          ]
+        },
+        {
+          "number": 10,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/10",
+          "title": "fix(token): reject incomplete economy fee allocations at policy creation",
+          "head": "0506773a6746eb75a1e90ccd44322d0f347aa5ce",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "fix/token-economy-allocation",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-20T02:47:51Z",
+          "files": [
+            "spawn-token/src/economy/policy.ts",
+            "spawn-token/test/economy-policy-allocation.test.ts"
+          ]
+        },
+        {
+          "number": 8,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/8",
+          "title": "fix(clips): keep a late job/render result from overwriting a cancellation",
+          "head": "8909752fa5476b076a22d4453591075cbd059172",
+          "base": "7c47f6b8856cc366bbb88c5a357f7324af5bd26d",
+          "base_ref": "main",
+          "head_ref": "spawn-s1-clips-cancel-overwrite",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-22T14:40:00Z",
+          "files": [
+            "services/clipper-modal/spawn_clipper/app.py",
+            "services/clipper-modal/tests/test_app_cancel.py"
+          ]
+        },
+        {
+          "number": 7,
+          "url": "https://github.com/Spawn-Backrooms/spawn/pull/7",
+          "title": "fix(protocol): give one-step research budgets a satisfiable planning instruction",
+          "head": "4a9142846905460a8af60a4a0297d6cbc8944ebe",
+          "base": "598665c8ad642f4243608ed7987db7d3517bc80b",
+          "base_ref": "main",
+          "head_ref": "spawn-s2-research-budget-one-step",
+          "draft": false,
+          "author": "dd12m54",
+          "assignees": [],
+          "updated_at": "2026-11-22T12:07:51Z",
+          "files": [
+            "protocol/spawn-backend/src/core/coordinator-contract.ts",
+            "protocol/spawn-backend/tests/coordinator-contract.test.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "main": "f1422580abcdd60baaa6c528fff1fe8ddca511c0",
+      "prs": [
+        {
+          "number": 4,
+          "url": "https://github.com/Spawn-Backrooms/backroom-rings/pull/4",
+          "title": "Stop the Rings gateway if its Photon indexer exits",
+          "head": "19edcee0ad75b28fda81b7e80f49255f9804ce8d",
+          "base": "b61f57b1c553d2f39399cc2d1db5d0ade43c67f9",
+          "base_ref": "feat/backrooms-production-runtime-v1",
+          "head_ref": "review/photon-indexer-exit-20261123",
+          "draft": true,
+          "author": "gl4sspr1sm",
+          "assignees": [],
+          "updated_at": "2026-11-23T09:31:41Z",
+          "files": [
+            "backrooms/gateway-host/host.ts",
+            "backrooms/gateway-host/indexer.ts",
+            "backrooms/gateway-host/production.ts",
+            "backrooms/gateway-host/serve.ts",
+            "backrooms/gateway-host/server.ts",
+            "backrooms/tests/production.test.ts",
+            "docs/backrooms/PRODUCTION.md"
+          ]
+        },
+        {
+          "number": 3,
+          "url": "https://github.com/Spawn-Backrooms/backroom-rings/pull/3",
+          "title": "feat(backrooms): bind production artifacts and recover the gateway runtime",
+          "head": "b61f57b1c553d2f39399cc2d1db5d0ade43c67f9",
+          "base": "f1422580abcdd60baaa6c528fff1fe8ddca511c0",
+          "base_ref": "main",
+          "head_ref": "feat/backrooms-production-runtime-v1",
+          "draft": false,
+          "author": "rndrntwrk",
+          "assignees": [],
+          "updated_at": "2026-11-23T08:55:50Z",
+          "files": [
+            "Cargo.lock",
+            "backrooms/README.md",
+            "backrooms/client/deployment.ts",
+            "backrooms/client/gateway-protocol.ts",
+            "backrooms/client/gateway.ts",
+            "backrooms/client/index.ts",
+            "backrooms/client/release.ts",
+            "backrooms/gateway-host/artifacts.ts",
+            "backrooms/gateway-host/configuration.ts",
+            "backrooms/gateway-host/host.ts",
+            "backrooms/gateway-host/index.ts",
+            "backrooms/gateway-host/indexer.ts",
+            "backrooms/gateway-host/production.ts",
+            "backrooms/gateway-host/serve.ts",
+            "backrooms/gateway-host/server.ts",
+            "backrooms/package-lock.json",
+            "backrooms/package.json",
+            "backrooms/program/Cargo.toml",
+            "backrooms/program/build.rs",
+            "backrooms/program/identity/development.json",
+            "backrooms/program/src/bin/bridge.rs",
+            "backrooms/program/src/bin/bridge/production.rs",
+            "backrooms/program/src/bin/bridge/recovery.rs",
+            "backrooms/program/src/lib.rs",
+            "backrooms/releases/development.json",
+            "backrooms/releases/prepare.ts",
+            "backrooms/tests/gateway-workerd.test.ts",
+            "backrooms/tests/photon-startup.test.ts",
+            "backrooms/tests/production.test.ts",
+            "backrooms/tests/release.test.ts",
+            "docs/backrooms/GATEWAY.md",
+            "docs/backrooms/PRODUCTION.md",
+            "docs/backrooms/VERIFICATION.md",
+            "services/photon/src/api/rpc_server.rs",
+            "services/photon/src/main.rs"
+          ]
+        }
+      ]
+    }
+  ],
+  "source_refs": [
+    {
+      "id": "contribution_guide",
+      "url": "https://github.com/Spawn-Backrooms/spawn/blob/e26e2585d01518ec4d86b93863f6e0fbde724338/CONTRIBUTING.md",
+      "blob": "e2dc243d4eaf6bee82105857295a6df7270fa347"
+    },
+    {
+      "id": "porting_guide",
+      "url": "https://github.com/Spawn-Backrooms/spawn/blob/e26e2585d01518ec4d86b93863f6e0fbde724338/docs/porting-contributions.md",
+      "blob": "1f11276d9a5e24f9cf45f021c622e2e8f9ec9dbb"
+    },
+    {
+      "id": "room_schema",
+      "url": "https://github.com/Spawn-Backrooms/spawn/blob/e26e2585d01518ec4d86b93863f6e0fbde724338/protocol/src/api/roomSchemas.ts",
+      "blob": "09d7cb4eeca0fcf6ca7438d7bd37c1b713e1c86b"
+    },
+    {
+      "id": "catalogue",
+      "url": "https://github.com/Spawn-Backrooms/spawn/blob/e26e2585d01518ec4d86b93863f6e0fbde724338/backrooms/catalogue/platform-rooms.v1.json",
+      "blob": "a732a415750ddab7f0df5d24f9cfd3f040605f92"
+    },
+    {
+      "id": "package",
+      "url": "https://github.com/Spawn-Backrooms/backroom-rings/blob/b61f57b1c553d2f39399cc2d1db5d0ade43c67f9/backrooms/package.json",
+      "blob": "8cd959caf75c16841f528495b46f5dcae0fdadb7"
+    }
+  ],
+  "room_kinds": {
+    "declared": [
+      "coding",
+      "art",
+      "video",
+      "research",
+      "live_avatar",
+      "trading"
+    ],
+    "source_ref": "room_schema",
+    "qualification": "unassessed",
+    "note": "Declared room kinds do not establish their media, trading, repository, host or privacy capabilities. Catalogue templates and operation qualification are separate."
+  },
+  "first_wave": [
+    {
+      "unit_id": "Q02",
+      "state": "maintainer_coordination_required",
+      "allowed_preparation": "Public contract review and isolated compatibility fixtures.",
+      "shared_boundary": "Canonical native runtime, session, startup recovery, generated MCP and public projection.",
+      "handoff_ids": [
+        "H-NATIVE",
+        "H-PORT",
+        "H-ACTIVE-WORK"
+      ]
+    },
+    {
+      "unit_id": "Q03",
+      "state": "public_preparation_ready",
+      "allowed_preparation": "Reproduce the selected public package and record source/package evidence without claiming production qualification.",
+      "shared_boundary": "Preserve the active production gateway and indexer-supervision stack; select its exact base explicitly.",
+      "handoff_ids": [
+        "H-ACTIVE-WORK"
+      ]
+    },
+    {
+      "unit_id": "Q05",
+      "state": "public_preparation_ready",
+      "allowed_preparation": "Define disclosure and reader/egress contracts with non-sensitive fixtures.",
+      "shared_boundary": "Actual native/provider enforcement and persistence require the authorized maintainer.",
+      "handoff_ids": [
+        "H-NATIVE"
+      ]
+    },
+    {
+      "unit_id": "K01",
+      "state": "public_preparation_ready",
+      "allowed_preparation": "Use isolated envelope/schema/fixture files. Coordinate any package-export or client-index change.",
+      "shared_boundary": "Rings client/index, gateway protocol, package and release manifests overlap the existing stack.",
+      "handoff_ids": [
+        "H-ACTIVE-WORK"
+      ]
+    },
+    {
+      "unit_id": "E03",
+      "state": "public_preparation_ready",
+      "allowed_preparation": "Implement an isolated experiment/resource record, validator and fixtures without changing runtime behavior.",
+      "shared_boundary": "Existing room/coordinator/workflow schemas, generated MCP and canonical export overlays have active owners.",
+      "handoff_ids": [
+        "H-PORT",
+        "H-ACTIVE-WORK"
+      ]
+    }
+  ],
+  "units": [
+    {
+      "id": "C01",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/56",
+      "title": "[C01][P1] Attach accepted knowledge to the existing workflow library",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "K04",
+        "E01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "C02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57",
+      "title": "[C02][P1] Demonstrate transferable CLIPS procedures",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "C01",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "C03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/58",
+      "title": "[C03][P2] Retain Character methods without transferring likeness rights",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "C01",
+        "F01",
+        "Q05"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "C04",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/59",
+      "title": "[C04][P2] Offer explicit learned releases in CATGPT forks",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "F02",
+        "C01",
+        "Q08"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "C05",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/60",
+      "title": "[C05][P2] Make ComfyUI recipes reproducible and safely portable",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "C01",
+        "F01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D01",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13",
+      "title": "[D01][P1] Profile narrow delegated authority for knowledge tasks",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01",
+        "K01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49",
+      "title": "[D02][P1] Extend native reservation conservation to delegated knowledge work",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "D01",
+        "Q02"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50",
+      "title": "[D03][P0] Enforce one original for every consequential effect",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q02"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D04",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51",
+      "title": "[D04][P1] Qualify the versioned opaque private Flue route",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q02",
+        "Q04",
+        "Q05",
+        "D03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D05",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52",
+      "title": "[D05][P1] Hand scoped knowledge work to Hermes and an SDK peer",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "D01",
+        "E01",
+        "F01",
+        "Q05"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D06",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/53",
+      "title": "[D06][P2] Bind owner model connections without exporting credentials",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q05",
+        "D03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D07",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/17",
+      "title": "[D07][P2] Allow concurrent proposals before concurrent accepted state",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K02",
+        "D02",
+        "D03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D08",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/27",
+      "title": "[D08][P1] Implement the production attested execution and key-release boundary",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q05",
+        "Q06",
+        "O01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "D09",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/71",
+      "title": "[D09][P1] Integrate the enforced confidential native execution profile",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "D08",
+        "D04",
+        "D03",
+        "Q05"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E01",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16",
+      "title": "[E01][P1] Export portable accepted-work evidence from existing receipts",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E02",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/18",
+      "title": "[E02][P1] Verify receipt semantics in two independent implementations",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "E01",
+        "D01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/44",
+      "title": "[E03][P1] Freeze the scientific experiment record and resource ledger",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E04",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/54",
+      "title": "[E04][P1] Test useful retention and transfer under matched resources",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "E03",
+        "K07"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E05",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/55",
+      "title": "[E05][P1] Measure poisoning and repair across retained knowledge",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "E03",
+        "K05",
+        "K06"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E06",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/19",
+      "title": "[E06][P2] Compare narrow proofs with ordinary reproducible checks",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "E01",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E07",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/20",
+      "title": "[E07][P3] Investigate private retrieval and attested execution boundaries",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q05",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "E08",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/21",
+      "title": "[E08][P3] Evaluate private aggregate scoring with MPC or FHE",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "E03",
+        "E01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "F01",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11",
+      "title": "[F01][P1] Define authorized knowledge export manifests",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "F02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/47",
+      "title": "[F02][P1] Create a new room from an authorized knowledge release",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "F01",
+        "K03",
+        "Q04"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "F03",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/12",
+      "title": "[F03][P1] Review imported knowledge before a merge",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "F01",
+        "K04",
+        "K07"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "F04",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/14",
+      "title": "[F04][P1] Add membership and key epochs for future access",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K02",
+        "F01",
+        "D01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "F05",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/48",
+      "title": "[F05][P1] Separate agent replacement from stewardship transfer",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "F04",
+        "K05"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "F06",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/15",
+      "title": "[F06][P1] Verify fork and merge against adversarial histories",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "F02",
+        "F03",
+        "F04",
+        "K06"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K01",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/8",
+      "title": "[K01][P1] Define a typed accepted-knowledge envelope",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K02",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/9",
+      "title": "[K02][P1] Specify and prototype a v1 committed knowledge manifest",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "Q03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/41",
+      "title": "[K03][P1] Store encrypted knowledge behind committed manifests",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "K02"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K04",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/42",
+      "title": "[K04][P1] Import accepted knowledge from existing work evidence",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q02",
+        "K01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K05",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/43",
+      "title": "[K05][P1] Retrieve scoped knowledge from a pinned run snapshot",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K03",
+        "K04"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K06",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/10",
+      "title": "[K06][P1] Propagate corrections and retractions through knowledge lineage",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "K03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K07",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/45",
+      "title": "[K07][P1] Promote reusable procedures through a versioned evaluation rule",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "K04",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "K08",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/46",
+      "title": "[K08][P1] Preserve rights and evidence during memory compaction",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "K05",
+        "Q05"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "M01",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/65",
+      "title": "[M01][P2] Use knowledge lineage in market research and shadow analysis",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K05",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "M02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/66",
+      "title": "[M02][P2] Retain commercial content lessons under fresh publishing consent",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "C01",
+        "F01",
+        "D03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "M03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67",
+      "title": "[M03][P1] Link private work to native economic and capacity evidence",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "D02",
+        "E01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "M04",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/22",
+      "title": "[M04][P2] Export task-specific reputation from complete evidence",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "E01",
+        "E03",
+        "F01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "M05",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/23",
+      "title": "[M05][P3] Test whether sealed procurement earns its complexity",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "D01",
+        "D02",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O01",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24",
+      "title": "[O01][P0] Implement the production gateway, custody and recovery boundary",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q02",
+        "Q03",
+        "D03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68",
+      "title": "[O02][P0] Operate bounded recovery and private observability",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q04",
+        "Q05",
+        "D03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/69",
+      "title": "[O03][P1] Measure complete room costs and capacity",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q04",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O04",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/25",
+      "title": "[O04][P1] Publish reusable contracts and preserve upstream contribution flow",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01",
+        "Q03",
+        "E01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O05",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/26",
+      "title": "[O05][P3] Design a Custom Rings application hook with upstream",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q03",
+        "E01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O06",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70",
+      "title": "[O06][P0] Close a scoped release with exact serving and user evidence",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q06",
+        "Q07",
+        "Q08",
+        "O01",
+        "O02",
+        "O03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "O07",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/72",
+      "title": "[O07][P0] Close the accepted programme with a complete capability and evidence register",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01",
+        "O06"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q01",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35",
+      "title": "[Q01][P0] Refresh the shared source and evidence baseline",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/36",
+      "title": "[Q02][P0] Reconcile the existing native learning stack",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q03",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/6",
+      "title": "[Q03][P0] Reproduce the public engine and pin its package",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q04",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/37",
+      "title": "[Q04][P0] Exercise the composed native host and real local chain",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q02",
+        "Q03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q05",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/38",
+      "title": "[Q05][P0] Bind privacy policy to every model and tool destination",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q06",
+      "repository": "Spawn-Backrooms/backroom-rings",
+      "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/7",
+      "title": "[Q06][P0] Qualify production cryptographic artifacts and deployment identity",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q07",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/39",
+      "title": "[Q07][P0] Qualify a bounded real OpenRouter learning episode",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q04",
+        "Q05"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "Q08",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40",
+      "title": "[Q08][P1] Finish truthful private-room creation and reopening",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q02",
+        "Q04"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "R01",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/61",
+      "title": "[R01][P1] Demonstrate retained supplied-source research methods",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K07",
+        "E03",
+        "Q04"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "R02",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/62",
+      "title": "[R02][P1] Bind Slop research claims to actual checker evidence",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "K01",
+        "E01",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "R03",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/63",
+      "title": "[R03][P1] Preserve the independent PNP contribution path",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "Q01",
+        "E03"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    },
+    {
+      "id": "R04",
+      "repository": "Spawn-Backrooms/spawn",
+      "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/64",
+      "title": "[R04][P2] Release research methods with controlled supporting evidence",
+      "github_state": "open",
+      "github_assignees": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "depends_on": [
+        "F01",
+        "E01",
+        "K06"
+      ],
+      "implementation_status": "unassessed",
+      "qualification_status": "unassessed",
+      "serving_status": "unassessed"
+    }
+  ],
+  "historical_records": [
+    {
+      "id": "CORE-001",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        },
+        {
+          "unit_id": "E03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/44"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-002",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/7"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-003",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        },
+        {
+          "unit_id": "Q08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40"
+        },
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-004",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/8"
+        },
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "Q05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/38"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-005",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/36"
+        },
+        {
+          "unit_id": "Q08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-006",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-007",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/36"
+        },
+        {
+          "unit_id": "Q04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/37"
+        },
+        {
+          "unit_id": "Q08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-008",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "F02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/47"
+        },
+        {
+          "unit_id": "F06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/15"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-009",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "K05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/43"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-010",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-011",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40"
+        },
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-012",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        },
+        {
+          "unit_id": "Q08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-013",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "K03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/41"
+        },
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-014",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "R04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/64"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-015",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/40"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-016",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-017",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "C01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/56"
+        },
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-018",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-019",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-020",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "bounded_research",
+      "programme_contributions": [
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        },
+        {
+          "unit_id": "E04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/54"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-021",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        },
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-022",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "K05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/43"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-023",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-024",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "E02",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/18"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-025",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-026",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-027",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-028",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-029",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/36"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-030",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51"
+        },
+        {
+          "unit_id": "Q05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/38"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-031",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/36"
+        },
+        {
+          "unit_id": "D04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51"
+        },
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-032",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/39"
+        },
+        {
+          "unit_id": "D04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-033",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/37"
+        },
+        {
+          "unit_id": "D04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-034",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        },
+        {
+          "unit_id": "D04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-035",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/43"
+        },
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "C01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/56"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-036",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "Q05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/38"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-037",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/46"
+        },
+        {
+          "unit_id": "D04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/51"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-038",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/8"
+        },
+        {
+          "unit_id": "K02",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/9"
+        },
+        {
+          "unit_id": "K03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/41"
+        },
+        {
+          "unit_id": "K04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/42"
+        },
+        {
+          "unit_id": "K05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/43"
+        },
+        {
+          "unit_id": "K06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/10"
+        },
+        {
+          "unit_id": "F05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/48"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-039",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "F02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/47"
+        },
+        {
+          "unit_id": "F03",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/12"
+        },
+        {
+          "unit_id": "F06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/15"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-040",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "C01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/56"
+        },
+        {
+          "unit_id": "K07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/45"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-041",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-042",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-043",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "C04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/59"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-044",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "C01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/56"
+        },
+        {
+          "unit_id": "C03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/58"
+        },
+        {
+          "unit_id": "C05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/60"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "CORE-045",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-01",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-02",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        },
+        {
+          "unit_id": "E02",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/18"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-03",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-04",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-05",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-06",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        },
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-07",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-08",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "K03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/41"
+        },
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-09",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        },
+        {
+          "unit_id": "D05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/52"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-10",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "E02",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/18"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-11",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-12",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-13",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-14",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-15",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "HOST-16",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-01",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        },
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-02",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-03",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        },
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-04",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-05",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-06",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-07",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-08",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-09",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-10",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "Q07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/39"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-11",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-12",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-13",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-14",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-15",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-16",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-17",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        },
+        {
+          "unit_id": "E03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/44"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-18",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/39"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-19",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        },
+        {
+          "unit_id": "O03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/69"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "FIN-20",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-01",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-02",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-03",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-04",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-05",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-06",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-07",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-08",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "TOK-09",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "M03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/67"
+        },
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-01",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/38"
+        },
+        {
+          "unit_id": "C05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/60"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-02",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-03",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "bounded_research",
+      "programme_contributions": [
+        {
+          "unit_id": "C02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/57"
+        },
+        {
+          "unit_id": "E04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/54"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-04",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "C04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/59"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-05",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "C04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/59"
+        },
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "F02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/47"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-06",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        },
+        {
+          "unit_id": "C03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/58"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-07",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "C03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/58"
+        },
+        {
+          "unit_id": "K07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/45"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-08",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "C01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/56"
+        },
+        {
+          "unit_id": "K07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/45"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-09",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "C05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/60"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-10",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-11",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "independent_no_new_delta",
+      "programme_contributions": [],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-12",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "R01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/61"
+        },
+        {
+          "unit_id": "R02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/62"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-13",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "R01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/61"
+        },
+        {
+          "unit_id": "R02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/62"
+        },
+        {
+          "unit_id": "C03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/58"
+        },
+        {
+          "unit_id": "M02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/66"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "PROD-14",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "bounded_research",
+      "programme_contributions": [
+        {
+          "unit_id": "M01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/65"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-01",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "Q05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/38"
+        },
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-02",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        },
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/53"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-03",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/43"
+        },
+        {
+          "unit_id": "F06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/15"
+        },
+        {
+          "unit_id": "E05",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/55"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-04",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/49"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "O03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/69"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-05",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/10"
+        },
+        {
+          "unit_id": "K08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/46"
+        },
+        {
+          "unit_id": "F01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/11"
+        },
+        {
+          "unit_id": "F04",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/14"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-06",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "D01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/13"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        },
+        {
+          "unit_id": "F04",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/14"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-07",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q03",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/6"
+        },
+        {
+          "unit_id": "Q06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/7"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "SEC-08",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-01",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q01",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/35"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-02",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "O04",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/25"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-03",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "Q04",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/37"
+        },
+        {
+          "unit_id": "Q06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/7"
+        },
+        {
+          "unit_id": "Q07",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/39"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-04",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "O03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/69"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-05",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        },
+        {
+          "unit_id": "D03",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/50"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-06",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-07",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-08",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "preserved_dependency",
+      "programme_contributions": [
+        {
+          "unit_id": "E01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/16"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-09",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "direct_delta",
+      "programme_contributions": [
+        {
+          "unit_id": "K06",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/10"
+        },
+        {
+          "unit_id": "K08",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/46"
+        },
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-10",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    },
+    {
+      "id": "OPS-11",
+      "historical_record_state": "draft_planning_record",
+      "current_requirement": {
+        "state": "unresolved",
+        "decision_ref": null
+      },
+      "relationship": "scoped_release_evidence",
+      "programme_contributions": [
+        {
+          "unit_id": "O01",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/24"
+        },
+        {
+          "unit_id": "O02",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/68"
+        },
+        {
+          "unit_id": "O04",
+          "issue_url": "https://github.com/Spawn-Backrooms/backroom-rings/issues/25"
+        },
+        {
+          "unit_id": "O06",
+          "issue_url": "https://github.com/Spawn-Backrooms/spawn/issues/70"
+        }
+      ],
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "canonical_work": {
+        "state": "unresolved",
+        "public_issue_url": null,
+        "handoff_id": "H-HISTORY"
+      },
+      "residual_acceptance": {
+        "state": "unreconciled",
+        "evidence_refs": []
+      },
+      "closure_status": "unassessed",
+      "next_action": "Reconcile the authoritative current requirement, canonical work, owner and residual acceptance through H-HISTORY. A programme contribution does not close the parent record."
+    }
+  ],
+  "linked_acceptance_groups": [
+    [
+      "CORE-018",
+      "CORE-020",
+      "PROD-02",
+      "PROD-03"
+    ],
+    [
+      "CORE-043",
+      "PROD-04",
+      "PROD-05"
+    ],
+    [
+      "CORE-044",
+      "PROD-06",
+      "PROD-07",
+      "PROD-08",
+      "PROD-09",
+      "PROD-10"
+    ],
+    [
+      "CORE-028",
+      "OPS-05"
+    ],
+    [
+      "CORE-042",
+      "OPS-08"
+    ],
+    [
+      "CORE-045",
+      "TOK-08"
+    ]
+  ],
+  "handoffs": [
+    {
+      "id": "H-NATIVE",
+      "scope": "Canonical native learning, private creation, Flue, recovery and current rendered evidence",
+      "state": "awaiting_owner",
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "public_receipt": null,
+      "next_action": "The authorized native maintainer must reconcile the current candidate and overlapping work at exact restricted revisions. Source and reported verification do not establish a released capability."
+    },
+    {
+      "id": "H-PORT",
+      "scope": "Canonical preservation of accepted public contributions and future exports",
+      "state": "awaiting_owner",
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "public_receipt": null,
+      "next_action": "Reconcile active contribution-preservation work, authoritative changed files and a complete isolated export rehearsal before refreshing managed public paths. Decide the canonical mapping for this new audit directory."
+    },
+    {
+      "id": "H-HISTORY",
+      "scope": "Accepted requirement catalogue, historical lineage, canonical work and residual acceptance",
+      "state": "awaiting_owner",
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "public_receipt": null,
+      "next_action": "Reconcile the 123 draft planning records with the authoritative current register and existing work. Locate existing tickets before adding missing ones; keep unresolved ownership explicit."
+    },
+    {
+      "id": "H-SERVING",
+      "scope": "Current build, deployment, enabled capabilities and live acceptance",
+      "state": "awaiting_owner",
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "public_receipt": null,
+      "next_action": "The release owner must supply exact source-to-serving and enabled-profile evidence through a release-cleared verdict. This projection observes no current deployed identities."
+    },
+    {
+      "id": "H-ACTIVE-WORK",
+      "scope": "Concurrent agent changes and unpushed source",
+      "state": "awaiting_owner",
+      "accountable_owner": {
+        "state": "unassigned",
+        "identity": null
+      },
+      "public_receipt": null,
+      "next_action": "Reconcile the starting head and file ownership with each active writer before shared-file edits. Remote source cannot establish the content of unpushed work."
+    }
+  ],
+  "scope_limits": [
+    "No application tests, model calls, deployment probes or production qualification were run for this source projection.",
+    "Public repository source presence and a PR author do not establish an accountable implementation or acceptance owner.",
+    "Remote reads do not verify unpushed work or every earlier conversation.",
+    "Historical relationships are traceability, not additional release dependency edges.",
+    "The public contribution and porting guides remain applicable. This directory does not modify runtime source, generated MCP contracts, release manifests or native acceptance authority."
+  ]
+}

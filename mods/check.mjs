@@ -54,7 +54,9 @@ function captionStyle(errors, at, c) {
 function clipRecipe(errors, at, c) {
   if (!exact(errors, at, c, ["base", "clips"])) return;
   if (!["clip-one", "three-clips", "walkthrough"].includes(c.base)) errors.push(`${at}.base: "clip-one", "three-clips" or "walkthrough"`);
-  if (!Array.isArray(c.clips) || c.clips.length < 1 || c.clips.length > 6) return errors.push(`${at}.clips: 1 to 6 clips`);
+  // One recipe clip becomes one Creator clip node, and the pipeline caps clip
+  // nodes at 4 (CREATOR_LIMITS.clips in protocol/src/api/creatorPipelineSchemas.ts).
+  if (!Array.isArray(c.clips) || c.clips.length < 1 || c.clips.length > 4) return errors.push(`${at}.clips: 1 to 4 clips`);
   c.clips.forEach((clip, i) => {
     const where = `${at}.clips[${i}]`;
     if (!exact(errors, where, clip, ["length_ms", "aspect", "framing"])) return;
@@ -74,7 +76,7 @@ export function checkManifest(m, at = "mod.json") {
   if (!KINDS.includes(m.kind)) errors.push(`${at}.kind: one of ${KINDS.join(", ")}`);
   text(errors, `${at}.name`, m.name, 60);
   text(errors, `${at}.description`, m.description, 200);
-  if (typeof m.author !== "string" || !/^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/.test(m.author)) errors.push(`${at}.author: your GitHub handle`);
+  if (typeof m.author !== "string" || !/^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/.test(m.author)) errors.push(`${at}.author: your GitHub handle`);
   if (!LICENSES.includes(m.license)) errors.push(`${at}.license: one of ${LICENSES.join(", ")}`);
   if (m.kind === "caption-style") captionStyle(errors, `${at}.content`, m.content);
   if (m.kind === "clip-recipe") clipRecipe(errors, `${at}.content`, m.content);
@@ -98,6 +100,9 @@ async function main() {
     let manifest;
     try { manifest = JSON.parse(await readFile(file, "utf8")); } catch (error) { errors.push(`${at}: not valid JSON (${error.message})`); continue; }
     errors.push(...checkManifest(manifest, at));
+    // A non-object JSON value is already reported by checkManifest. The
+    // field checks below assume an object and would throw on null/[]/42.
+    if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) continue;
     if (basename(dirname(file)) !== manifest.id) errors.push(`${at}: the folder name must be the mod id "${manifest.id}"`);
     if (ids.has(manifest.id)) errors.push(`${at}: "${manifest.id}" is already used`);
     ids.add(manifest.id);

@@ -54,6 +54,11 @@ const TEMPLATE_KEYS = [
 ];
 const bytes = (value) => new TextEncoder().encode(value).length;
 
+/** Room names compare case-insensitively after trimming: " VESPER-04 " is VESPER-04. */
+export function roomNameKey(name) {
+  return String(name).trim().toLowerCase();
+}
+
 function check(errors, where, condition, message) {
   if (!condition) errors.push(`${where}: ${message}`);
   return condition;
@@ -84,7 +89,7 @@ function checkConfig(errors, where, kind, config) {
       break;
     case "research":
       if (!exactKeys(errors, where, config, ["kind", "questions", "citation_policy"])) return;
-      if (check(errors, where + ".questions", Array.isArray(config.questions) && config.questions.length <= 16, "must be a list of at most 16 questions"))
+      if (check(errors, where + ".questions", Array.isArray(config.questions) && config.questions.length >= 1 && config.questions.length <= 16, "must be a list of 1-16 questions"))
         config.questions.forEach((question, i) => text(errors, `${where}.questions[${i}]`, question, 2048));
       check(errors, where + ".citation_policy", config.citation_policy === "provided_sources_only", 'must be "provided_sources_only"');
       break;
@@ -99,7 +104,7 @@ function checkConfig(errors, where, kind, config) {
         check(errors, where + ".tool", ["clips", "memes", "affiliate"].includes(config.tool), 'must be "clips", "memes" or "affiliate"');
       if (config.workspace_mode !== undefined)
         check(errors, where + ".workspace_mode", config.workspace_mode === "clips", 'must be "clips"');
-      if (!check(errors, where + ".shots", Array.isArray(config.shots) && config.shots.length <= 32, "must be a list of at most 32 shots")) return;
+      if (!check(errors, where + ".shots", Array.isArray(config.shots) && config.shots.length >= 1 && config.shots.length <= 32, "must be a list of 1-32 shots")) return;
       const ids = new Set();
       config.shots.forEach((shot, i) => {
         const at = `${where}.shots[${i}]`;
@@ -192,8 +197,13 @@ async function main() {
   const taken = { ids: new Set(), names: new Set() };
   catalogue.templates.forEach((template, i) => {
     errors.push(...checkTemplate(template, `catalogue/platform-rooms.v1.json templates[${i}]`, "editable_proposed_default"));
+    // The catalogue is the store list: two entries under one seed_id or
+    // name leave one room unreachable by that key, so the catalogue itself
+    // needs the same uniqueness check proposals get below.
+    check(errors, `catalogue/platform-rooms.v1.json templates[${i}].seed_id`, !taken.ids.has(template.seed_id), `"${template.seed_id}" is already used`);
+    check(errors, `catalogue/platform-rooms.v1.json templates[${i}].name`, !taken.names.has(roomNameKey(template.name)), `the name "${template.name}" is already used`);
     taken.ids.add(template.seed_id);
-    taken.names.add(String(template.name).toLowerCase());
+    taken.names.add(roomNameKey(template.name));
   });
   const args = process.argv.slice(2);
   const proposals = args.length ? args : [...(await jsonFiles(join(here, "examples"))), ...(await jsonFiles(join(here, "proposals")))];
@@ -201,12 +211,15 @@ async function main() {
     const where = relative(here, path);
     const template = await json(path);
     errors.push(...checkTemplate(template, where, "proposed"));
+    // A non-object JSON value is already reported by checkTemplate. The
+    // field checks below assume an object and would throw on null/[]/42.
+    if (!template || typeof template !== "object" || Array.isArray(template)) continue;
     if (basename(dirname(path)) === "examples") continue;
     check(errors, where, basename(path) === `${template.seed_id}.json`, `file name must be "${template.seed_id}.json"`);
     check(errors, where + ".seed_id", !taken.ids.has(template.seed_id), `"${template.seed_id}" is already used`);
-    check(errors, where + ".name", !taken.names.has(String(template.name).toLowerCase()), `the name "${template.name}" is already used`);
+    check(errors, where + ".name", !taken.names.has(roomNameKey(template.name)), `the name "${template.name}" is already used`);
     taken.ids.add(template.seed_id);
-    taken.names.add(String(template.name).toLowerCase());
+    taken.names.add(roomNameKey(template.name));
   }
   if (errors.length) {
     console.error(errors.map((error) => "✗ " + error).join("\n"));

@@ -158,7 +158,17 @@ export const contentWorkflowEvaluation = z
     source: contentWorkflowSource,
     created_at: z.string(),
   })
-  .strict();
+  .strict()
+  .superRefine((evaluation, issue) => {
+    if (
+      evaluation.result === "manual_pass" &&
+      Object.values(evaluation.scores).some((score) => score < 3)
+    )
+      issue.addIssue({
+        code: "custom",
+        message: "manual_pass requires every dimension to score at least 3",
+      });
+  });
 export type ContentWorkflowEvaluation = z.infer<
   typeof contentWorkflowEvaluation
 >;

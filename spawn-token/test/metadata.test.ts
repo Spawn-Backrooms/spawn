@@ -8,10 +8,11 @@ const api = candidate as unknown as {
 const publicValue = {name:'SPAWN Archivist',symbol:'SPWN',description:'Fictional archivist',image:'https://assets.example.org/image.png',showName:true,createdOn:'https://spawn.example.org',website:'https://spawn.example.org/agents/public-01'};
 describe('public metadata',()=>{
  it('returns a validated immutable public projection',()=>expect(api.validatePublicMetadata(publicValue)).toEqual(publicValue));
+ it('accepts a public FQDN with a trailing dot',()=>expect(api.validatePublicMetadata({...publicValue,image:'https://assets.example.org./image.png'})).toEqual({...publicValue,image:'https://assets.example.org./image.png'}));
  for (const field of ['system_instructions','memory','owner_id','private_key','api_key','chat','wallet_balance']) {
   it(`rejects ${field} rather than silently publishing it`,()=>expect(()=>api.validatePublicMetadata({...publicValue,[field]:'private'})).toThrow(/FIELD/));
  }
- it.each(['http://assets.example.org/a','https://user:secret@assets.example.org/a','https://127.0.0.1/a','https://localhost/a','https://[::1]/a','https://10.0.0.1/a'])('rejects non-public HTTPS image %s',(image)=>expect(()=>api.validatePublicMetadata({...publicValue,image})).toThrow(/URL/));
+ it.each(['http://assets.example.org/a','https://user:secret@assets.example.org/a','https://127.0.0.1/a','https://localhost/a','https://[::1]/a','https://10.0.0.1/a','https://localhost./a','https://sub.localhost./a','https://foo.local./a','https://foo.internal./a','https://foo.test./a','https://foo.invalid./a','https://127.0.0.1./a','https://10.0.0.1./a'])('rejects non-public HTTPS image %s',(image)=>expect(()=>api.validatePublicMetadata({...publicValue,image})).toThrow(/URL/));
  it('enforces UTF8 byte lengths instead of string code-unit lengths',()=>expect(()=>api.validatePublicMetadata({...publicValue,name:'🦄'.repeat(9)})).toThrow(/NAME/));
  it('rejects symbol over 13 bytes',()=>expect(()=>api.validatePublicMetadata({...publicValue,symbol:'S'.repeat(14)})).toThrow(/SYMBOL/));
  it('does not coerce showName',()=>expect(()=>api.validatePublicMetadata({...publicValue,showName:'true'})).toThrow(/METADATA/));

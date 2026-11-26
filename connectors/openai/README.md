@@ -6,7 +6,7 @@ A plugin package in the compatibility format current OpenAI agent hosts load (`.
 
 ## How it fits together
 
-The template in [`spawn`](spawn) contains no account-specific app ID. Before it can be installed, it must be bound to the canonical app ID of an existing registered SPAWN app, read from that host's authenticated app metadata. Don't guess it from a connection ID, OAuth client ID or display name.
+The template in [`spawn`](spawn) contains no account-specific app ID. Before it can be installed, it must be bound to the canonical app ID of an existing registered SPAWN app, read from that host's authenticated app metadata. Don't guess it from a connection ID, OAuth client ID or display name. OpenAI shows that ID with a `plugin_` prefix in the browser URL (`plugin_asdk_app_...`); the script accepts that spelling and stores the bare `asdk_app_...` form.
 
 ```sh
 node connectors/openai/prepare-registered.mjs VERIFIED_CANONICAL_APP_ID NEW_OUTPUT_DIRECTORY

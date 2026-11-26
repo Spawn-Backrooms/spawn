@@ -18,10 +18,12 @@ export function nativeResearchProvider(authority: () => NativeResearchAuthority)
       requireCondition(binding.conversation_id === instance, 'NATIVE_RESEARCH_CONTEXT_CHANGED');
       const original = await selectResearchOriginal(binding, execution.callSite, model, context, options);
       requireCondition(!options?.signal?.aborted, 'NATIVE_RESEARCH_ABORTED');
+      requireCondition(Date.now() < binding.deadline_ms, 'NATIVE_RESEARCH_DEADLINE_EXCEEDED');
       const result = v.parse(researchReplySchema, await native.executeModel(original));
       requireCondition(result.binding_hash === binding.binding_hash && result.wire_sha256 === binding.wire_sha256 &&
         result.output_hash === await sha256(result.output), 'NATIVE_RESEARCH_ORIGINAL_CHANGED');
       requireCondition(!options?.signal?.aborted, 'NATIVE_RESEARCH_ABORTED');
+      requireCondition(Date.now() < binding.deadline_ms, 'NATIVE_RESEARCH_DEADLINE_EXCEEDED');
       const message: AssistantMessage = {
         role: 'assistant', content: [{ type: 'text', text: result.output }],
         api: NATIVE_RESEARCH_PROTOCOL, provider: NATIVE_RESEARCH_PROVIDER, model: model.id,

@@ -340,7 +340,13 @@ def windows_from_transcript(
     """
     clips: list[dict] = []
     start = None
+    last_end = None
     texts: list[str] = []
+    def append_usable(window_start: int, speech_end: int) -> None:
+        clip = _window(window_start, speech_end, texts, duration_ms)
+        if clip["out_ms"] - clip["in_ms"] >= 1000:
+            clips.append(clip)
+
     for segment in segments:
         try:
             seg_start = int(segment.get("start_ms"))
@@ -352,24 +358,27 @@ def windows_from_transcript(
             continue
         if start is None:
             start = seg_start
-        if seg_end - start > 45_000 and texts:
-            clips.append(_window(start, min(start + MAX_CLIP_MS, seg_start), texts, duration_ms))
+        if seg_end - start > 45_000 and last_end is not None:
+            # End at the last speech, not at the next segment's start:
+            # the gap between bursts is silence, not a moment worth clipping.
+            append_usable(start, last_end)
             texts = []
             start = seg_start
+            last_end = None
             if len(clips) >= max_clips:
                 break
         texts.append(text)
-        if seg_end - start >= 15_000:
-            clips.append(_window(start, min(seg_end, start + MAX_CLIP_MS), texts, duration_ms))
+        last_end = seg_end if last_end is None else max(last_end, seg_end)
+        if last_end - start >= 15_000:
+            append_usable(start, last_end)
             texts = []
             start = None
+            last_end = None
             if len(clips) >= max_clips:
                 break
-    if start is not None and texts and len(clips) < max_clips:
-        end = min(duration_ms, start + MAX_CLIP_MS)
-        if end > start:
-            clips.append(_window(start, end, texts, duration_ms))
-    return [clip for clip in clips if clip["out_ms"] - clip["in_ms"] >= 1000][:max_clips]
+    if start is not None and last_end is not None and len(clips) < max_clips:
+        append_usable(start, last_end)
+    return clips[:max_clips]
 
 
 def _window(start: int, end: int, texts: list[str], duration_ms: int) -> dict:

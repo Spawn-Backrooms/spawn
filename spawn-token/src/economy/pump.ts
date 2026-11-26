@@ -2,7 +2,7 @@ import {PublicKey,type TransactionInstruction} from '@solana/web3.js';
 import {NATIVE_MINT,TOKEN_PROGRAM_ID} from '@solana/spl-token';
 import {PUMP_SDK,feeSharingConfigPda,canonicalPumpPoolPda,type SharingConfig} from '@pump-fun/pump-sdk';
 import {canonicalJson,requireCondition,sha256,validateText} from '../metadata.js';
-import {createEconomyPolicy,frozen,policyBlockReason,publicKey,validateRecipients} from './policy.js';
+import {normalizeEconomyPolicy,frozen,policyBlockReason,publicKey,validateRecipients} from './policy.js';
 import type {EconomyBinding,EconomyPolicy,EconomyChainState,InstructionDto,UnsignedEconomyPlan,FeeRecipient} from './types.js';
 export function instructionDto(instruction:TransactionInstruction):InstructionDto{return {program_id:instruction.programId.toBase58(),accounts:instruction.keys.map(key=>({public_key:key.pubkey.toBase58(),is_signer:key.isSigner,is_writable:key.isWritable})),data_base64:instruction.data.toString('base64')};}
 /** Solana message privileges are the union across all occurrences of an account, including the fee payer. */
@@ -24,7 +24,7 @@ export async function distributionInstructions(mintAddress:string,feePayer:strin
 }
 /** Offline instruction-only builder. State must come from a backend-controlled finalized resolver, never client/agent claims. */
 export async function buildUnsignedEconomyPlan(binding:EconomyBinding,policy:EconomyPolicy,state:EconomyChainState,request:{plan_id:string;fee_payer:string;action:UnsignedEconomyPlan['action']}):Promise<Readonly<UnsignedEconomyPlan>>{
- binding=structuredClone(binding);policy=createEconomyPolicy(policy);state=structuredClone(state);request=structuredClone(request);
+ binding=structuredClone(binding);policy=normalizeEconomyPolicy(policy);state=structuredClone(state);request=structuredClone(request);
  requireCondition(policyBlockReason(binding,policy)===null,'INACTIVE_ECONOMY_POLICY');validateText(request.plan_id,160,'INVALID_PLAN_ID');publicKey(request.fee_payer);
  requireCondition(request.action==='setup_fee_sharing'||request.action==='distribute_creator_fees','UNSUPPORTED_ECONOMY_ACTION');
  requireCondition(policy.allowed_actions.includes(request.action==='setup_fee_sharing'?'propose_fee_setup':'propose_fee_claim'),'ACTION_NOT_PERMITTED');

@@ -16,7 +16,7 @@ import { nativeResearchProvider } from '../src/research-provider.ts';
 import { selectResearchOriginal } from '../src/research-wire.ts';
 
 const task = JSON.parse(readFileSync(new URL('./fixtures/flue-2.3.0-task.json', import.meta.url), 'utf8')) as Tool;
-async function setup() {
+async function setup(deadlineMs = Date.now() + 120_000, delayMs = 0) {
   const selector = { owner_id: 'native_owner', project_id: 'native_project', run_id: 'native_run' };
   const basis = {
     version: 'spawn.native-research-binding.v2' as const, selector,
@@ -26,7 +26,7 @@ async function setup() {
     normalization_version: NATIVE_RESEARCH_NORMALIZATION, transport: 'synthetic_native' as const,
     system_instructions: 'Use only supplied source. Date: user instructions keep this exact.',
     message: 'Ledger A dated Wed, Jan 7, 1970 says 12 of 20. Date: never normalize source text.',
-    date_label: 'Thu, Jan 1, 1970', max_output_tokens: 2048, deadline_ms: 2_000_000,
+    date_label: 'Thu, Jan 1, 1970', max_output_tokens: 2048, deadline_ms: deadlineMs,
   };
   const binding: NativeResearchBinding = { ...basis,
     binding_hash: await sha256(canonicalJson(basis)), wire_sha256: await sha256('retained wire') };
@@ -40,7 +40,11 @@ async function setup() {
   const native: NativeResearchAuthority = {
     resolve: async () => binding, resolveConversation: async () => binding,
     prepare: async () => {}, admitted: async () => {}, admission: async () => null,
-    stop: async () => {}, executeModel: async () => { calls++; return structuredClone(reply); },
+    stop: async () => {}, executeModel: async () => {
+      calls++;
+      if (delayMs) await new Promise(resolve => setTimeout(resolve, delayMs));
+      return structuredClone(reply);
+    },
   };
   const provider = nativeResearchProvider(() => native), model = provider.getModels()[0];
   const context = (tools: Tool[] = [structuredClone(task)]) => normalizeContext({
@@ -144,4 +148,21 @@ test('research bridge records the exact original idempotency key and awaits nati
   assert.deepEqual(await bridge.send(f.binding.selector), receipt);
   assert.deepEqual(events, ['intent', 'dispatch', 'native-result', 'admitted']);
   assert.equal(f.calls(), 1);
+});
+
+test('an expired research deadline refuses the native model call before admission', async () => {
+  const f = await setup(Date.now() - 1);
+  const result = await f.invoke();
+  assert.equal(result.stopReason, 'error');
+  assert.equal(result.errorMessage, 'NATIVE_RESEARCH_DEADLINE_EXCEEDED');
+  assert.equal(f.calls(), 0);
+});
+
+test('a research deadline crossed during the native call rejects delivery of the output', async () => {
+  const f = await setup(Date.now() + 50, 300);
+  const result = await f.invoke();
+  assert.equal(result.stopReason, 'error');
+  assert.equal(result.errorMessage, 'NATIVE_RESEARCH_DEADLINE_EXCEEDED');
+  assert.equal(f.calls(), 1);
+  assert.deepEqual(result.content, []);
 });

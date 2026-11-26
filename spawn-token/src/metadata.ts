@@ -9,7 +9,10 @@ export function validatePublicHttps(value: unknown, maxBytes = 2048): asserts va
   validateText(value, maxBytes, 'INVALID_URL');
   let url: URL;
   try { url = new URL(value); } catch { throw new LaunchError('INVALID_URL'); }
-  const host = url.hostname.toLowerCase();
+  // A trailing dot is the same DNS name (WHATWG keeps it on domain names but
+  // strips it on IPv4), so normalize it away before the public-host checks;
+  // otherwise `https://localhost./x` slips past the reserved-name list.
+  const host = url.hostname.toLowerCase().replace(/\.+$/, '');
   requireCondition(url.protocol === 'https:' && !url.username && !url.password && !url.hash && !url.search
     && !host.includes(':') && !/^\d+(\.\d+)*$/.test(host) && host.includes('.')
     && !['localhost','local','internal','test','invalid'].some(s => host === s || host.endsWith(`.${s}`))

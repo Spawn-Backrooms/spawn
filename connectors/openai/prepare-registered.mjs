@@ -4,11 +4,18 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const template = resolve(dirname(fileURLToPath(import.meta.url)), "spawn");
 export function registeredAppMapping(appId) {
-  if (typeof appId !== "string" || !/^asdk_app_[a-f0-9]{32}$/.test(appId))
+  // OpenAI displays the registered app's technical ID with a `plugin_` prefix
+  // (the browser URL shows `plugin_asdk_app_...`); the canonical ID stored in
+  // .app.json is the bare `asdk_app_...` form the reference plugins use.
+  const canonical =
+    typeof appId === "string" && appId.startsWith("plugin_")
+      ? appId.slice("plugin_".length)
+      : appId;
+  if (typeof canonical !== "string" || !/^asdk_app_[a-f0-9]{32}$/.test(canonical))
     throw new Error(
       "Use the verified canonical asdk_app ID from the intended SPAWN registration, not a link or plugin ID",
     );
-  return { apps: { spawn: { id: appId } } };
+  return { apps: { spawn: { id: canonical } } };
 }
 
 /** Package only: does not install, register, authenticate or change host settings. */
@@ -50,7 +57,7 @@ if (
   try {
     if (process.argv.length !== 4)
       throw new Error(
-        "Usage: node integrations/openai/prepare-registered.mjs VERIFIED_CANONICAL_APP_ID NEW_OUTPUT_DIRECTORY",
+        "Usage: node connectors/openai/prepare-registered.mjs VERIFIED_CANONICAL_APP_ID NEW_OUTPUT_DIRECTORY",
       );
     console.log(
       JSON.stringify(await prepareRegistered(process.argv[2], process.argv[3])),
