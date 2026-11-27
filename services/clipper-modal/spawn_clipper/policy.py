@@ -107,12 +107,25 @@ def verify_request(
     body: bytes,
     now: float,
 ) -> bool:
-    if not secret or not timestamp or not signature or not timestamp.isdigit():
+    # Header values are attacker-controlled. str.isdigit() also accepts unicode
+    # digits such as '²' that int() cannot parse, and compare_digest() rejects
+    # non-ASCII str operands with TypeError. Validate the wire form first so a
+    # malformed header is a clean rejection, not a 500 in the API worker.
+    if (
+        not secret
+        or not timestamp
+        or not signature
+        or not timestamp.isascii()
+        or not timestamp.isdigit()
+    ):
         return False
     if abs(int(timestamp) - int(now)) > SIGNATURE_SKEW_SECONDS:
         return False
+    candidate = signature.strip().lower()
+    if not candidate.isascii():
+        return False
     expected = sign_request(secret, timestamp, method, path, body)
-    return hmac.compare_digest(expected, signature.strip().lower())
+    return hmac.compare_digest(expected, candidate)
 
 
 def assert_direct_source_url(url: str) -> None:
