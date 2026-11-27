@@ -119,7 +119,11 @@ def verify_request(
         or not timestamp.isdigit()
     ):
         return False
-    if abs(int(timestamp) - int(now)) > SIGNATURE_SKEW_SECONDS:
+    try:
+        signed_at = int(timestamp)
+    except ValueError:
+        return False
+    if abs(signed_at - int(now)) > SIGNATURE_SKEW_SECONDS:
         return False
     candidate = signature.strip().lower()
     if not candidate.isascii():
