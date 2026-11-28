@@ -229,6 +229,28 @@ class RepeatedJobIdTest(unittest.TestCase):
         self.assertTrue(response.content["duplicate"])
         self.assertEqual(response.content["state"], "succeeded")
 
+    def test_a_malformed_url_is_refused_with_422(self):
+        cases = [
+            ("/v1/jobs", _job_body, "source_get_url", "URL_INGEST_DISABLED"),
+            ("/v1/renders", _render_body, "source_get_url", "URL_INGEST_DISABLED"),
+            ("/v1/imports", _import_body, "source_url", "IMPORT_URL_INVALID"),
+            ("/v1/imports", _import_body, "put_url", "URL_INGEST_DISABLED"),
+        ]
+        for path, make_body, field, code in cases:
+            with self.subTest(path=path, field=field):
+                payload = json.loads(make_body())
+                payload[field] = "https://["
+                body = json.dumps(payload).encode()
+                response = asyncio.run(self.routes[("POST", path)](_Request(path, body)))
+                self.assertEqual(response.status_code, 422)
+                self.assertEqual(response.content, {"error": code})
+        payload = json.loads(_render_body())
+        payload["clips"][0]["put_url"] = "https://["
+        body = json.dumps(payload).encode()
+        response = asyncio.run(self.routes[("POST", "/v1/renders")](_Request("/v1/renders", body)))
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(response.content, {"error": "URL_INGEST_DISABLED"})
+
 
 if __name__ == "__main__":
     unittest.main()
