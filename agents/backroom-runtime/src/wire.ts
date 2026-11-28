@@ -15,6 +15,17 @@ function textContent(content: string | readonly { type: string; text?: string }[
   return content.map(part => part.text).join('\n');
 }
 
+// Provider bodies and tool arguments are untrusted wire data. A malformed JSON
+// payload must fail with the same contract error as any other invalid response,
+// not surface a raw SyntaxError that bypasses the native failure taxonomy.
+function parseWireJson(text: string, code: string): any {
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(code);
+  }
+}
+
 export async function prepareModelRequest(binding: NativeWorkBinding, bindingHash: string,
   callSite: string, model: Model<Api>, context: TranscriptContext,
   options?: SimpleStreamOptions): Promise<NativeModelRequest> {
@@ -72,7 +83,7 @@ export async function prepareModelRequest(binding: NativeWorkBinding, bindingHas
 
 export function assistantFromResponse(rawText: string, model: Model<Api>, httpStatus = 200): AssistantMessage {
   requireCondition(new TextEncoder().encode(rawText).byteLength <= MAX_RESPONSE_BYTES, 'NATIVE_RESPONSE_TOO_LARGE');
-  const raw = JSON.parse(rawText);
+  const raw = parseWireJson(rawText, 'NATIVE_RESPONSE_INVALID');
   if (httpStatus === 400 && raw?.error?.code === 'context_length_exceeded') {
     return { role: 'assistant', content: [], api: WIRE_PROTOCOL, provider: PROVIDER_ID, model: model.id,
       responseId: raw.id, stopReason: 'error',
@@ -100,7 +111,7 @@ export function assistantFromResponse(rawText: string, model: Model<Api>, httpSt
         'NATIVE_TOOL_CALL_ID_INVALID');
       ids.add(call.id);
       requireCondition(/^[A-Za-z_][A-Za-z0-9_]{0,63}$/.test(call.function.name), 'NATIVE_TOOL_NAME_INVALID');
-      const args = JSON.parse(call.function.arguments);
+      const args = parseWireJson(call.function.arguments, 'NATIVE_TOOL_ARGUMENTS_INVALID');
       requireCondition(args && typeof args === 'object' && !Array.isArray(args), 'NATIVE_TOOL_ARGUMENTS_INVALID');
       content.push({ type: 'toolCall', id: call.id, name: call.function.name, arguments: args });
     }
