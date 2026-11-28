@@ -64,6 +64,20 @@ class PolicyTest(unittest.TestCase):
         with self.assertRaises(PolicyError):
             parse_job_request(_job(source_get_url="https://www.youtube.com/watch?v=abc"))
 
+    def test_every_import_platform_host_and_a_bad_port_are_rejected(self):
+        for url in (
+            "https://player.vimeo.com/video/1",
+            "https://m.twitch.tv/videos/1",
+            "https://mobile.twitter.com/a/status/1",
+            "https://mobile.x.com/a/status/1",
+            "https://m.tiktok.com/v/1",
+            "https://vt.tiktok.com/abc",
+            "https://account.r2.cloudflarestorage.com:abc/bucket/source",
+        ):
+            with self.assertRaises(PolicyError):
+                assert_direct_source_url(url)
+        assert_direct_source_url("https://account.r2.cloudflarestorage.com:443/bucket/source")
+
     def test_render_defaults_off_and_extra_urls_are_rejected(self):
         parsed = parse_job_request(_job())
         self.assertFalse(parsed["render_clips"])
