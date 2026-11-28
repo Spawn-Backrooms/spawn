@@ -54,18 +54,24 @@ node mods/check.mjs
 
 CI also runs connector checks, the Signal Below fixture, and package-specific builds and audits. Pull requests from first-time contributors wait for a maintainer to approve the read-only workflow run. [CI commands](.github/workflows/checks.yml)
 
-## Known source findings
+## Resolved source findings
 
-- CLIPS can start analysis, rendering, or link import twice for the same job ID. [Duplicate job review](https://github.com/Spawn-Backrooms/spawn/pull/2#discussion_r4584545274)
-- A late CLIPS analysis or render result can overwrite an acknowledged cancellation. [Cancellation review](https://github.com/Spawn-Backrooms/spawn/pull/2#discussion_r4584545263)
-- The research planner can require more steps than its budget affords. [Research budget review](https://github.com/Spawn-Backrooms/spawn/pull/2#discussion_r4584545283)
-- The caption mod checker can accept a color array that the CLIPS renderer rejects. Use a string such as `"#FFFFFF"` for each color field. [Caption color review](https://github.com/Spawn-Backrooms/spawn/pull/3#discussion_r4586829875)
+- Caption colors must be strings such as `"#FFFFFF"`. The checker now rejects color arrays, with regression tests for all three fields. [Contributor fix](https://github.com/Spawn-Backrooms/spawn/pull/6)
+- CLIPS admission now claims a job ID before starting its worker, preventing duplicate starts for the same admitted job. [Contributor fix](https://github.com/Spawn-Backrooms/spawn/pull/29)
+- A late analysis or render result cannot overwrite an acknowledged cancellation in the published implementation. [Contributor fix](https://github.com/Spawn-Backrooms/spawn/pull/8)
+- The coordinator's explicitly selected `v2` prompt can describe one research step that also synthesizes its findings when only one step fits the budget. Default `v1` wording stays unchanged for retained work. This is a standalone helper contract; hosted caller adoption and release need their own qualification. [Contributor fix](https://github.com/Spawn-Backrooms/spawn/pull/7)
+
+## Configuration and transport boundaries
+
+The generated `spawn_configure_room` contract describes the five configurable room kinds; `config` remains optional for name, description, or brief-only updates. Empty research and video drafts remain valid. New writes allow at most 16 research questions or 32 video shots, while reading retained rooms, renaming them, and repairing oversized legacy configurations use the server's compatibility rules. A room schema by itself does not establish write authority or bypass revision checks. [Configuration discussion](https://github.com/Spawn-Backrooms/spawn/pull/19)
+
+MCP's 65,536-byte HTTP limit applies to the complete serialized JSON-RPC request, including escaping and protocol fields. A graph that fits its argument schema can still exceed that transport limit. See the [request-size guidance](agents/mcp-contract/README.md#request-size).
 
 ## How your change reaches production
 
 The private repository is the source of truth for exported files, including the root README and contributor guide. After public review, a maintainer ports accepted changes before the next export and keeps the commit author and sign-off. A hosted release follows its own review and verification. [Porting and export process](docs/porting-contributions.md)
 
-The MCP contract in [`agents/mcp-contract`](agents/mcp-contract) is generated from the live server. Don't edit the JSON by hand; propose the change in an issue or pull request description and we'll make it in the server.
+The MCP contract in [`agents/mcp-contract`](agents/mcp-contract) is generated from the server source. Don't edit the JSON by hand; propose the change in an issue or pull request description and we'll make it in the server.
 
 ## Ground rules
 

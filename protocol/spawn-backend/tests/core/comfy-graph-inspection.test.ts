@@ -78,28 +78,38 @@ describe("Comfy API graph inspection", () => {
     expect(comfyGraphInspection.safeParse(result).success).toBe(true);
   });
 
-  it("accepts prefixed IDs and the current SaveImage output signature", () => {
-    const result = inspect({
-      "group.0.image": {
-        class_type: "LoadImage",
-        inputs: { image: "fixture.png" },
-      },
-      "group.1.save": {
-        class_type: "SaveImage",
-        inputs: { images: ["group.0.image", 0], filename_prefix: "fixture" },
-      },
-      preview: {
-        class_type: "PreviewImage",
-        inputs: { images: ["group.1.save", 0] },
-      },
-    });
-    expect(result.structurally_valid).toBe(true);
-    expect(result.link_count).toBe(2);
-    expect(
-      result.classes.find((entry) => entry.class_type === "SaveImage")
-        ?.output_count,
-    ).toBe(1);
-  });
+  it.each(["SaveImage", "PreviewImage"])(
+    "accepts output 0 and rejects output 1 for pinned %s",
+    (class_type) => {
+      const candidate = {
+        "group.0.image": {
+          class_type: "LoadImage",
+          inputs: { image: "fixture.png" },
+        },
+        "group.1.output": {
+          class_type,
+          inputs: {
+            images: ["group.0.image", 0],
+            ...(class_type === "SaveImage" ? { filename_prefix: "fixture" } : {}),
+          },
+        },
+        preview: {
+          class_type: "PreviewImage",
+          inputs: { images: ["group.1.output", 0] },
+        },
+      };
+      const result = inspect(candidate);
+      expect(result.structurally_valid).toBe(true);
+      expect(result.link_count).toBe(2);
+      expect(
+        result.classes.find((entry) => entry.class_type === class_type)
+          ?.output_count,
+      ).toBe(1);
+
+      candidate.preview.inputs.images = ["group.1.output", 1];
+      expectError(JSON.stringify(candidate), "OUTPUT_INDEX_OUT_OF_RANGE");
+    },
+  );
 
   it("keeps unknown classes and their output arity visibly unverified", () => {
     const result = inspect({
