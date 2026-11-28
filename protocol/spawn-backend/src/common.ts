@@ -56,12 +56,16 @@ export function assert(
   if (!condition) throw new DomainError(code, status);
 }
 export function canonical(v: unknown): string {
-  if (v === null || typeof v !== "object") return JSON.stringify(v);
-  if (Array.isArray(v)) return "[" + v.map(canonical).join(",") + "]";
+  if (v === undefined) return "undefined";
+  if (v === null || typeof v !== "object") return JSON.stringify(v) ?? "undefined";
+  if (Array.isArray(v)) return "[" + v.map((item) => item === undefined ? "null" : canonical(item)).join(",") + "]";
   return (
     "{" +
     Object.keys(v as object)
       .sort()
+      // Match JSON.stringify: an optional field explicitly set to undefined
+      // is not serialized, so digests do not depend on how the caller built it.
+      .filter((k) => (v as Record<string, unknown>)[k] !== undefined)
       .map(
         (k) =>
           JSON.stringify(k) +
