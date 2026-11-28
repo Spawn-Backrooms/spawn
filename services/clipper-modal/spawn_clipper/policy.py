@@ -132,8 +132,15 @@ def verify_request(
     return hmac.compare_digest(expected, candidate)
 
 
+def _parse_url(url: str, code: str):
+    try:
+        return urlparse(url)
+    except ValueError as error:
+        raise PolicyError(code) from error
+
+
 def assert_direct_source_url(url: str) -> None:
-    parsed = urlparse(url)
+    parsed = _parse_url(url, "URL_INGEST_DISABLED")
     host = (parsed.hostname or "").lower().rstrip(".")
     if (
         parsed.scheme != "https"
@@ -225,7 +232,7 @@ def classify_import_url(url: str) -> tuple[str, str, tuple[str, ...]]:
         raise PolicyError("IMPORT_URL_INVALID")
     if any(ord(char) <= 0x20 or ord(char) == 0x7F for char in url):
         raise PolicyError("IMPORT_URL_INVALID")
-    parsed = urlparse(url)
+    parsed = _parse_url(url, "IMPORT_URL_INVALID")
     if parsed.scheme != "https":
         raise PolicyError("IMPORT_URL_INVALID")
     if parsed.username or parsed.password or "@" in parsed.netloc:
