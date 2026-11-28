@@ -142,12 +142,17 @@ def _parse_url(url: str, code: str):
 def assert_direct_source_url(url: str) -> None:
     parsed = _parse_url(url, "URL_INGEST_DISABLED")
     host = (parsed.hostname or "").lower().rstrip(".")
+    try:
+        parsed.port
+    except ValueError as error:
+        raise PolicyError("URL_INGEST_DISABLED") from error
     if (
         parsed.scheme != "https"
         or parsed.username
         or parsed.password
         or not host
         or host in _PLATFORM_HOSTS
+        or host in _IMPORT_PLATFORMS
         or host.endswith(".youtube.com")
         or host.endswith(".tiktok.com")
     ):
